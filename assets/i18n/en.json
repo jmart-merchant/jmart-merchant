@@ -57,7 +57,9 @@
                 "TITLE": "QR-code with details",
                 "SERVICE": "QR-code for services",
                 "PRODUCT": "QR-code for goods",
-                "PRINT": "Print"
+                "PRINT": "Print",
+                "PRINT_SERVICE": "",
+                "PRINT_PRODUCT": ""
             }
         },
         "EXPORT": {
@@ -101,7 +103,7 @@
             "USER_LIMITED": "Access is restricted for {{user}}",
             "USER_GRANTED": "Access is granted for {{user}}"
         },
-        "LOANS": ""
+        "LOANS": "Loans"
     },
     "AUTH": {
         "LOGIN": "Login",
@@ -219,7 +221,13 @@
         "DELETED_COUNTERPARTIES": "Counterparties are deleted",
         "EDIT_COUNTERPARTY": "Editing counterparty",
         "UPDATED_COUNTERPARTY": "Counterparty is changed",
-        "NO_COUNTERPARTIES": "There are no counterparties"
+        "NO_COUNTERPARTIES": "There are no counterparties",
+        "IIN": "",
+        "NAME": "",
+        "KBE": "",
+        "IBAN": "",
+        "BANK": "",
+        "ACCOUNT_NUMBER": ""
     },
     "DIRECTORY": {
         "TITLE": "Directory",
@@ -303,7 +311,19 @@
             "BALANCE_NOT_ENOUGH": "Insufficient funds"
         },
         "TAX_ACCOUNT": "For tax payment go to <strong><a href='{{path}}'>Tenge payments -> To budget ->Tax</a></strong>",
-        "OTP_NOT_FOUND_AUTH": ""
+        "OTP_NOT_FOUND_AUTH": "You cannot login with OTP code",
+        "EMAIL": "",
+        "VIN": "",
+        "KBE": {
+            "MASK": "",
+            "NOT_EXIST": ""
+        },
+        "EMPLOYEES": {
+            "REQUIRED": "",
+            "MIN_LENGTH": "",
+            "GROUP_ERROR": ""
+        },
+        "WRONG_TAX_ACCOUNT": "For tax payment enter valid account number"
     },
     "FOOTER": {
         "COPYRIGHT": "JSC «First Heartland Jusan Bank»",
@@ -478,7 +498,10 @@
             "EMPLOYEE_PERIOD_EMPTY": "Employee period is not indicated",
             "TOTAL_AMOUNT_NOT_EQUALS": "Total amount isn't equal to calculated for all employees",
             "RECIPIENT_KBE_INVALID": "Indicated KBe does not match the payment type",
-            "PAYMENT_TAX_KBK_EMPTY": ""
+            "PAYMENT_TAX_KBK_EMPTY": "",
+            "ACCESS_DENIED_FOR_PAYMENT_OPERATION": "",
+            "LIMIT_EXCEEDED": "",
+            "SERVICE_NOT_IMPLEMENTED": ""
         },
         "ALREADY_IMPORTED": {
             "ONE": "This file has already been imported",
@@ -502,10 +525,19 @@
             "TITLE": "Imported"
         },
         "DISABLE_SEND_DEPOSIT_ACCOUNT": {
+            "ONE": "You cannot pay from deposit accounts",
+            "OTHER": "You cannot pay from deposit accounts",
+            "TITLE": "Error"
+        },
+        "ERRORED": {
+            "FEW": "",
             "ONE": "",
             "OTHER": "",
+            "SUBTITLE": "",
             "TITLE": ""
-        }
+        },
+        "RESTRICTED_FILES": "You're trying to load restricted file",
+        "TOO_BIG_FILE": "File size is too big (5mb allowed)"
     },
     "PAYMENTS": {
         "SELECT_FROM_DICTIONARY": "Select from directory",
@@ -542,7 +574,9 @@
             "SOCIAL": "Social payment",
             "PENSION": "Pension payment",
             "IN_BETWEEN": "Between own accounts",
-            "CONVERSION": "Conversion"
+            "CONVERSION": "Conversion",
+            "TENGE_PAYMENTS": "",
+            "FOREIGN": ""
         },
         "EMPLOYEES": {
             "LIST": "Employee list",
@@ -588,7 +622,147 @@
             "OPTIONAL": "Optional field",
             "LESS": "Entered VIN-code is less than {{length}} symbols",
             "MORE": "Entered VIN-code is more than {{length}} symbols"
-        }
+        },
+        "DICTIONARY": {
+            "TITLE": "",
+            "NOT_FOUND": "",
+            "SEARCH": "",
+            "KNP_NOT_FOUND": "",
+            "IIN": "",
+            "BIN": "",
+            "IBAN": "",
+            "RECIPIENT_NOT_FOUND": "",
+            "UGD_TITLE": "",
+            "UGD_NOT_FOUND": "",
+            "FREQUENT_UGD": "",
+            "FREQUENT_KNP": "",
+            "KNP_DESCRIPTION": "",
+            "FREQUENT_KBK": ""
+        },
+        "GUARD_MODAL": {
+            "TITLE": "",
+            "DESCRIPTION": "",
+            "EXIT": ""
+        },
+        "FORM": {
+            "DETAILS": "",
+            "DOCUMENT_NUMBER": "",
+            "KNP": "",
+            "PURPOSE": "",
+            "PURPOSE_HELPER": "",
+            "TOTAL_AMOUNT": "",
+            "URGENT": "",
+            "SAVE": "",
+            "SAVE_EDIT": "",
+            "IIN": "",
+            "BIN": "",
+            "CHECK": "",
+            "NAME": "",
+            "IBAN": "",
+            "KBE": "",
+            "KBK": "",
+            "UGD": "",
+            "VALUE_DATE": "",
+            "DATE_HELPER": "",
+            "KNP_REGULAR": "",
+            "AMOUNT": "",
+            "RECEIVER_BANK": "",
+            "ACCOUNT": "",
+            "BANK_IBAN": "",
+            "RESIDENT_AGREEMENT": "",
+            "EMPLOYEE_RESIDENTS": "",
+            "EMPLOYEE_NON-RESIDENTS": "",
+            "VIN": "",
+            "PROTOCOL_NUMBER": "",
+            "SENDER_ACCOUNT": {
+                "SELECTED": "",
+                "EMPTY": ""
+            },
+            "INCLUDING_VAT": ""
+        },
+        "DATE_MESSAGES": {
+            "PRIMARY_ANY": "",
+            "SECONDARY_DATE_AUTO": "",
+            "SECONDARY_DATE": ""
+        },
+        "AMOUNT_MESSAGES": {
+            "AUTO": "",
+            "DEFAULT": ""
+        },
+        "INTERVAL": {
+            "ENABLED": "",
+            "DISABLED": ""
+        },
+        "VAT": {
+            "TITLE": "",
+            "DESCRIPTION": ""
+        },
+        "TABS": {
+            "MEDICAL": "",
+            "TAX": "",
+            "SOCIAL": "",
+            "PENSION": "",
+            "PAYMENT_ORDER": "",
+            "BUDGET": "",
+            "SALARY": ""
+        },
+        "DATE": {
+            "AUTO": "",
+            "TODAY": "",
+            "TOMORROW": ""
+        },
+        "SELECT": {
+            "NOT_FOUND": "",
+            "SEARCH": "",
+            "ADD": "",
+            "LOADING": "",
+            "CLEAR": ""
+        },
+        "RECIPIENTS": {
+            "IIN": "",
+            "IBAN": "",
+            "NOT_FOUND": "",
+            "LIST_FETCH_ERROR": "",
+            "EMPTY": ""
+        },
+        "BANKS_RECEIVERS": {
+            "SEARCH": "",
+            "NOT_FOUND": "",
+            "IBAN": ""
+        },
+        "BIC_INFO": {
+            "SWIFT": {
+                "TITLE": "",
+                "DESCRIPTION": ""
+            },
+            "BIC": {
+                "TITLE": "",
+                "DESCRIPTION": ""
+            }
+        },
+        "IIN_CHECK_ERROR": "",
+        "RESULT_MODAL": {
+            "COMMISSION": "",
+            "CHECK_STATUS": "",
+            "BACK_TO_HOME": ""
+        },
+        "PIPELINES": {
+            "DRAFT_UPDATED": "",
+            "SAVED_TO_DRAFTS": ""
+        },
+        "NOTIFY": {
+            "TITLE": "",
+            "DESCRIPTION": "",
+            "EMAIL": "",
+            "HELPER": ""
+        },
+        "KPP": "",
+        "OKTMO": "",
+        "BASIS": "",
+        "BUDGET": "",
+        "KBE": "",
+        "RESTRICTED_PLACEHOLDER": "",
+        "LIMIT_MODAL": ""
     },
     "SETTINGS": {
         "MAIN": "Main",
@@ -644,7 +818,8 @@
         },
         "REQUISITES": {
             "SELECT_REQUISITES": "Select account",
-            "SELECT_ALL": "Select all"
+            "SELECT_ALL": "Select all",
+            "ERROR": ""
         },
         "FEATURE_REQUEST": {
             "TITLE": "Request function",
@@ -659,6 +834,184 @@
             "NOTIFICATIONS": {
                 "SAVE_REQUEST_ERROR": "Failed to send a request for function"
             }
+        },
+        "PACKAGE": {
+            "NAV": "",
+            "TITLE": {
+                "NOT_FOUND": "",
+                "CHANGE": "",
+                "SUCCESS": ""
+            },
+            "PRICE": {
+                "TITLE": "",
+                "SAVING": "",
+                "MANUAL": "",
+                "CONNECT": "",
+                "CURRENCY": ""
+            },
+            "PROGRESS_BAR": {
+                "LEFT": "",
+                "FROM": "",
+                "NOT_CONNECTED": "",
+                "STANDARD": ""
+            },
+            "TABS": {
+                "NUMBER_OF_PAYMENTS": "",
+                "DEPOSIT_AND_WITHDRAWAL": ""
+            },
+            "RESET": "",
+            "EDIT": "",
+            "CHANGE": "",
+            "BACK_TO_STANDARD": "",
+            "CALCULATE": {
+                "PAYMENTS": "",
+                "DEPOSITS": "",
+                "SALES": "",
+                "PAYMENT_DESCRIPTION": "",
+                "DEPOSITS_DESCRIPTION": "",
+                "MY_PAYMENT_DESCRIPTION": "",
+                "COST": "",
+                "NEXT_WITHDRAW": ""
+            },
+            "FORBIDDEN": "",
+            "SALE_DATA": {
+                "NAME1": "",
+                "TEXT1": "",
+                "NAME2": "",
+                "TEXT2": ""
+            },
+            "FAQ": {
+                "TITLE": "",
+                "DATA": {
+                    "SALES": {
+                        "TITLE": "",
+                        "LISTS": {
+                            "TITLE1": "",
+                            "DESCRIPTION1": "",
+                            "TITLE2": "",
+                            "DESCRIPTION2": "",
+                            "TITLE3": ""
+                        }
+                    },
+                    "DEPOSITS": {
+                        "TITLE": "",
+                        "LISTS": {
+                            "DESCRIPTION": ""
+                        }
+                    },
+                    "PAYMENTS": {
+                        "TITLE": "",
+                        "LISTS": {
+                            "DESCRIPTION": ""
+                        }
+                    },
+                    "MY_PACKAGE": {
+                        "TITLE": "",
+                        "LISTS": {
+                            "DESCRIPTION1": "",
+                            "DESCRIPTION2": "",
+                            "DESCRIPTION3": ""
+                        }
+                    },
+                    "CALCULATE": {
+                        "TITLE": "",
+                        "LISTS": {
+                            "TITLE1": "",
+                            "DESCRIPTION1": "",
+                            "TITLE2": "",
+                            "DESCRIPTION2": ""
+                        }
+                    }
+                }
+            },
+            "MESSAGE": {
+                "CONNECT": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_OK": {
+                        "TEXT": ""
+                    },
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                },
+                "PREPARED": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_OK": {
+                        "TEXT": ""
+                    }
+                },
+                "ERROR": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_OK": {
+                        "TEXT": ""
+                    },
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                },
+                "CHANGE": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_OK": {
+                        "TEXT": ""
+                    },
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                },
+                "CONNECT_STANDART": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_OK": {
+                        "TEXT": ""
+                    },
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                },
+                "PREPARED_STANDART": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_OK": {
+                        "TEXT": ""
+                    }
+                },
+                "PAYMENT": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                },
+                "PAYMENT_LOCKED": {
+                    "TITLE": "",
+                    "DESCRIPTION": "",
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                },
+                "WORKING_DAYS": {
+                    "DESCRIPTION": "",
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                },
+                "SAME_DAY": {
+                    "DESCRIPTION": "",
+                    "BUTTON_CLOSE": {
+                        "TEXT": ""
+                    }
+                }
+            }
+        },
+        "USER_LAST_SESSION": {
+            "TITLE": "Last entrance",
+            "TIMESTAMP": "Date",
+            "DEVICE_INFO": "Device",
+            "IP_ADDRESS": "IP address"
         }
     },
     "EXTRA_SETTINGS": {
@@ -714,13 +1067,13 @@
             "NEW_CODE": "You can get a new code in <strong> {{timerValue}} </strong> seconds.",
             "TAB": "SMS code",
             "TITLE": "SMS confirmation",
-            "SEND_SMS": ""
+            "SEND_SMS": "Send SMS code"
         },
         "OTP": {
             "DESCRIPTION": "Enter code, generated by OTP card",
             "TAB": "OTP code",
             "TITLE": "OTP code",
-            "SEND_OTP": ""
+            "SEND_OTP": "Send OTP code"
         },
         "TIME": {
             "MONTH": "Month",
@@ -738,7 +1091,67 @@
             "TITLE": "Technical problems",
             "DESCRIPTION": "Due to technical reasons addition of the Contract is temporary not working. <br> try later or contact the bank at <a href='tel:7711'>7711</a>"
         },
-        "ACTION_ERROR": "Failed to do action"
+        "ACTION_ERROR": "Failed to do action",
+        "DATE": "",
+        "MORE": "",
+        "MIN_AMOUNT": "",
+        "PERIOD": {
+            "TITLE": "",
+            "FROM": "",
+            "TO": ""
+        },
+        "DATE_FROM": "",
+        "RESTRICTED_PLACEHOLDER": "",
+        "AND": "and",
+        "YES": "",
+        "NO": "",
+        "GO_TO_PAGE": "Go to page",
+        "CURRENCY_DESCRIPTION": {
+            "USD": "US dollar",
+            "EUR": "Euro",
+            "JPY": "Japan yen",
+            "GBP": "Great Britain Pound",
+            "CHF": "Swiss franc",
+            "AUD": "Australian dollar",
+            "CAD": "Canada dollar",
+            "SEK": "Swedish krona",
+            "HKD": "Hong Kong dollar",
+            "NOK": "Norway krone",
+            "NZD": "New Zealand dollar",
+            "MXN": "Mexican peso",
+            "SGD": "Singapore dollar",
+            "KPW": "South Korean won",
+            "ZAR": "ZAR rand",
+            "DKK": "Danish krone",
+            "RUB": "Russian ruble",
+            "ATS": "Australian schilling",
+            "BEF": "Belgian franc",
+            "CZK": "Czech koruna",
+            "NLG": "Dutch guilder",
+            "EEK": "Estonian krone",
+            "FIM": "Finn mark",
+            "FRF": "French franc",
+            "DEM": "Deutsche mark",
+            "GRD": "Greek drachma",
+            "HUF": "Hungarian forint",
+            "IEP": "Irish pound",
+            "ITL": "Italian lire",
+            "LVL": "Latvian lat",
+            "LTL": "Lithuanian lite",
+            "PLN": "Polish zloty",
+            "PTE": "Portuguese escudo",
+            "SKK": "Slovak koruna",
+            "ESP": "Spanish peseta",
+            "UAN": "Ukrainian hryvnia",
+            "KGS": "Kyrgyz som",
+            "GEL": "Georgian lari",
+            "CNY": "Chinese yuan",
+            "TRY": "Turkish lira",
+            "AZN": "Turkish lira",
+            "AED": "AED",
+            "THB": "Thailand bath",
+            "KZT": "Kazakhstani tenge"
+        }
     },
     "FILES": {
         "DEFAULT_ERROR": "Failed to load a file",
@@ -813,7 +1226,8 @@
         },
         "DETAILS": {
             "REPLY": "Answer for a letter",
-            "SIGNERS": "Signatories"
+            "SIGNERS": "Signatories",
+            "TITLE": ""
         },
         "ITEM": {
             "FOR_SIGN": "For signing",
@@ -905,7 +1319,13 @@
                 "REJECTED_FOR_UNSUFFICIENT_SIGNATURES": "Requested signatures are not received before value date",
                 "REJECTED_FOR_EXPIRATION": "Payment was not processed before value date expiry"
             },
-            "REFUND_DETAILS": ""
+            "REFUND_DETAILS": "Refund details",
+            "DATE": {
+                "TODAY": "",
+                "TODAY_TIME": "",
+                "YESTERDAY": "",
+                "YESTERDAY_TIME": ""
+            }
         },
         "EMPLOYEES": {
             "TITLE": "Employees",
@@ -995,6 +1415,12 @@
             "TO_AMOUNT": "Sum of crediting",
             "NUMBER": "Request No.",
             "PURPOSE": "Conversion purpose"
+        },
+        "BALANCES": {
+            "INCOME": "",
+            "OUTCOME": "",
+            "BALANCE_IN": "",
+            "BALANCE_OUT": ""
         }
     },
     "TRANSFERS": {
@@ -1132,7 +1558,23 @@
             "ALL": "All",
             "INCOME": "Credit",
             "OUTCOME": "Debit"
-        }
+        },
+        "COMMISSION": "",
+        "PERIOD_FROM": "",
+        "DATE_FROM": "",
+        "PERIOD_TO": "",
+        "DATE_TO": "",
+        "COMMISSION_OPTIONS": {
+            "WITH_COMISSION": "",
+            "WITHOUT_COMISSION": "",
+            "ONLY_COMISSION": ""
+        },
+        "SORT_OPTIONS": {
+            "DEFAULT": "",
+            "AMOUNT_DESC": "",
+            "AMOUNT_ASC": ""
+        },
+        "FILTER_PAYMENT_TYPES_LIST": "Payment type"
     },
     "CURRENCY_PAYMENT": {
         "NEW_PAYMENT": "Currency payment",
@@ -1276,6 +1718,16 @@
             "BUILDING_NUMBER": "Building No.",
             "STREET": "Street",
             "ADDRESS": "Address"
+        },
+        "MESSAGES": {
+            "COMMISSION": {
+                "WITH_DATE": "",
+                "DEFAULT": ""
+            },
+            "AMOUNT": {
+                "WITH_DATE": "",
+                "DEFAULT": ""
+            }
         }
     },
     "CONVERSION": {
@@ -1373,8 +1825,8 @@
             "SIGN": "Sign",
             "SIGN_AND_SEND": "Sing and send",
             "SENT_FOR_SIGN": "Send to sign",
-            "COMMISSION_ACCOUNT": "",
-            "COMMISSION_HELPER": ""
+            "COMMISSION_ACCOUNT": "Commission withdrawal account",
+            "COMMISSION_HELPER": "Commission will be withdrawn based on your plan"
         },
         "SUCCESS_MODAL": {
             "TITLE": "Sent",
@@ -1590,7 +2042,8 @@
             "AZN": "Turkish lira",
             "AED": "AED",
             "THB": "Thailand bath"
-        }
+        },
+        "FOR": ""
     },
     "TOUR": {
         "MODAL": {
@@ -1954,7 +2407,8 @@
             "BANK": "",
             "BIK": "",
             "MAIN_DEPT": "",
-            "REMAINING_PAYMENTS": ""
+            "REMAINING_PAYMENTS": "",
+            "ACCRUED": ""
         }
     },
     "JMART": {
@@ -2013,5 +2467,206 @@
             },
             "GOTOSTORE": ""
         }
+    },
+    "SESSION": {
+        "ABOUT_TO_EXPIRE": "",
+        "EXPIRED": ""
+    },
+    "AUTHORITIES": {
+        "MAIN": {
+            "TITLE": "",
+            "NAV": {
+                "USERS": "",
+                "ORDER": "",
+                "OTP": ""
+            }
+        },
+        "USERS": {
+            "TABLE": {
+                "USER": "",
+                "TYPE": "",
+                "DURATION": "",
+                "RESTRICTIONS": "",
+                "IIN": "",
+                "PHONE": "",
+                "SERIAL": ""
+            },
+            "AUTHORITY": {
+                "PRIMARY_SIGNATURE": "",
+                "SECONDARY_SIGNATURE": "",
+                "NO_SIGNATURE": ""
+            },
+            "RESTRICTIONS": {
+                "NO_RESTRICTIONS": "",
+                "HAS_RESTRICTIONS": ""
+            },
+            "REGISTERED": {
+                "TITLE": "",
+                "DESCRIPTION": ""
+            },
+            "UNREGISTERED": {
+                "TITLE": "",
+                "DESCRIPTION": ""
+            },
+            "LIMITS_LINK": ""
+        },
+        "PAYMENTS": {
+            "TITLE": "",
+            "DESCRIPTION": "",
+            "SWITCH": {
+                "NO_LIMITS": "",
+                "HAS_LIMIT": ""
+            },
+            "BUTTON": {
+                "SET_LIMIT": "",
+                "CHANGE_LIMIT": ""
+            },
+            "TYPE": {
+                "PENSION": "",
+                "SOCIAL": "",
+                "MEDICAL": "",
+                "TAX": "",
+                "SALARY": "",
+                "IN_BETWEEN": "",
+                "CONVERSION": "",
+                "FOREIGN": ""
+            },
+            "MESSAGES": {
+                "ACCESS_DISABLED": "",
+                "ACCESS_ENABLED": "",
+                "ACCESS_DISABLE_FAILED": "",
+                "ACCESS_ENABLE_FAILED": "",
+                "LIMIT_SET": "",
+                "LIMIT_SET_FAILED": "",
+                "LIMIT_UPDATED": "",
+                "LIMIT_UPDATE_FAILED": "",
+                "LIMIT_DELETED": "",
+                "LIMIT_DELETE_FAILED": ""
+            }
+        },
+        "MODALS": {
+            "CREATE": {
+                "PENSION": "",
+                "SOCIAL": "",
+                "MEDICAL": "",
+                "TAX": "",
+                "SALARY": "",
+                "IN_BETWEEN": "",
+                "CONVERSION": "",
+                "FOREIGN": ""
+            },
+            "EDIT": {
+                "PENSION": "",
+                "SOCIAL": "",
+                "MEDICAL": "",
+                "TAX": "",
+                "SALARY": "",
+                "IN_BETWEEN": "",
+                "CONVERSION": "",
+                "FOREIGN": ""
+            },
+            "DESCRIPTION": "",
+            "LABEL": "",
+            "SUBMIT": "",
+            "RESET": ""
+        },
+        "OTP": {
+            "TABLE": {
+                "SERIAL": "",
+                "USER": ""
+            }
+        }
+    },
+    "DEPOSITS": {
+        "TITLE": "",
+        "ACTIONS": {
+            "WITHDRAWAL": "",
+            "REPLENISHMENT": ""
+        },
+        "STATEMENT": {
+            "TITLE": "",
+            "EMPTY": "",
+            "HEADER": {
+                "INCOME": "",
+                "OUTCOME": "",
+                "BALANCE_IN": "",
+                "BALANCE_OUT": ""
+            },
+            "CREDIT": "",
+            "DEBIT": ""
+        },
+        "INTERESTS": {
+            "TITLE": "",
+            "EMPTY": "",
+            "TRANSACTION": {
+                "TITLE": "",
+                "DESCRIPTION": "",
+                "DATE": {
+                    "TODAY": "",
+                    "YESTERDAY": ""
+                }
+            }
+        },
+        "TERMS": {
+            "TITLE": "",
+            "MAIN": {
+                "NAME": "",
+                "RATE": "",
+                "DOCUMENT_NUMBER": "",
+                "PERIOD": "",
+                "AMOUNT": "",
+                "INTEREST": "",
+                "IBAN": "",
+                "MONTHS": {
+                    "ONE": "",
+                    "FEW": "",
+                    "MANY": ""
+                }
+            },
+            "REPLENISHMENT": {
+                "TITLE": "",
+                "MAX_AMOUNT": ""
+            },
+            "WITHDRAWAL": {
+                "TITLE": "",
+                "PARTIAL_WITHDRAWAL": "",
+                "IRREDUCIBLE_AMOUNT": ""
+            }
+        },
+        "REQUISITES": {
+            "TITLE": "",
+            "COPIED": "",
+            "LIST": {
+                "COMPANY": "",
+                "BIN": "",
+                "KBE": "",
+                "IBAN": "",
+                "BANK": "",
+                "BIC": ""
+            }
+        }
+    },
+    "ADDITIONAL_ACCOUNTS": {
+        "OPEN_ACCOUNT": "",
+        "SIDEBAR_HEADER": "",
+        "MODAL_SIGN_BTN": "",
+        "APPLICATION_HEADER": "",
+        "APPLICATION_ITEM_COMPANY_NAME": "",
+        "APPLICATION_ITEM_COMPANY_CURRENCY": "",
+        "APPLICATION_TERMS": "",
+        "SUCCESS_MODAL": {
+            "HEADER": "",
+            "TEXT": "",
+            "BTN": ""
+        },
+        "FAIL_MODAL": {
+            "HEADER": "",
+            "TEXT": {
+                "4x": "",
+                "5x": ""
+            },
+            "BTN": ""
+        },
+        "IN_PROGRESS": ""
     }
 }
