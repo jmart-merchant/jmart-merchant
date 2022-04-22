@@ -339,12 +339,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DeliveryService": () => (/* binding */ DeliveryService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ 84505);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ 28784);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ 28784);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 86942);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ 79128);
 
 
 
@@ -355,8 +354,6 @@ let DeliveryService = class DeliveryService {
         this.baseUrl = baseUrl;
         this.http = http;
         this.deliveryCity$ = new rxjs__WEBPACK_IMPORTED_MODULE_0__.BehaviorSubject([]);
-        this.cities$ = null;
-        this.citiesAndRegions$ = null;
     }
     getDeliveries() {
         this.http.get(`${this.baseUrl}/gw/shipping/v1/merchant/shipping-rates`).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)((res) => {
@@ -367,55 +364,6 @@ let DeliveryService = class DeliveryService {
             this.deliveryCity$.next(deliveries);
         });
         return this.deliveryCity$;
-    }
-    mapCity({ cityId, title }) {
-        return {
-            cityId,
-            title,
-            type: 3,
-            id: cityId,
-        };
-    }
-    getCities() {
-        if (!this.cities$) {
-            const cities$ = this.http.get(`${this.baseUrl}/gw/dictionary/v1/cities`, {
-                params: {
-                    status: 'A'
-                },
-            }).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)((data) => Object.values(data.data).map(this.mapCity)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.shareReplay)(1));
-            this.cities$ = cities$;
-        }
-        return this.cities$;
-    }
-    getCitiesAndRegion() {
-        if (!this.citiesAndRegions$) {
-            const cities$ = this.http.get(`${this.baseUrl}/gw/dictionary/v1/entities/city,region`, {
-                params: { is_city: 0 },
-            }).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)((data) => {
-                const { city, region } = data.data;
-                return [
-                    { title: 'Вся страна', value: { title: 'Вся страна', cityId: 0, type: 1, id: 0 } },
-                    ...region.map(({ title, id }) => ({
-                        title,
-                        value: {
-                            title,
-                            cityId: id,
-                            type: 2,
-                            id,
-                        }
-                    })),
-                    ...city.map(city => {
-                        const mappedCity = this.mapCity(city);
-                        return {
-                            title: mappedCity.title,
-                            value: mappedCity,
-                        };
-                    }),
-                ];
-            }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.shareReplay)(1));
-            this.citiesAndRegions$ = cities$;
-        }
-        return this.citiesAndRegions$;
     }
     addDelivery(delivery) {
         const url = `${this.baseUrl}/gw/shipping/v1/merchant/shipping-rates`;
@@ -453,11 +401,11 @@ let DeliveryService = class DeliveryService {
     }
 };
 DeliveryService.ctorParameters = () => [
-    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Inject, args: ['JMART_CABINET_BASE_URL',] }] },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpClient }
+    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Inject, args: ['JMART_CABINET_BASE_URL',] }] },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpClient }
 ];
-DeliveryService = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+DeliveryService = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
         providedIn: 'root'
     })
 ], DeliveryService);

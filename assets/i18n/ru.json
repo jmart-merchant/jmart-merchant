@@ -1853,7 +1853,8 @@
         "TITLE": "Пункт выдачи",
         "TYPE": "Тип",
         "TYPE_WAREHOUSE": "Тип склада",
-        "WAREHOUSE": "Склад"
+        "WAREHOUSE": "Склад",
+        "CHOOSE_ON_MAP": "Выбрать адрес на карте"
       },
       "SCHEDULE": {
         "TITLE": "Расписание"
@@ -3217,5 +3218,8 @@
     "THURSDAY": "Четверг",
     "TUESDAY": "Вторник",
     "WEDNESDAY": "Среда"
+  },
+  "YANDEX_MAP": {
+    "CHOOSE_ADDRESS": "Укажите адрес"
   }
 }
