@@ -29,7 +29,6 @@ let InputAutocompleteComponent = class InputAutocompleteComponent extends _share
         this.maskedService = maskedService;
         this.options = [];
         this.name = 'inputAutocomplete';
-        this.class = '';
         this.onSelect = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
         this.inputChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
         this.inputValue = '';
@@ -71,7 +70,6 @@ InputAutocompleteComponent.ctorParameters = () => [
 InputAutocompleteComponent.propDecorators = {
     options: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input }],
     name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input }],
-    class: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input }],
     onSelect: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output }],
     inputChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output }]
 };
@@ -1292,66 +1290,6 @@ NoDataComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 /***/ }),
 
-/***/ 66179:
-/*!************************************************************************************************************!*\
-  !*** ./src/app/jmart-cabinet/modules/settings/components/pickup-points-map/pickup-points-map.component.ts ***!
-  \************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "PickupPointsMapComponent": () => (/* binding */ PickupPointsMapComponent)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _pickup_points_map_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pickup-points-map.component.html?ngResource */ 77682);
-/* harmony import */ var _pickup_points_map_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pickup-points-map.component.scss?ngResource */ 33193);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 52816);
-var PickupPointsMapComponent_1;
-
-
-
-
-
-let PickupPointsMapComponent = PickupPointsMapComponent_1 = class PickupPointsMapComponent {
-    constructor(router) {
-        this.router = router;
-        this.addressFromPosAction = null;
-        this.pickuptPointData = null;
-    }
-    ngOnInit() {
-        this.pickuptPointData = JSON.parse(sessionStorage.getItem(PickupPointsMapComponent_1.sessionStorageKey));
-        const { form: { city: { title: cityTitle }, pickupAddress: { title: pickupAddressTitle } } } = this.pickuptPointData;
-        this.addressFromPosAction = `${cityTitle} ${pickupAddressTitle}`;
-    }
-    applyClickFn(value) {
-        this.pickuptPointData.form.pickupAddress = {
-            title: value.properties.name,
-            value,
-        };
-        sessionStorage.setItem(PickupPointsMapComponent_1.sessionStorageKey, JSON.stringify(this.pickuptPointData));
-        this.navigateToPickupPoints();
-    }
-    navigateToPickupPoints() {
-        this.router.navigate(['jmart-cabinet', 'settings', 'pickup-points']);
-    }
-};
-PickupPointsMapComponent.sessionStorageKey = 'pickup-points-data';
-PickupPointsMapComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__.Router }
-];
-PickupPointsMapComponent = PickupPointsMapComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
-        selector: 'j-pickup-points-map',
-        template: _pickup_points_map_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_pickup_points_map_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], PickupPointsMapComponent);
-
-
-
-/***/ }),
-
 /***/ 61087:
 /*!************************************************************************************************!*\
   !*** ./src/app/jmart-cabinet/modules/settings/components/points-info/points-info.component.ts ***!
@@ -1446,37 +1384,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PointsTableComponent": () => (/* binding */ PointsTableComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _points_table_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./points-table.component.html?ngResource */ 94680);
 /* harmony import */ var _points_table_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./points-table.component.scss?ngResource */ 22430);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _data_pickup_points_mock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/pickup-points-mock */ 4229);
-/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services */ 74211);
-/* harmony import */ var _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/cities-regions.service */ 54466);
-
-
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services */ 74211);
 
 
 
 
 
 let PointsTableComponent = class PointsTableComponent {
-    constructor(modalsService, citiesAndRegions) {
+    constructor(modalsService) {
         this.modalsService = modalsService;
-        this.citiesAndRegions = citiesAndRegions;
-        this.viewPoints = [];
         this.translatePrefix = 'JMART.SETTINGS.PICKUPPOINTS';
     }
     ngOnInit() {
-        this.getCities().subscribe(city => {
-            this.cities = city;
-            this.mapPoints();
-        });
-    }
-    ngOnChanges() {
-        if (this.viewPoints.length > 0) {
-            this.mapPoints();
-        }
     }
     identify(index, item) {
         return item.storeLocationId;
@@ -1487,42 +1410,16 @@ let PointsTableComponent = class PointsTableComponent {
     edit(point) {
         this.modalsService.pickupPointsModal(point);
     }
-    getCities() {
-        return this.citiesAndRegions.getCities();
-    }
-    mapPoints() {
-        this.viewPoints = this.points.map(point => this.mapPointToView(point));
-    }
-    mapPointToView(el) {
-        console.log(el.workingTime);
-        return Object.assign(Object.assign({}, el), { workingTime: el.workingTime
-                ? el.workingTime.map(t => {
-                    return {
-                        days: t.days.map(d => d.day).join(', '),
-                        hour: t.hour.from.localeCompare('00:00') === 0 && t.hour.to.localeCompare('00:00') === 0
-                            ? ' Круглосуточно'
-                            : `${t.hour.from} - ${t.hour.to}`,
-                        // break: t.break.from.localeCompare('00:00') === 0  && t.break.to.localeCompare('00:00') === 0
-                        //   ? ' без перерыва'
-                        //   : `перерыв ${t.break.from} - ${t.break.to}`,
-                    };
-                })
-                : '', type: _data_pickup_points_mock__WEBPACK_IMPORTED_MODULE_2__.pointsTypes.find(p => {
-                if (p.value === el.type)
-                    return p.label;
-            }), isMain: el.isMain === 'Y' ? 'Основной склад по городу' : '', isMainInCity: el.isMainInCity === 'Y' ? 'Основной склад в Казахстане' : '', city: this.cities.find(city => city.cityId === el.cityId) });
-    }
 };
 PointsTableComponent.ctorParameters = () => [
-    { type: _services__WEBPACK_IMPORTED_MODULE_3__.ModalsService },
-    { type: _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_4__.CitiesAndRegionsService }
+    { type: _services__WEBPACK_IMPORTED_MODULE_2__.ModalsService }
 ];
 PointsTableComponent.propDecorators = {
-    points: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input }],
-    search: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input }]
+    points: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }],
+    search: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
 };
-PointsTableComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+PointsTableComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
         selector: 'j-points-table',
         template: _points_table_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_points_table_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -1594,7 +1491,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _select_city_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./select-city.component.scss?ngResource */ 59318);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ 90587);
-/* harmony import */ var _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/cities-regions.service */ 54466);
+/* harmony import */ var _services_delivery_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/delivery.service */ 69942);
 
 
 
@@ -1604,8 +1501,8 @@ __webpack_require__.r(__webpack_exports__);
 let SelectCityComponent = class SelectCityComponent {
     constructor(
     // probably this service would be statefull for the case of memoizing select city component
-    citiesAndRegions) {
-        this.citiesAndRegions = citiesAndRegions;
+    deliveryService) {
+        this.deliveryService = deliveryService;
         this.label = '';
         this.error = null;
         this.class = '';
@@ -1613,7 +1510,7 @@ let SelectCityComponent = class SelectCityComponent {
         this.select = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
     }
     ngOnInit() {
-        this.citiesAndRegions.getCities().subscribe(cities => {
+        this.deliveryService.getCities().subscribe(cities => {
             this.cities = cities;
             this.citiesNames = this.cities.map(({ title }) => title);
         });
@@ -1624,7 +1521,7 @@ let SelectCityComponent = class SelectCityComponent {
     }
 };
 SelectCityComponent.ctorParameters = () => [
-    { type: _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_2__.CitiesAndRegionsService }
+    { type: _services_delivery_service__WEBPACK_IMPORTED_MODULE_2__.DeliveryService }
 ];
 SelectCityComponent.propDecorators = {
     label: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input }],
@@ -1885,7 +1782,7 @@ const SETTINGS_CONTAINERS = [
     _pickup_points_pickup_points_component__WEBPACK_IMPORTED_MODULE_1__.PickupPointsComponent,
     _delivery_delivery_component__WEBPACK_IMPORTED_MODULE_2__.DeliveryComponent,
     _schedule_schedule_component__WEBPACK_IMPORTED_MODULE_3__.ScheduleComponent,
-    _users_users_component__WEBPACK_IMPORTED_MODULE_4__.UsersComponent,
+    _users_users_component__WEBPACK_IMPORTED_MODULE_4__.UsersComponent
 ];
 
 
@@ -1942,21 +1839,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PickupPointsComponent": () => (/* binding */ PickupPointsComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _pickup_points_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pickup-points.component.html?ngResource */ 79999);
 /* harmony import */ var _pickup_points_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pickup-points.component.scss?ngResource */ 39520);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 90587);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ 90587);
 /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services */ 74211);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 32425);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 19193);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 32425);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 19193);
 /* harmony import */ var _data_pickup_points_mock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/pickup-points-mock */ 4229);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 25722);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 86942);
-/* harmony import */ var _components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/pickup-points-map/pickup-points-map.component */ 66179);
-/* harmony import */ var _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/cities-regions.service */ 54466);
-
-
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 25722);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 86942);
 
 
 
@@ -1967,15 +1860,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let PickupPointsComponent = class PickupPointsComponent {
-    constructor(modalsService, pointsService, citiesAndRegions) {
+    constructor(modalsService, pointsService) {
         this.modalsService = modalsService;
         this.pointsService = pointsService;
-        this.citiesAndRegions = citiesAndRegions;
-        this.search = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormControl('');
+        this.search = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('');
         this.translatePrefix = 'JMART.SETTINGS.PICKUPPOINTS';
         this.isLoading = true;
-        this.pSub = new rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription();
-        this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormGroup({ status: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormControl('all') });
+        this.pSub = new rxjs__WEBPACK_IMPORTED_MODULE_5__.Subscription();
+        this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormGroup({ status: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('all') });
         this.sSub = this.pointsService
             .getStatuses()
             .subscribe((statuses) => {
@@ -1985,12 +1877,8 @@ let PickupPointsComponent = class PickupPointsComponent {
     ngOnInit() {
         this.getCities();
         const points$ = this.pointsService.getPoints();
-        // case we returned from pickup points map
-        if (sessionStorage.getItem(_components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_4__.PickupPointsMapComponent.sessionStorageKey)) {
-            this.addPickupPoints();
-        }
-        this.pSub.add((0,rxjs__WEBPACK_IMPORTED_MODULE_8__.combineLatest)([points$, this.search.valueChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.startWith)('')), this.form.get('status').valueChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.startWith)('all'))])
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.map)(([points, search, status]) => {
+        this.pSub.add((0,rxjs__WEBPACK_IMPORTED_MODULE_6__.combineLatest)([points$, this.search.valueChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.startWith)('')), this.form.get('status').valueChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.startWith)('all'))])
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.map)(([points, search, status]) => {
             let filteredData;
             if (status !== 'all') {
                 filteredData = points.filter((point) => point.type === status);
@@ -2033,15 +1921,13 @@ let PickupPointsComponent = class PickupPointsComponent {
         }));
     }
     handleAdd(id, point) {
-        // const modifiedPoint = this.mapPoint(point);
-        console.log({ point });
-        this.points = [point, ...this.points];
-        // this.points.push(modifiedPoint);
+        const modifiedPoint = this.mapPoint(point);
+        this.points.push(modifiedPoint);
     }
     handleEdit(id, point) {
         const index = this.points.findIndex(({ storeLocationId }) => id === storeLocationId);
-        // const modifiedPoint = this.mapPoint(point);
-        this.points[index] = point;
+        const modifiedPoint = this.mapPoint(point);
+        this.points[index] = modifiedPoint;
     }
     handleDelete(id, _) {
         const index = this.points.findIndex(({ storeLocationId }) => id === storeLocationId);
@@ -2070,18 +1956,35 @@ let PickupPointsComponent = class PickupPointsComponent {
         return `${this.translatePrefix}.${key}`;
     }
     getCities() {
-        this.citiesAndRegions.getCities().subscribe(city => {
+        this.pointsService.getCities().subscribe(city => {
             this.cities = city;
         });
+    }
+    mapPoint(el) {
+        return Object.assign(Object.assign({}, el), { workingTime: el.workingTime
+                ? el.workingTime.map(t => {
+                    return {
+                        days: t.days.map(d => d.day).join(', '),
+                        hour: t.hour.from.localeCompare('00:00') === 0 && t.hour.to.localeCompare('00:00') === 0
+                            ? ' Круглосуточно'
+                            : `${t.hour.from} - ${t.hour.to}`,
+                        break: t.break.from.localeCompare('00:00') === 0 && t.break.to.localeCompare('00:00') === 0
+                            ? ' без перерыва'
+                            : `перерыв ${t.break.from} - ${t.break.to}`,
+                    };
+                })
+                : '', type: _data_pickup_points_mock__WEBPACK_IMPORTED_MODULE_3__.pointsTypes.find(p => {
+                if (p.value === el.type)
+                    return p.label;
+            }), isMain: el.isMain === 'Y' ? 'Основной склад по городу' : '', isMainInCity: el.isMainInCity === 'Y' ? 'Основной склад в Казахстане' : '', city: this.cities.find(el => el.id === el.cityId) });
     }
 };
 PickupPointsComponent.ctorParameters = () => [
     { type: _services__WEBPACK_IMPORTED_MODULE_2__.ModalsService },
-    { type: _services__WEBPACK_IMPORTED_MODULE_2__.PickupPointsService },
-    { type: _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_5__.CitiesAndRegionsService }
+    { type: _services__WEBPACK_IMPORTED_MODULE_2__.PickupPointsService }
 ];
-PickupPointsComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Component)({
+PickupPointsComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
         selector: 'j-pickup-points',
         template: _pickup_points_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_pickup_points_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -2623,22 +2526,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "CreateDeliveryModalComponent": () => (/* binding */ CreateDeliveryModalComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _create_delivery_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create-delivery-modal.component.html?ngResource */ 34272);
 /* harmony import */ var _create_delivery_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-delivery-modal.component.scss?ngResource */ 45072);
 /* harmony import */ var _analytics_services_manager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @analytics/services/manager */ 46155);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 90587);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 52816);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 3191);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 32425);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 80823);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 90587);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 52816);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 3191);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 32425);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 80823);
 /* harmony import */ var _components_j_tole_work_regime_classes_working_time_mapper_class__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/j-tole-work-regime/classes/working-time-mapper.class */ 34327);
 /* harmony import */ var _data_delivery_mock__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/delivery-mock */ 89607);
-/* harmony import */ var _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/cities-regions.service */ 54466);
-/* harmony import */ var _services_delivery_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/delivery.service */ 69942);
-/* harmony import */ var _utils_getRuDays__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/getRuDays */ 49134);
-
+/* harmony import */ var _services_delivery_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/delivery.service */ 69942);
+/* harmony import */ var _utils_getRuDays__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/getRuDays */ 49134);
 
 
 
@@ -2654,20 +2555,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let CreateDeliveryModalComponent = class CreateDeliveryModalComponent {
-    constructor(modal, deliveryService, fb, router, analytics, citiesAndRegionsService) {
+    constructor(modal, deliveryService, fb, router, analytics) {
         this.modal = modal;
         this.deliveryService = deliveryService;
         this.fb = fb;
         this.router = router;
         this.analytics = analytics;
-        this.citiesAndRegionsService = citiesAndRegionsService;
         this.modalSmParams = {
             backdropClass: 'backdrop_light',
             windowClass: 'modal_light modal_dictionary',
             centered: true,
         };
         this.editDelivery = null;
-        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subscription();
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription();
         this.isSubmitted = false;
         this.isCancel = false;
         this.deliveryModes = _data_delivery_mock__WEBPACK_IMPORTED_MODULE_4__.deliveryModes;
@@ -2679,21 +2579,21 @@ let CreateDeliveryModalComponent = class CreateDeliveryModalComponent {
         this.accidentTimeToggle = false;
         this.citiesAndRegionsCache = [];
         this.citiesAndRegions = {};
-        this.getEstimatedDaysSuffix = _utils_getRuDays__WEBPACK_IMPORTED_MODULE_7__.getRuDays;
+        this.getEstimatedDaysSuffix = _utils_getRuDays__WEBPACK_IMPORTED_MODULE_6__.getRuDays;
     }
     ngOnInit() {
         this.form = this.fb.group({
-            isJpost: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl(false, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required),
-            direction: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroup({
-                from: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl({ cityName: '' }, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required),
+            isJpost: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl(false, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required),
+            direction: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroup({
+                from: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl({ cityName: '' }, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required),
             }),
-            prices: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormArray([]),
-            deliveryEstimatedDay: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required),
+            prices: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormArray([]),
+            deliveryEstimatedDay: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required),
         });
         this.isInterCity
             ? this.onInterCityFormEstablish()
             : this.onCityFormEstablish();
-        this.citiesAndRegionsService
+        this.deliveryService
             .getCitiesAndRegion()
             .subscribe((citiesAndRegions) => {
             this.citiesAndRegionsCache = citiesAndRegions;
@@ -2720,15 +2620,15 @@ let CreateDeliveryModalComponent = class CreateDeliveryModalComponent {
     }
     onInterCityFormEstablish() {
         const directions = this.form.get('direction');
-        directions.addControl('to', new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl({ cityName: '' }));
+        directions.addControl('to', new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl({ cityName: '' }));
         directions.setValue({
             from: { title: '', value: null },
             to: { title: '', value: null },
         });
         Object.keys(directions.controls).forEach((fieldName) => {
             const field = directions.get(fieldName);
-            const sub = field.valueChanges
-                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.debounceTime)(200))
+            field.valueChanges
+                .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.debounceTime)(200))
                 .subscribe((option) => {
                 if (!option.value) {
                     this.citiesAndRegions[fieldName] =
@@ -2742,20 +2642,19 @@ let CreateDeliveryModalComponent = class CreateDeliveryModalComponent {
                 }
                 this.excludeSelectedCityDirections();
             });
-            this.subscription.add(sub);
         });
     }
     onCityFormEstablish() {
         this.form.get('deliveryEstimatedDay').disable();
-        this.form.addControl('isToday', new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl(true, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required));
-        this.form.addControl('workingTime', new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroup({
-            isDayAndNight: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required),
-            hour: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroup({
-                from: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required),
-                to: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required),
+        this.form.addControl('isToday', new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl(true, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required));
+        this.form.addControl('workingTime', new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroup({
+            isDayAndNight: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required),
+            hour: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroup({
+                from: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required),
+                to: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required),
             }),
         }));
-        this.form.addControl('estimatedTime', new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl('1300', _angular_forms__WEBPACK_IMPORTED_MODULE_9__.Validators.required));
+        this.form.addControl('estimatedTime', new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl('1300', _angular_forms__WEBPACK_IMPORTED_MODULE_8__.Validators.required));
         const workingTimeSub = this.form
             .get('workingTime.isDayAndNight')
             .valueChanges.subscribe((value) => {
@@ -2810,10 +2709,10 @@ let CreateDeliveryModalComponent = class CreateDeliveryModalComponent {
     addPrice(canBeFree = false) {
         const isDeliveryTypeCheckbox = canBeFree ? '0' : '';
         const prices = this.form.get('prices');
-        const price = new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroup({
-            from: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl(''),
-            to: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl(isDeliveryTypeCheckbox),
-            deliveryPrice: new _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControl(isDeliveryTypeCheckbox),
+        const price = new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroup({
+            from: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl(''),
+            to: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl(isDeliveryTypeCheckbox),
+            deliveryPrice: new _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControl(isDeliveryTypeCheckbox),
         });
         let index;
         if (prices.length <= 1) {
@@ -2943,18 +2842,17 @@ let CreateDeliveryModalComponent = class CreateDeliveryModalComponent {
     }
 };
 CreateDeliveryModalComponent.ctorParameters = () => [
-    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbActiveModal },
-    { type: _services_delivery_service__WEBPACK_IMPORTED_MODULE_6__.DeliveryService },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_12__.Router },
-    { type: _analytics_services_manager__WEBPACK_IMPORTED_MODULE_2__.AnalyticsManagerAbstract },
-    { type: _services_cities_regions_service__WEBPACK_IMPORTED_MODULE_5__.CitiesAndRegionsService }
+    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbActiveModal },
+    { type: _services_delivery_service__WEBPACK_IMPORTED_MODULE_5__.DeliveryService },
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormBuilder },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_11__.Router },
+    { type: _analytics_services_manager__WEBPACK_IMPORTED_MODULE_2__.AnalyticsManagerAbstract }
 ];
 CreateDeliveryModalComponent.propDecorators = {
-    editDelivery: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_13__.Input }]
+    editDelivery: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_12__.Input }]
 };
-CreateDeliveryModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_13__.Component)({
+CreateDeliveryModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_13__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Component)({
         selector: 'j-create-deivery-modal',
         template: _create_delivery_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_create_delivery_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -2975,16 +2873,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DeliveryModalComponent": () => (/* binding */ DeliveryModalComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _delivery_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./delivery-modal.component.html?ngResource */ 92805);
 /* harmony import */ var _delivery_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./delivery-modal.component.scss?ngResource */ 63089);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 3191);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 90587);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 3191);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ 90587);
 /* harmony import */ var _jmart_cabinet_modules_settings_data_delivery_mock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @jmart-cabinet/modules/settings/data/delivery-mock */ 89607);
 /* harmony import */ var _jmart_cabinet_modules_settings_services_delivery_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @jmart-cabinet/modules/settings/services/delivery.service */ 69942);
-/* harmony import */ var _jmart_cabinet_modules_settings_services_cities_regions_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @jmart-cabinet/modules/settings/services/cities-regions.service */ 54466);
-
 
 
 
@@ -2994,12 +2890,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let DeliveryModalComponent = class DeliveryModalComponent {
-    constructor(ngbActiveModal, ngbModalService, fb, deliveryService, citiesAndRegions) {
+    constructor(ngbActiveModal, ngbModalService, fb, deliveryService) {
         this.ngbActiveModal = ngbActiveModal;
         this.ngbModalService = ngbModalService;
         this.fb = fb;
         this.deliveryService = deliveryService;
-        this.citiesAndRegions = citiesAndRegions;
         this.isSubmitted = false;
         this.isCancel = false;
         this.translatePrefix = 'JMART.SETTINGS.DELIVERY';
@@ -3011,9 +2906,9 @@ let DeliveryModalComponent = class DeliveryModalComponent {
         this.getCities();
         /* Form initialization */
         this.form = this.fb.group({
-            city: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_5__.Validators.required),
-            deliveryMode: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormControl('jpost', _angular_forms__WEBPACK_IMPORTED_MODULE_5__.Validators.required),
-            estimatedType: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormControl('today', _angular_forms__WEBPACK_IMPORTED_MODULE_5__.Validators.required),
+            city: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required),
+            deliveryMode: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('jpost', _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required),
+            estimatedType: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('today', _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required),
         });
     }
     save() { }
@@ -3025,7 +2920,7 @@ let DeliveryModalComponent = class DeliveryModalComponent {
         return this.editedIndex === -1 ? this.mapTranslate('ADD') : this.mapTranslate('EDIT');
     }
     getCities() {
-        const cities = this.citiesAndRegions.getCities();
+        const cities = this.deliveryService.getCities();
         // this.cities = cities;
         // this.cityNames = cities.map((city) => city.cityName);
     }
@@ -3040,17 +2935,16 @@ let DeliveryModalComponent = class DeliveryModalComponent {
     }
 };
 DeliveryModalComponent.ctorParameters = () => [
-    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__.NgbActiveModal },
-    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__.NgbModal },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormBuilder },
-    { type: _jmart_cabinet_modules_settings_services_delivery_service__WEBPACK_IMPORTED_MODULE_3__.DeliveryService },
-    { type: _jmart_cabinet_modules_settings_services_cities_regions_service__WEBPACK_IMPORTED_MODULE_4__.CitiesAndRegionsService }
+    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__.NgbActiveModal },
+    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__.NgbModal },
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormBuilder },
+    { type: _jmart_cabinet_modules_settings_services_delivery_service__WEBPACK_IMPORTED_MODULE_3__.DeliveryService }
 ];
 DeliveryModalComponent.propDecorators = {
-    mode: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.Input }]
+    mode: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input }]
 };
-DeliveryModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+DeliveryModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'j-delivery-modal',
         template: _delivery_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_delivery_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -3646,28 +3540,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PickupPointsModalComponent": () => (/* binding */ PickupPointsModalComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 34929);
 /* harmony import */ var _pickup_points_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pickup-points-modal.component.html?ngResource */ 20245);
 /* harmony import */ var _pickup_points_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pickup-points-modal.component.scss?ngResource */ 84780);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 3191);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ 90587);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 3191);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 90587);
 /* harmony import */ var _data_pickup_points_mock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../data/pickup-points-mock */ 4229);
 /* harmony import */ var _services_pickup_points_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/pickup-points.service */ 97952);
 /* harmony import */ var _company_company_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @company/company.service */ 26164);
 /* harmony import */ var _points_remove_modal_points_remove_modal_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../points-remove-modal/points-remove-modal.component */ 24187);
 /* harmony import */ var _jmart_cabinet_modules_settings_components_j_tole_work_regime_classes_working_time_mapper_class__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @jmart-cabinet/modules/settings/components/j-tole-work-regime/classes/working-time-mapper.class */ 34327);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ 32425);
-/* harmony import */ var _jmart_cabinet_modules_settings_services_ymaps_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @jmart-cabinet/modules/settings/services/ymaps.service */ 78225);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 80823);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ 59151);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 52816);
-/* harmony import */ var _jmart_cabinet_modules_settings_components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @jmart-cabinet/modules/settings/components/pickup-points-map/pickup-points-map.component */ 66179);
-
-
-
-
-
 
 
 
@@ -3680,22 +3563,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let PickupPointsModalComponent = class PickupPointsModalComponent {
-    constructor(ngbActiveModal, ngbModalService, fb, pointService, companyService, ymapsService, router) {
+    constructor(ngbActiveModal, ngbModalService, fb, pointService, companyService) {
         this.ngbActiveModal = ngbActiveModal;
         this.ngbModalService = ngbModalService;
         this.fb = fb;
         this.pointService = pointService;
         this.companyService = companyService;
-        this.ymapsService = ymapsService;
-        this.router = router;
         this.isSubmitted = false;
         this.isCancel = false;
         this.isSave = false;
-        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_9__.Subscription();
         this.translatePrefix = 'JMART.SETTINGS.PICKUPPOINTS';
         this.typePointList = _data_pickup_points_mock__WEBPACK_IMPORTED_MODULE_2__.pointsTypes;
         this.editedIndex = -1;
-        this.addressOptions = [];
         this.modalSmParams = {
             backdropClass: 'backdrop_light',
             windowClass: 'modal_light modal_dictionary',
@@ -3704,45 +3583,33 @@ let PickupPointsModalComponent = class PickupPointsModalComponent {
         this.workingTime = new _jmart_cabinet_modules_settings_components_j_tole_work_regime_classes_working_time_mapper_class__WEBPACK_IMPORTED_MODULE_6__.WorkingTimeMapper();
         /* Form initialization */
         this.form = this.fb.group({
-            status: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl('A', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required),
-            companyStoreId: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required),
-            city: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl({ cityName: '', title: '' }, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required),
-            pickupAddress: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl({
-                value: { title: '', value: null, },
-                disabled: true
-            }, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required),
-            iban: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(''),
-            type: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl('shop', _angular_forms__WEBPACK_IMPORTED_MODULE_10__.Validators.required),
-            isMain: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl(''),
-            isMainInCity: new _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControl('')
+            status: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl('A', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required),
+            companyStoreId: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required),
+            city: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl('', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required),
+            pickupAddress: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl({ value: '', disabled: true }, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required),
+            iban: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl(''),
+            type: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl('shop', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required),
+            isMain: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl(''),
+            isMainInCity: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormControl('')
+        });
+        this.form.get('city').valueChanges.subscribe(val => {
+            if (val)
+                this.form.get('pickupAddress').enable();
         });
     }
     ngOnInit() {
         /*Form draft pre-Save*/
         const draft = sessionStorage.getItem('form');
-        const citySub = this.form.get('city').valueChanges.subscribe(val => {
-            if (val)
-                this.form.get('pickupAddress').enable();
-            citySub.unsubscribe();
-        });
-        // case we returned from pickup points map
-        const pickupPointsData = JSON.parse(sessionStorage.getItem(_jmart_cabinet_modules_settings_components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_8__.PickupPointsMapComponent.sessionStorageKey));
-        if (pickupPointsData) {
-            this.workingTime = new _jmart_cabinet_modules_settings_components_j_tole_work_regime_classes_working_time_mapper_class__WEBPACK_IMPORTED_MODULE_6__.WorkingTimeMapper(pickupPointsData.workingTime);
-            this.form.patchValue(pickupPointsData.form);
-            sessionStorage.removeItem(_jmart_cabinet_modules_settings_components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_8__.PickupPointsMapComponent.sessionStorageKey);
-        }
         /* Filling in a form */
         if (this.point) {
             this.editedIndex = 1;
             const form = this.point;
-            this.workingTime = new _jmart_cabinet_modules_settings_components_j_tole_work_regime_classes_working_time_mapper_class__WEBPACK_IMPORTED_MODULE_6__.WorkingTimeMapper(this.point.workingTime);
             this.form.patchValue({
                 companyStoreId: form.companyStoreId,
                 status: form.status,
                 name: form.name,
-                city: form.city,
+                city: form.city.name,
                 pickupAddress: form.pickupAddress,
                 iban: form.iban,
                 type: form.type.value,
@@ -3750,38 +3617,22 @@ let PickupPointsModalComponent = class PickupPointsModalComponent {
                 isMainInCity: form.isMainInCity,
             });
         }
-        // else {
-        //   if(draft) {
-        //     const form = JSON.parse(draft);
-        //     this.form.patchValue({
-        //       companyStoreId: form.companyStoreId,
-        //       status: form.status,
-        //       name: form.name,
-        //       city: form.city.name || { cityName: '' },
-        //       pickupAddress: form.pickupAddress,
-        //       iban: form.iban,
-        //       type: form.type,
-        //       isMain: form.isMain,
-        //       isMainInCity: form.isMainInCity,
-        //     });
-        //   }
-        // }
-        const addressSub = this.form.get('pickupAddress')
-            .valueChanges
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.debounceTime)(400), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.filter)(({ title }) => title.trim().length > 0))
-            .subscribe(({ title }) => {
-            const city = this.form.get('city').value.title;
-            const query = `${city} ${title}`;
-            this.ymapsService.getAddress(query).subscribe(res => {
-                this.addressOptions = res.map((value) => {
-                    return {
-                        title: value.properties.name,
-                        value
-                    };
+        else {
+            if (draft) {
+                const form = JSON.parse(draft);
+                this.form.patchValue({
+                    companyStoreId: form.companyStoreId,
+                    status: form.status,
+                    name: form.name,
+                    city: form.city.name,
+                    pickupAddress: form.pickupAddress,
+                    iban: form.iban,
+                    type: form.type,
+                    isMain: form.isMain,
+                    isMainInCity: form.isMainInCity,
                 });
-            });
-        });
-        this.subscription.add(addressSub);
+            }
+        }
     }
     ngOnDestroy() {
         if (this.editedIndex === -1) {
@@ -3792,7 +3643,8 @@ let PickupPointsModalComponent = class PickupPointsModalComponent {
         }
     }
     test() {
-        console.log(this.form.get('pickupAddress').value);
+        console.log('asd');
+        console.log(this.form.get('city').value);
     }
     save() {
         this.isSave = true;
@@ -3800,16 +3652,15 @@ let PickupPointsModalComponent = class PickupPointsModalComponent {
         if (this.form.invalid) {
             return;
         }
-        const { value: { geometry: { coordinates: [latitude, longitude] }, }, title: pickupAddressTitle } = this.form.value.pickupAddress;
         if (this.editedIndex === -1) {
             const point = {
                 status: 'A',
                 companyStoreId: this.form.value.companyStoreId,
                 name: this.form.value.name,
                 cityId: this.form.get('city').value.cityId,
-                pickupAddress: pickupAddressTitle,
-                latitude,
-                longitude,
+                pickupAddress: this.form.value.pickupAddress,
+                latitude: 43.3444,
+                longitude: 23.445,
                 // workingTime: null,
                 type: this.form.value.type,
                 isMain: this.form.value.isMain ? 'Y' : 'N',
@@ -3817,15 +3668,11 @@ let PickupPointsModalComponent = class PickupPointsModalComponent {
                 iban: this.form.value.iban,
                 workingTime: this.workingTime.getExternalState(),
             };
-            // this.pointService.addPoint(point).subscribe((res) => {
-            //   this.pointService.onPointsChanged.next({
-            //     action: 'add',
-            //     point: res.data
-            //   });
-            // });
-            this.pointService.onPointsChanged.next({
-                action: 'add',
-                point,
+            this.pointService.addPoint(point).subscribe((res) => {
+                this.pointService.onPointsChanged.next({
+                    action: 'add',
+                    point: res.data
+                });
             });
         }
         else {
@@ -3844,29 +3691,15 @@ let PickupPointsModalComponent = class PickupPointsModalComponent {
                 iban: this.form.value.iban ? this.form.value.iban : '',
                 workingTime: this.workingTime.getExternalState(),
             };
-            // this.pointService.edit(point, this.point.storeLocationId).subscribe((res) => {
-            //   this.pointService.onPointsChanged.next({
-            //     id: this.point.storeLocationId,
-            //     action: 'edit',
-            //     point: res.data
-            //   })
-            // });
-            this.pointService.onPointsChanged.next({
-                id: this.point.storeLocationId,
-                action: 'edit',
-                point,
+            this.pointService.edit(point, this.point.storeLocationId).subscribe((res) => {
+                this.pointService.onPointsChanged.next({
+                    id: this.point.storeLocationId,
+                    action: 'edit',
+                    point: res.data
+                });
             });
         }
         this.cancel();
-    }
-    chooseOnMap() {
-        const formCopy = JSON.stringify({
-            workingTime: this.workingTime.getExternalState(),
-            form: this.form.value,
-        });
-        sessionStorage.setItem(_jmart_cabinet_modules_settings_components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_8__.PickupPointsMapComponent.sessionStorageKey, formCopy);
-        this.cancel();
-        this.router.navigate(['jmart-cabinet', 'settings', 'no-layout', 'select-address']);
     }
     remove() {
         const modalRef = this.ngbModalService.open(_points_remove_modal_points_remove_modal_component__WEBPACK_IMPORTED_MODULE_5__.PointsRemoveModalComponent, this.modalSmParams);
@@ -3910,19 +3743,17 @@ let PickupPointsModalComponent = class PickupPointsModalComponent {
     }
 };
 PickupPointsModalComponent.ctorParameters = () => [
-    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbActiveModal },
-    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbModal },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder },
+    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__.NgbActiveModal },
+    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__.NgbModal },
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormBuilder },
     { type: _services_pickup_points_service__WEBPACK_IMPORTED_MODULE_3__.PickupPointsService },
-    { type: _company_company_service__WEBPACK_IMPORTED_MODULE_4__.CompanyService },
-    { type: _jmart_cabinet_modules_settings_services_ymaps_service__WEBPACK_IMPORTED_MODULE_7__.YMapsService },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_14__.Router }
+    { type: _company_company_service__WEBPACK_IMPORTED_MODULE_4__.CompanyService }
 ];
 PickupPointsModalComponent.propDecorators = {
-    point: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_15__.Input }]
+    point: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__.Input }]
 };
-PickupPointsModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_16__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_15__.Component)({
+PickupPointsModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Component)({
         selector: 'j-pickup-points-modal',
         template: _pickup_points_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_pickup_points_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -4242,96 +4073,6 @@ NumberSpaceFormatPipe = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
 
 /***/ }),
 
-/***/ 54466:
-/*!***********************************************************************************!*\
-  !*** ./src/app/jmart-cabinet/modules/settings/services/cities-regions.service.ts ***!
-  \***********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "CitiesAndRegionsService": () => (/* binding */ CitiesAndRegionsService)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ 28784);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ 86942);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 79128);
-
-
-
-
-let CitiesAndRegionsService = class CitiesAndRegionsService {
-    constructor(http, baseUrl) {
-        this.http = http;
-        this.baseUrl = baseUrl;
-        this.cities$ = null;
-        this.citiesAndRegions$ = null;
-    }
-    getCities() {
-        if (!this.cities$) {
-            const cities$ = this.http.get(`${this.baseUrl}/gw/dictionary/v1/cities`, {
-                params: {
-                    status: 'A'
-                },
-            }).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_0__.map)((data) => Object.values(data.data).map(this.mapCity)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.shareReplay)(1));
-            this.cities$ = cities$;
-        }
-        return this.cities$;
-    }
-    getCitiesAndRegion() {
-        if (!this.citiesAndRegions$) {
-            const cities$ = this.http.get(`${this.baseUrl}/gw/dictionary/v1/entities/city,region`, {
-                params: { is_city: 0 },
-            }).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_0__.map)((data) => {
-                const { city, region } = data.data;
-                return [
-                    { title: 'Вся страна', value: { title: 'Вся страна', cityId: 0, type: 1, id: 0 } },
-                    ...region.map(({ title, id }) => ({
-                        title,
-                        value: {
-                            title,
-                            cityId: id,
-                            type: 2,
-                            id,
-                        }
-                    })),
-                    ...city.map(city => {
-                        const mappedCity = this.mapCity(city);
-                        return {
-                            title: mappedCity.title,
-                            value: mappedCity,
-                        };
-                    }),
-                ];
-            }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.shareReplay)(1));
-            this.citiesAndRegions$ = cities$;
-        }
-        return this.citiesAndRegions$;
-    }
-    mapCity({ cityId, title }) {
-        return {
-            cityId,
-            title,
-            type: 3,
-            id: cityId,
-        };
-    }
-};
-CitiesAndRegionsService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient },
-    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Inject, args: ['JMART_CABINET_BASE_URL',] }] }
-];
-CitiesAndRegionsService = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
-        providedIn: 'root',
-    })
-], CitiesAndRegionsService);
-
-
-
-/***/ }),
-
 /***/ 74211:
 /*!******************************************************************!*\
   !*** ./src/app/jmart-cabinet/modules/settings/services/index.ts ***!
@@ -4598,7 +4339,7 @@ let PickupPointsService = class PickupPointsService {
         const url = `${this.baseUrl}/gw/company/v2/my/store-location`;
         return this.http.get(url)
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)(res => {
-            return res.data.data.slice(0, 1);
+            return res.data.data;
         }));
     }
     addPoint(point) {
@@ -4629,55 +4370,6 @@ PickupPointsService = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
 
 /***/ }),
 
-/***/ 78225:
-/*!**************************************************************************!*\
-  !*** ./src/app/jmart-cabinet/modules/settings/services/ymaps.service.ts ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "YMapsService": () => (/* binding */ YMapsService)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 28784);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _shared_components_yandex_maps_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shared/components/yandex-maps/config */ 23159);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ 86942);
-
-
-
-
-
-let YMapsService = class YMapsService {
-    constructor(http) {
-        this.http = http;
-    }
-    getAddress(value, slice = 5) {
-        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpParams()
-            .set('text', value)
-            .set('lang', _shared_components_yandex_maps_config__WEBPACK_IMPORTED_MODULE_0__.MAP_CONFIG.lang)
-            .set('apikey', _shared_components_yandex_maps_config__WEBPACK_IMPORTED_MODULE_0__.SEARCH_API_KEY);
-        return this.http.get(_shared_components_yandex_maps_config__WEBPACK_IMPORTED_MODULE_0__.SEARCH_BASE_URL, {
-            params
-        }).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.map)((response) => {
-            return response.features.slice(0, slice);
-        }));
-    }
-};
-YMapsService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient }
-];
-YMapsService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
-        providedIn: 'root',
-    })
-], YMapsService);
-
-
-
-/***/ }),
-
 /***/ 94291:
 /*!***************************************************************************!*\
   !*** ./src/app/jmart-cabinet/modules/settings/settings-routing.module.ts ***!
@@ -4688,18 +4380,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SettingsRoutingModule": () => (/* binding */ SettingsRoutingModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 52816);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 52816);
 /* harmony import */ var _settings_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./settings.component */ 63180);
 /* harmony import */ var _containers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./containers */ 89866);
 /* harmony import */ var _models_delivery_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./models/delivery.model */ 48873);
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components */ 10813);
 /* harmony import */ var _jmart_cabinet_components_jmart_cabinet_layout_jmart_cabinet_layout_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @jmart-cabinet/components/jmart-cabinet-layout/jmart-cabinet-layout.component */ 18232);
-/* harmony import */ var _jmart_cabinet_components_jmart_cabinet_no_layout_jmart_cabinet_no_layout_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @jmart-cabinet/components/jmart-cabinet-no-layout/jmart-cabinet-no-layout.component */ 6553);
-/* harmony import */ var _components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pickup-points-map/pickup-points-map.component */ 66179);
-
-
 
 
 
@@ -4709,16 +4397,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const routes = [
-    {
-        path: 'no-layout',
-        component: _jmart_cabinet_components_jmart_cabinet_no_layout_jmart_cabinet_no_layout_component__WEBPACK_IMPORTED_MODULE_5__.JmartCabinetNoLayoutComponent,
-        children: [
-            {
-                path: 'select-address',
-                component: _components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_6__.PickupPointsMapComponent,
-            },
-        ]
-    },
     {
         path: '',
         component: _jmart_cabinet_components_jmart_cabinet_layout_jmart_cabinet_layout_component__WEBPACK_IMPORTED_MODULE_4__.JmartCabinetLayoutComponent,
@@ -4734,10 +4412,10 @@ const routes = [
                     //   path: 'information',
                     //   component: InformationComponent,
                     // },
-                    {
-                        path: 'pickup-points',
-                        component: _containers__WEBPACK_IMPORTED_MODULE_1__.PickupPointsComponent
-                    },
+                    // {
+                    //   path: 'pickup-points',
+                    //   component: PickupPointsComponent
+                    // },
                     {
                         path: 'delivery',
                         component: _containers__WEBPACK_IMPORTED_MODULE_1__.DeliveryComponent,
@@ -4781,10 +4459,10 @@ const routes = [
 ];
 let SettingsRoutingModule = class SettingsRoutingModule {
 };
-SettingsRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.NgModule)({
-        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule.forChild(routes)],
-        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterModule],
+SettingsRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_7__.RouterModule.forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_7__.RouterModule],
     })
 ], SettingsRoutingModule);
 
@@ -4845,17 +4523,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SettingsModule": () => (/* binding */ SettingsModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/common */ 36362);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/forms */ 90587);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/common */ 36362);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/forms */ 90587);
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shared/shared.module */ 44466);
 /* harmony import */ var _settings_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings.component */ 63180);
 /* harmony import */ var _settings_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settings-routing.module */ 94291);
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components */ 10813);
 /* harmony import */ var _containers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./containers */ 89866);
 /* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modals */ 9419);
-/* harmony import */ var ngx_file_drop__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-file-drop */ 50157);
+/* harmony import */ var ngx_file_drop__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ngx-file-drop */ 50157);
 /* harmony import */ var _pipes_maskPrefixPhone_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pipes/maskPrefixPhone.pipe */ 98249);
 /* harmony import */ var _components_j_table_j_table_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/j-table/j-table.component */ 15573);
 /* harmony import */ var _components_j_table_get_template_directive__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/j-table/get-template.directive */ 53677);
@@ -4868,8 +4546,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pipes_filterPoints_pipe__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./pipes/filterPoints.pipe */ 82647);
 /* harmony import */ var _jmart_cabinet_components_input_autocomplete_input_autocomplete_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @jmart-cabinet/components/input-autocomplete/input-autocomplete.component */ 7114);
 /* harmony import */ var _pipes_number_space_format_pipe__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pipes/number-space-format.pipe */ 86567);
-/* harmony import */ var _components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/pickup-points-map/pickup-points-map.component */ 66179);
-
 
 
 
@@ -4896,8 +4572,8 @@ __webpack_require__.r(__webpack_exports__);
 
 let SettingsModule = class SettingsModule {
 };
-SettingsModule = (0,tslib__WEBPACK_IMPORTED_MODULE_19__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_20__.NgModule)({
+SettingsModule = (0,tslib__WEBPACK_IMPORTED_MODULE_18__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_19__.NgModule)({
         declarations: [
             _settings_component__WEBPACK_IMPORTED_MODULE_1__.SettingsComponent,
             _containers__WEBPACK_IMPORTED_MODULE_4__.SETTINGS_CONTAINERS,
@@ -4915,9 +4591,8 @@ SettingsModule = (0,tslib__WEBPACK_IMPORTED_MODULE_19__.__decorate)([
             _components_j_tole_work_regime_j_tole_work_regime__WEBPACK_IMPORTED_MODULE_13__.JToleWorkRegimeComponent,
             _modals_remove_delivery_modal_remove_delivery_modal_component__WEBPACK_IMPORTED_MODULE_14__.RemoveDeliveryModalComponent,
             _jmart_cabinet_components_input_autocomplete_input_autocomplete_component__WEBPACK_IMPORTED_MODULE_16__.InputAutocompleteComponent,
-            _components_pickup_points_map_pickup_points_map_component__WEBPACK_IMPORTED_MODULE_18__.PickupPointsMapComponent,
         ],
-        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_21__.CommonModule, _shared_shared_module__WEBPACK_IMPORTED_MODULE_0__.SharedModule, _settings_routing_module__WEBPACK_IMPORTED_MODULE_2__.SettingsRoutingModule, _angular_forms__WEBPACK_IMPORTED_MODULE_22__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_22__.ReactiveFormsModule, ngx_file_drop__WEBPACK_IMPORTED_MODULE_23__.NgxFileDropModule],
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_20__.CommonModule, _shared_shared_module__WEBPACK_IMPORTED_MODULE_0__.SharedModule, _settings_routing_module__WEBPACK_IMPORTED_MODULE_2__.SettingsRoutingModule, _angular_forms__WEBPACK_IMPORTED_MODULE_21__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_21__.ReactiveFormsModule, ngx_file_drop__WEBPACK_IMPORTED_MODULE_22__.NgxFileDropModule],
         exports: [_containers__WEBPACK_IMPORTED_MODULE_4__.SETTINGS_CONTAINERS],
         providers: [
             _pipes_number_space_format_pipe__WEBPACK_IMPORTED_MODULE_17__.NumberSpaceFormatPipe,
@@ -5085,16 +4760,6 @@ module.exports = "::ng-deep .work-day__item .j-dropdown-input__item {\n  backgro
 /***/ ((module) => {
 
 module.exports = ".points-empty {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  background-color: #ffffff;\n  border-radius: 0 0 12px 12px;\n  height: 300px;\n}\n.points-empty__img {\n  width: 140px;\n  height: 140px;\n}\n.points-empty__text {\n  display: block;\n  font-size: 1rem;\n  line-height: 1.5rem;\n  color: #666c72;\n  white-space: pre-wrap;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vLWRhdGEuY29tcG9uZW50LnNjc3MiLCIuLi8uLi8uLi8uLi8uLi8uLi9zY3NzL192YXJpYWJsZXMuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFFQTtFQUNFLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0VBQ0EsdUJBQUE7RUFDQSx5QkFBQTtFQUNBLDRCQUFBO0VBQ0EsYUFBQTtBQURGO0FBR0U7RUFDRSxZQUFBO0VBQ0EsYUFBQTtBQURKO0FBSUU7RUFDRSxjQUFBO0VBQ0EsZUFBQTtFQUNBLG1CQUFBO0VBQ0EsY0NQTztFRFFQLHFCQUFBO0FBRkoiLCJmaWxlIjoibm8tZGF0YS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBpbXBvcnQgXCJzaGFyZWRcIjtcblxuLnBvaW50cy1lbXB0eSB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmZmZmO1xuICBib3JkZXItcmFkaXVzOiAwIDAgMTJweCAxMnB4O1xuICBoZWlnaHQ6IDMwMHB4O1xuXG4gICZfX2ltZyB7XG4gICAgd2lkdGg6IDE0MHB4O1xuICAgIGhlaWdodDogMTQwcHg7XG4gIH1cblxuICAmX190ZXh0IHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBmb250LXNpemU6IDFyZW07XG4gICAgbGluZS1oZWlnaHQ6IDEuNXJlbTtcbiAgICBjb2xvcjogJGdyYXktNjAwO1xuICAgIHdoaXRlLXNwYWNlOiBwcmUtd3JhcDtcbiAgfVxufVxuIiwiLy8gVmFyaWFibGVzXHJcbi8vXHJcbi8vIFZhcmlhYmxlcyBzaG91bGQgZm9sbG93IHRoZSBgJGNvbXBvbmVudC1zdGF0ZS1wcm9wZXJ0eS1zaXplYCBmb3JtdWxhIGZvclxyXG4vLyBjb25zaXN0ZW50IG5hbWluZy4gRXg6ICRuYXYtbGluay1kaXNhYmxlZC1jb2xvciBhbmQgJG1vZGFsLWNvbnRlbnQtYm94LXNoYWRvdy14cy5cclxuXHJcbi8vIENvbG9yIHN5c3RlbVxyXG5cclxuJHdoaXRlOiAjZmZmO1xyXG4kZ3JheS0xMDA6ICNmYWY3Zjc7XHJcbiRncmF5LTIwMDogI2Y2ZjdmODtcclxuJGdyYXktMzAwOiAjZWNlZWYxO1xyXG4kZ3JheS00MDA6ICNkNmRhZGY7XHJcbiRncmF5LTUwMDogI2I3YmVjNTtcclxuJGdyYXktNjAwOiAjNjY2YzcyO1xyXG4kZ3JheS03MDA6ICM0NzRiNTI7XHJcbiRncmF5LTgwMDogI2U5ZWNmMTtcclxuJGdyYXktOTAwOiAjZGJkZmUyO1xyXG4kZ3JheS0xMDAwOiAjODI4MjgyO1xyXG4kYmxhY2s6ICMxYTFjMWY7XHJcblxyXG4kZ3JheXM6ICgpO1xyXG4kZ3JheXM6IG1hcC1tZXJnZShcclxuICAoXHJcbiAgICAnMTAwJzogJGdyYXktMTAwLFxyXG4gICAgJzIwMCc6ICRncmF5LTIwMCxcclxuICAgICczMDAnOiAkZ3JheS0zMDAsXHJcbiAgICAnNDAwJzogJGdyYXktNDAwLFxyXG4gICAgJzUwMCc6ICRncmF5LTUwMCxcclxuICAgICc2MDAnOiAkZ3JheS02MDAsXHJcbiAgICAnNzAwJzogJGdyYXktNzAwLFxyXG4gICAgJzgwMCc6ICRncmF5LTgwMCxcclxuICApLFxyXG4gICRncmF5c1xyXG4pO1xyXG5cclxuJGJsdWU6ICMyMDQxNzc7XHJcbiRibHVlLWxpZ2h0OiAjMTU4NmJiO1xyXG4kYmx1ZS13aGl0ZTogI2Y1ZjlmZDtcclxuJG9yYW5nZTogI2VmNTYzMDtcclxuJG9yYW5nZS1kYXJrOiAjZDQzZTE5O1xyXG4kb3JhbmdlLWxpZ2h0OiAjZjdhYjk4O1xyXG4keWVsbG93OiAjZWY4ZjAwO1xyXG4kZ3JlZW46ICMyMzlhNTQ7XHJcbiRncmVlbi1saWdodDogIzc0YmE3MjtcclxuJHJlZDogI2ZmMDAwMDtcclxuJHJlZC1saWdodDogI2ZmZWZlZjtcclxuXHJcbiRncmF5OiAkZ3JheS01MDA7XHJcbiRncmF5LWRhcms6ICRncmF5LTYwMDtcclxuJGdyYXktbGlnaHQ6ICRncmF5LTQwMDtcclxuXHJcbiRjb2xvcnM6ICgpO1xyXG4kY29sb3JzOiBtYXAtbWVyZ2UoXHJcbiAgKFxyXG4gICAgJ2JsdWUnOiAkYmx1ZSxcclxuICAgICdibHVlLWxpZ2h0JzogJGJsdWUtbGlnaHQsXHJcbiAgICAnYmx1ZS13aGl0ZSc6ICRibHVlLXdoaXRlLFxyXG4gICAgJ29yYW5nZSc6ICRvcmFuZ2UsXHJcbiAgICAnb3JhbmdlLWRhcmsnOiAkb3JhbmdlLWRhcmssXHJcbiAgICAnb3JhbmdlLWxpZ2h0JzogJG9yYW5nZS1saWdodCxcclxuICAgICd5ZWxsb3cnOiAkeWVsbG93LFxyXG4gICAgJ2dyZWVuJzogJGdyZWVuLFxyXG4gICAgJ2dyZWVuLWxpZ2h0JzogJGdyZWVuLWxpZ2h0LFxyXG4gICAgJ3JlZCc6ICRyZWQsXHJcbiAgICAncmVkLWxpZ2h0JzogJHJlZC1saWdodCxcclxuICAgICdibGFjayc6ICRibGFjayxcclxuICAgICdibGFjay1saWdodCc6ICRncmF5LTcwMCxcclxuICAgICdncmF5JzogJGdyYXktNTAwLFxyXG4gICAgJ2dyYXktZGFyayc6ICRncmF5LTYwMCxcclxuICAgICdncmF5LWxpZ2h0JzogJGdyYXktNDAwLFxyXG4gICksXHJcbiAgJGNvbG9yc1xyXG4pO1xyXG5cclxuJHByaW1hcnk6ICRvcmFuZ2U7XHJcbiRzZWNvbmRhcnk6ICRibHVlO1xyXG4kc3VjY2VzczogJGdyZWVuO1xyXG4kaW5mbzogJGJsdWUtbGlnaHQ7XHJcbiR3YXJuaW5nOiAkeWVsbG93O1xyXG4kZGFuZ2VyOiAkcmVkO1xyXG4kbGlnaHQ6ICRncmF5LTUwMDtcclxuJGRhcms6ICRibGFjaztcclxuXHJcbiR0aGVtZS1jb2xvcnM6ICgpO1xyXG4kdGhlbWUtY29sb3JzOiBtYXAtbWVyZ2UoXHJcbiAgKFxyXG4gICAgJ3ByaW1hcnknOiAkcHJpbWFyeSxcclxuICAgICdzZWNvbmRhcnknOiAkc2Vjb25kYXJ5LFxyXG4gICAgJ3N1Y2Nlc3MnOiAkc3VjY2VzcyxcclxuICAgICdpbmZvJzogJGluZm8sXHJcbiAgICAnd2FybmluZyc6ICR3YXJuaW5nLFxyXG4gICAgJ2Rhbmdlcic6ICRkYW5nZXIsXHJcbiAgICAnbGlnaHQnOiAkbGlnaHQsXHJcbiAgICAnZGFyayc6ICRkYXJrLFxyXG4gICAgJ3doaXRlJzogJHdoaXRlLFxyXG4gICksXHJcbiAgJHRoZW1lLWNvbG9yc1xyXG4pO1xyXG5cclxuLy8gJHRleHQtY29sb3JzOiAoKTtcclxuLy8gJHRleHQtY29sb3JzOiBtYXAtbWVyZ2UoXHJcbi8vICAgKFxyXG4vLyAgICAgJ2RlZmF1bHQnOiAkYmxhY2ssXHJcbi8vICAgICAnbG93LWNvbnRyYXN0JzogJGdyYXktNjAwLFxyXG4vLyAgICAgJ2luZm8nOiAkZ3JheS01MDAsXHJcbi8vICAgICAnZXJyb3InOiAkcmVkLFxyXG4vLyAgICAgJ2xpbmsnOiAkYmx1ZSxcclxuLy8gICAgICdiYWxhbmNlJzogJGdyZWVuLFxyXG4vLyAgICAgJ2JhbGFuY2UtY29pbnMnOiAkZ3JlZW4tbGlnaHQsXHJcbi8vICAgKSxcclxuLy8gICAkdGV4dC1jb2xvcnNcclxuLy8gKTtcclxuXHJcbi8vIFNwYWNpbmdcclxuLy9cclxuLy8gQ29udHJvbCB0aGUgZGVmYXVsdCBzdHlsaW5nIG9mIG1vc3QgQm9vdHN0cmFwIGVsZW1lbnRzIGJ5IG1vZGlmeWluZyB0aGVzZVxyXG4vLyB2YXJpYWJsZXMuIE1vc3RseSBmb2N1c2VkIG9uIHNwYWNpbmcuXHJcbi8vIFlvdSBjYW4gYWRkIG1vcmUgZW50cmllcyB0byB0aGUgJHNwYWNlcnMgbWFwLCBzaG91bGQgeW91IG5lZWQgbW9yZSB2YXJpYXRpb24uXHJcblxyXG4kc3BhY2VyOiAxcmVtO1xyXG4kc3BhY2VyczogKCk7XHJcbiRzcGFjZXJzOiBtYXAtbWVyZ2UoXHJcbiAgKFxyXG4gICAgMDogMCxcclxuICAgIC8vIDBweFxyXG4gICAgMTogJHNwYWNlciAqIDAuMjUsXHJcbiAgICAvLyA0cHggeHhzLFxyXG4gICAgMjogJHNwYWNlciAqIDAuNSxcclxuICAgIC8vIDhweCB4cyxcclxuICAgIDM6ICRzcGFjZXIsXHJcbiAgICAvLyAxNnB4IHNtXHJcbiAgICA0OiAkc3BhY2VyICogMS41LFxyXG4gICAgLy8gMjRweCBtZCxcclxuICAgIDU6ICRzcGFjZXIgKiAyLFxyXG4gICAgLy8gMzJweCBsZyxcclxuICAgIDY6ICRzcGFjZXIgKiAyLjUsXHJcbiAgICAvLyA0MHB4IHhsLFxyXG4gICAgNzogJHNwYWNlciAqIDMuNSxcclxuICAgIC8vIDU2cHggeHhsXHJcbiAgICA4OiAkc3BhY2VyICogNCxcclxuICAgIC8vIDY0cHggeHhsXHJcbiAgKSxcclxuICAkc3BhY2Vyc1xyXG4pO1xyXG5cclxuLy8gQm9keVxyXG4vL1xyXG4vLyBTZXR0aW5ncyBmb3IgdGhlIGA8Ym9keT5gIGVsZW1lbnQuXHJcblxyXG4kYm9keS1iZzogJHdoaXRlO1xyXG4kYm9keS1jb2xvcjogJGRhcms7XHJcblxyXG4vLyBMaW5rc1xyXG4vL1xyXG4vLyBTdHlsZSBhbmNob3IgZWxlbWVudHMuXHJcblxyXG4kbGluay1jb2xvcjogdGhlbWUtY29sb3IoJ3ByaW1hcnknKTtcclxuJGxpbmstZGVjb3JhdGlvbjogbm9uZTtcclxuJGxpbmstaG92ZXItY29sb3I6ICRvcmFuZ2UtZGFyaztcclxuJGxpbmstaG92ZXItZGVjb3JhdGlvbjogbm9uZTtcclxuXHJcbi8vIFBhcmFncmFwaHNcclxuLy9cclxuLy8gU3R5bGUgcCBlbGVtZW50LlxyXG5cclxuJHBhcmFncmFwaC1tYXJnaW4tYm90dG9tOiAxcmVtO1xyXG5cclxuLy8gR3JpZCBicmVha3BvaW50c1xyXG4vL1xyXG4vLyBEZWZpbmUgdGhlIG1pbmltdW0gZGltZW5zaW9ucyBhdCB3aGljaCB5b3VyIGxheW91dCB3aWxsIGNoYW5nZSxcclxuLy8gYWRhcHRpbmcgdG8gZGlmZmVyZW50IHNjcmVlbiBzaXplcywgZm9yIHVzZSBpbiBtZWRpYSBxdWVyaWVzLlxyXG5cclxuJGdyaWQtYnJlYWtwb2ludHM6IChcclxuICB4czogMCxcclxuICBzbTogNjcwcHgsXHJcbiAgbWQ6IDk2MHB4LFxyXG4gIGxnOiAxMjgwcHgsXHJcbiAgeGw6IDE5MjBweCxcclxuKTtcclxuXHJcbi8vIEdyaWQgY29udGFpbmVyc1xyXG4vL1xyXG4vLyBEZWZpbmUgdGhlIG1heGltdW0gd2lkdGggb2YgYC5jb250YWluZXJgIGZvciBkaWZmZXJlbnQgc2NyZWVuIHNpemVzLlxyXG5cclxuJGNvbnRhaW5lci1tYXgtd2lkdGhzOiAoXHJcbiAgc206IDU0MHB4LFxyXG4gIG1kOiA3MjBweCxcclxuICBsZzogOTYwcHgsXHJcbiAgeGw6IDEyODBweCxcclxuKTtcclxuXHJcbi8vIEdyaWQgY29sdW1uc1xyXG4vL1xyXG4vLyBTZXQgdGhlIG51bWJlciBvZiBjb2x1bW5zIGFuZCBzcGVjaWZ5IHRoZSB3aWR0aCBvZiB0aGUgZ3V0dGVycy5cclxuXHJcbiRncmlkLWNvbHVtbnM6IDEyO1xyXG4kZ3JpZC1ndXR0ZXItd2lkdGg6IDMwcHg7XHJcbiRncmlkLXJvdy1jb2x1bW5zOiA2O1xyXG5cclxuLy8gQ29tcG9uZW50c1xyXG4vL1xyXG4vLyBEZWZpbmUgY29tbW9uIHBhZGRpbmcgYW5kIGJvcmRlciByYWRpdXMgc2l6ZXMgYW5kIG1vcmUuXHJcblxyXG4kbGluZS1oZWlnaHQtbGc6IDEuNTtcclxuJGxpbmUtaGVpZ2h0LXNtOiAxLjU7XHJcblxyXG4kYm9yZGVyLXdpZHRoOiAxcHg7XHJcbiRib3JkZXItY29sb3I6ICRncmF5LTMwMDtcclxuXHJcbiRib3JkZXItcmFkaXVzOiAwLjVyZW07XHJcbiRib3JkZXItcmFkaXVzLW1kOiByZW15KDEyKTtcclxuJGJvcmRlci1yYWRpdXMtbGc6IDIuNXJlbTtcclxuJGJvcmRlci1yYWRpdXMtc206IDAuMnJlbTtcclxuXHJcbi8vIEwwXHJcbiRib3gtc2hhZG93LXhzOiAwcHggMHB4IDBweCByZ2JhKDAsIDAsIDAsIDAuMDUpO1xyXG4vLyBMMVxyXG4kYm94LXNoYWRvdy1zbTogMHB4IDBweCAxcHggcmdiYSgwLCAwLCAwLCAwLjA0KSwgMHB4IDBweCAycHggcmdiYSgwLCAwLCAwLCAwLjA2KSxcclxuICAwcHggNHB4IDhweCByZ2JhKDAsIDAsIDAsIDAuMDQpO1xyXG4vLyBMMlxyXG4kYm94LXNoYWRvdzogMHB4IDBweCAxcHggcmdiYSgwLCAwLCAwLCAwLjA0KSwgMHB4IDJweCA2cHggcmdiYSgwLCAwLCAwLCAwLjA0KSxcclxuICAwcHggMTBweCAyMHB4IHJnYmEoMCwgMCwgMCwgMC4wNCk7XHJcbi8vIEwzXHJcbiRib3gtc2hhZG93LWxnOiAwcHggMTRweCAxNnB4IHJnYmEoMCwgMCwgMCwgMC4wNSk7XHJcbi8vIEw0XHJcbiRib3gtc2hhZG93LXhsOiAwcHggMHB4IDFweCByZ2JhKDAsIDAsIDAsIDAuMDQpLCAwcHggNHB4IDhweCByZ2JhKDAsIDAsIDAsIDAuMDQpLFxyXG4gIDBweCAxNnB4IDI0cHggcmdiYSgwLCAwLCAwLCAwLjA0KSwgMHB4IDI0cHggMzJweCByZ2JhKDAsIDAsIDAsIDAuMDQpO1xyXG5cclxuJGNvbXBvbmVudC1hY3RpdmUtY29sb3I6ICR3aGl0ZTtcclxuJGNvbXBvbmVudC1hY3RpdmUtYmc6IHRoZW1lLWNvbG9yKCdwcmltYXJ5Jyk7XHJcblxyXG4kdHJhbnNpdGlvbi1iYXNlOiBhbGwgMC4ycyBlYXNlLWluLW91dDtcclxuJHRyYW5zaXRpb24tZmFkZTogb3BhY2l0eSAwLjE1cyBsaW5lYXI7XHJcbiR0cmFuc2l0aW9uLWNvbGxhcHNlOiBoZWlnaHQgMC4zNXMgZWFzZTtcclxuJHRyYW5zaXRpb24tbWF4LWhlaWdodDogYWxsIDAuNnMgZWFzZTtcclxuXHJcbi8vIFR5cG9ncmFwaHlcclxuLy9cclxuLy8gRm9udCwgbGluZS1oZWlnaHQsIGFuZCBjb2xvciBmb3IgYm9keSB0ZXh0LCBoZWFkaW5ncywgYW5kIG1vcmUuXHJcblxyXG4kZm9udC1mYW1pbHktc2Fucy1zZXJpZjogJ1JvYm90bycsIHNhbnMtc2VyaWY7XHJcbiRmb250LWZhbWlseS1tb25vc3BhY2U6IFNGTW9uby1SZWd1bGFyLCBNZW5sbywgTW9uYWNvLCBDb25zb2xhcyxcclxuICAnTGliZXJhdGlvbiBNb25vJywgJ0NvdXJpZXIgTmV3JywgbW9ub3NwYWNlICFkZWZhdWx0O1xyXG4kZm9udC1mYW1pbHktYmFzZTogJGZvbnQtZmFtaWx5LXNhbnMtc2VyaWY7XHJcblxyXG4kZm9udC1zaXplLWJhc2U6IDFyZW07IC8vIDE2cHhcclxuJGZvbnQtc2l6ZS1sZzogJGZvbnQtc2l6ZS1iYXNlICogMS4yNSAhZGVmYXVsdDsgLy8gMjBweFxyXG4kZm9udC1zaXplLXNtOiAkZm9udC1zaXplLWJhc2UgKiAwLjg3NSAhZGVmYXVsdDsgLy8gMTRweFxyXG4kZm9udC1zaXplLXhzOiByZW15KDEyKTtcclxuXHJcbiRmb250LXdlaWdodC1saWdodGVyOiBsaWdodGVyO1xyXG4kZm9udC13ZWlnaHQtbGlnaHQ6IDMwMDtcclxuJGZvbnQtd2VpZ2h0LW5vcm1hbDogNDAwO1xyXG4kZm9udC13ZWlnaHQtYm9sZDogNTAwO1xyXG4kZm9udC13ZWlnaHQtYm9sZGVyOiBib2xkZXI7XHJcblxyXG4kZm9udC13ZWlnaHQtYmFzZTogJGZvbnQtd2VpZ2h0LW5vcm1hbDtcclxuJGxpbmUtaGVpZ2h0LWJhc2U6IDEuNTtcclxuXHJcbiRoMS1mb250LXNpemU6IHJlbXkoMzApO1xyXG4kaDItZm9udC1zaXplOiByZW15KDI2KTtcclxuJGgzLWZvbnQtc2l6ZTogcmVteSgyNCk7XHJcbiRoNC1mb250LXNpemU6IHJlbXkoMjIpO1xyXG4kaDUtZm9udC1zaXplOiByZW15KDIwKTtcclxuJGg2LWZvbnQtc2l6ZTogcmVteSgxOCk7XHJcblxyXG4kaDEtZm9udC1zaXplczogKFxyXG4gIHhzOiAzMHB4LFxyXG4gIHNtOiAzNnB4LFxyXG4gIG1kOiA0OHB4LFxyXG4gIGxnOiA0OHB4LFxyXG4gIHhsOiA2MHB4LFxyXG4pO1xyXG5cclxuLy8gaDIgc2l6ZXNcclxuJGgyLWZvbnQtc2l6ZXM6IChcclxuICB4czogMjZweCxcclxuICBzbTogMzBweCxcclxuICBtZDogNDBweCxcclxuICBsZzogNDRweCxcclxuICB4bDogNTRweCxcclxuKTtcclxuXHJcbi8vIGgzIHNpemVzXHJcbiRoMy1mb250LXNpemVzOiAoXHJcbiAgeHM6IDI0cHgsXHJcbiAgc206IDI2cHgsXHJcbiAgbWQ6IDMycHgsXHJcbiAgbGc6IDM2cHgsXHJcbiAgeGw6IDQ0cHgsXHJcbik7XHJcblxyXG4vLyBoNCBzaXplc1xyXG4kaDQtZm9udC1zaXplczogKFxyXG4gIHhzOiAyMnB4LFxyXG4gIHNtOiAyNHB4LFxyXG4gIG1kOiAyNHB4LFxyXG4gIGxnOiAyOHB4LFxyXG4gIHhsOiAyOHB4LFxyXG4pO1xyXG5cclxuLy8gaDUgc2l6ZXNcclxuJGg1LWZvbnQtc2l6ZXM6IChcclxuICB4czogMjBweCxcclxuICBzbTogMjJweCxcclxuICBtZDogMjJweCxcclxuICBsZzogMjRweCxcclxuICB4bDogMjRweCxcclxuKTtcclxuXHJcbi8vIGg2IHNpemVzXHJcbiRoNi1mb250LXNpemVzOiAoXHJcbiAgeHM6IDE4cHgsXHJcbiAgc206IDE4cHgsXHJcbiAgbWQ6IDE4cHgsXHJcbiAgbGc6IDIwcHgsXHJcbiAgeGw6IDIwcHgsXHJcbik7XHJcblxyXG4kaGVhZGluZ3MtbWFyZ2luLWJvdHRvbTogJHNwYWNlciAvIDIgIWRlZmF1bHQ7XHJcbiRoZWFkaW5ncy1mb250LWZhbWlseTogbnVsbDtcclxuJGhlYWRpbmdzLWZvbnQtd2VpZ2h0OiA1MDA7XHJcbiRoZWFkaW5ncy1mb250LXdlaWdodC1saWdodDogNDAwO1xyXG4kaGVhZGluZ3MtbGluZS1oZWlnaHQ6IDEuNTtcclxuJGhlYWRpbmdzLWNvbG9yOiBudWxsO1xyXG5cclxuJHAwLWZvbnQtc2l6ZXM6IChcclxuICB4czogMTZweCxcclxuICBzbTogMTZweCxcclxuICBtZDogMTZweCxcclxuICBsZzogMTZweCxcclxuICB4bDogMTZweCxcclxuKTtcclxuXHJcbiRwMS1mb250LXNpemVzOiAoXHJcbiAgeHM6IDE2cHgsXHJcbiAgc206IDE2cHgsXHJcbiAgbWQ6IDE4cHgsXHJcbiAgbGc6IDE4cHgsXHJcbiAgeGw6IDE4cHgsXHJcbik7XHJcblxyXG4kcDItZm9udC1zaXplczogKFxyXG4gIHhzOiAxNHB4LFxyXG4gIHNtOiAxNHB4LFxyXG4gIG1kOiAxNnB4LFxyXG4gIGxnOiAxNnB4LFxyXG4gIHhsOiAxNnB4LFxyXG4pO1xyXG5cclxuJHAzLWZvbnQtc2l6ZXM6IChcclxuICB4czogMTJweCxcclxuICBzbTogMTJweCxcclxuICBtZDogMTRweCxcclxuICBsZzogMTRweCxcclxuICB4bDogMTRweCxcclxuKTtcclxuXHJcbiRwNC1mb250LXNpemVzOiAoXHJcbiAgeHM6IDEwcHgsXHJcbiAgc206IDEwcHgsXHJcbiAgbWQ6IDEycHgsXHJcbiAgbGc6IDEycHgsXHJcbiAgeGw6IDEycHgsXHJcbik7XHJcblxyXG4kc21hbGwtZm9udC1zaXplOiAkZm9udC1zaXplLXhzO1xyXG5cclxuJHRleHQtbXV0ZWQ6ICRncmF5LTYwMDtcclxuXHJcbi8vICRibG9ja3F1b3RlLXNtYWxsLWNvbG9yOiAgICAgICRncmF5LTYwMCAhZGVmYXVsdDtcclxuLy8gJGJsb2NrcXVvdGUtc21hbGwtZm9udC1zaXplOiAgJHNtYWxsLWZvbnQtc2l6ZSAhZGVmYXVsdDtcclxuLy8gJGJsb2NrcXVvdGUtZm9udC1zaXplOiAgICAgICAgJGZvbnQtc2l6ZS1iYXNlICogMS4yNSAhZGVmYXVsdDtcclxuXHJcbi8vICRoci1ib3JkZXItY29sb3I6ICAgICAgICAgICAgIHJnYmEoJGJsYWNrLCAuMSkgIWRlZmF1bHQ7XHJcbi8vICRoci1ib3JkZXItd2lkdGg6ICAgICAgICAgICAgICRib3JkZXItd2lkdGggIWRlZmF1bHQ7XHJcblxyXG4vLyAkbWFyay1wYWRkaW5nOiAgICAgICAgICAgICAgICAuMmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJGR0LWZvbnQtd2VpZ2h0OiAgICAgICAgICAgICAgJGZvbnQtd2VpZ2h0LWJvbGQgIWRlZmF1bHQ7XHJcblxyXG4vLyAka2JkLWJveC1zaGFkb3c6ICAgICAgICAgICAgICBpbnNldCAwIC0uMXJlbSAwIHJnYmEoJGJsYWNrLCAuMjUpICFkZWZhdWx0O1xyXG4vLyAkbmVzdGVkLWtiZC1mb250LXdlaWdodDogICAgICAkZm9udC13ZWlnaHQtYm9sZCAhZGVmYXVsdDtcclxuXHJcbi8vICRsaXN0LWlubGluZS1wYWRkaW5nOiAgICAgICAgIC41cmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJG1hcmstYmc6ICAgICAgICAgICAgICAgICAgICAgI2ZjZjhlMyAhZGVmYXVsdDtcclxuXHJcbi8vICRoci1tYXJnaW4teTogICAgICAgICAgICAgICAgICRzcGFjZXIgIWRlZmF1bHQ7XHJcblxyXG4vLyAvLyBUYWJsZXNcclxuLy8gLy9cclxuLy8gLy8gQ3VzdG9taXplcyB0aGUgYC50YWJsZWAgY29tcG9uZW50IHdpdGggYmFzaWMgdmFsdWVzLCBlYWNoIHVzZWQgYWNyb3NzIGFsbCB0YWJsZSB2YXJpYXRpb25zLlxyXG5cclxuLy8gJHRhYmxlLWNlbGwtcGFkZGluZzogICAgICAgICAgLjc1cmVtICFkZWZhdWx0O1xyXG4vLyAkdGFibGUtY2VsbC1wYWRkaW5nLXNtOiAgICAgICAuM3JlbSAhZGVmYXVsdDtcclxuXHJcbi8vICR0YWJsZS1jb2xvcjogICAgICAgICAgICAgICAgICRib2R5LWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkdGFibGUtYmc6ICAgICAgICAgICAgICAgICAgICBudWxsICFkZWZhdWx0O1xyXG4vLyAkdGFibGUtYWNjZW50LWJnOiAgICAgICAgICAgICByZ2JhKCRibGFjaywgLjA1KSAhZGVmYXVsdDtcclxuLy8gJHRhYmxlLWhvdmVyLWNvbG9yOiAgICAgICAgICAgJHRhYmxlLWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkdGFibGUtaG92ZXItYmc6ICAgICAgICAgICAgICByZ2JhKCRibGFjaywgLjA3NSkgIWRlZmF1bHQ7XHJcbi8vICR0YWJsZS1hY3RpdmUtYmc6ICAgICAgICAgICAgICR0YWJsZS1ob3Zlci1iZyAhZGVmYXVsdDtcclxuXHJcbi8vICR0YWJsZS1ib3JkZXItd2lkdGg6ICAgICAgICAgICRib3JkZXItd2lkdGggIWRlZmF1bHQ7XHJcbi8vICR0YWJsZS1ib3JkZXItY29sb3I6ICAgICAgICAgICRib3JkZXItY29sb3IgIWRlZmF1bHQ7XHJcblxyXG4vLyAkdGFibGUtaGVhZC1iZzogICAgICAgICAgICAgICAkZ3JheS0yMDAgIWRlZmF1bHQ7XHJcbi8vICR0YWJsZS1oZWFkLWNvbG9yOiAgICAgICAgICAgICRncmF5LTcwMCAhZGVmYXVsdDtcclxuXHJcbi8vICR0YWJsZS1kYXJrLWNvbG9yOiAgICAgICAgICAgICR3aGl0ZSAhZGVmYXVsdDtcclxuLy8gJHRhYmxlLWRhcmstYmc6ICAgICAgICAgICAgICAgJGdyYXktODAwICFkZWZhdWx0O1xyXG4vLyAkdGFibGUtZGFyay1hY2NlbnQtYmc6ICAgICAgICByZ2JhKCR3aGl0ZSwgLjA1KSAhZGVmYXVsdDtcclxuLy8gJHRhYmxlLWRhcmstaG92ZXItY29sb3I6ICAgICAgJHRhYmxlLWRhcmstY29sb3IgIWRlZmF1bHQ7XHJcbi8vICR0YWJsZS1kYXJrLWhvdmVyLWJnOiAgICAgICAgIHJnYmEoJHdoaXRlLCAuMDc1KSAhZGVmYXVsdDtcclxuLy8gJHRhYmxlLWRhcmstYm9yZGVyLWNvbG9yOiAgICAgbGlnaHRlbigkdGFibGUtZGFyay1iZywgNy41JSkgIWRlZmF1bHQ7XHJcblxyXG4vLyAkdGFibGUtc3RyaXBlZC1vcmRlcjogICAgICAgICBvZGQgIWRlZmF1bHQ7XHJcblxyXG4vLyAkdGFibGUtY2FwdGlvbi1jb2xvcjogICAgICAgICAkdGV4dC1tdXRlZCAhZGVmYXVsdDtcclxuXHJcbi8vICR0YWJsZS1iZy1sZXZlbDogICAgICAgICAgICAgIC05ICFkZWZhdWx0O1xyXG4vLyAkdGFibGUtYm9yZGVyLWxldmVsOiAgICAgICAgICAtNiAhZGVmYXVsdDtcclxuXHJcbi8vIC8vIEJ1dHRvbnMgKyBGb3Jtc1xyXG4vLyAvL1xyXG4vLyAvLyBTaGFyZWQgdmFyaWFibGVzIHRoYXQgYXJlIHJlYXNzaWduZWQgdG8gYCRpbnB1dC1gIGFuZCBgJGJ0bi1gIHNwZWNpZmljIHZhcmlhYmxlcy5cclxuXHJcbiRpbnB1dC1idG4tcGFkZGluZy15OiAxcmVtO1xyXG4kaW5wdXQtYnRuLXBhZGRpbmcteDogMS43NXJlbTtcclxuJGlucHV0LWJ0bi1mb250LWZhbWlseTogbnVsbDtcclxuJGlucHV0LWJ0bi1mb250LXNpemU6ICRmb250LXNpemUtYmFzZTtcclxuJGlucHV0LWJ0bi1saW5lLWhlaWdodDogMS41O1xyXG5cclxuJGlucHV0LWJ0bi1mb2N1cy13aWR0aDogcmVteSgxKTtcclxuJGlucHV0LWJ0bi1mb2N1cy1jb2xvcjogJHByaW1hcnk7XHJcbiRpbnB1dC1idG4tZm9jdXMtYm94LXNoYWRvdzogbm9uZTtcclxuXHJcbiRpbnB1dC1idG4tcGFkZGluZy15LXNtOiAwLjI1cmVtO1xyXG4kaW5wdXQtYnRuLXBhZGRpbmcteC1zbTogMS4ycmVtO1xyXG4kaW5wdXQtYnRuLWZvbnQtc2l6ZS1zbTogJGZvbnQtc2l6ZS1iYXNlO1xyXG4kaW5wdXQtYnRuLWxpbmUtaGVpZ2h0LXNtOiAkbGluZS1oZWlnaHQtc207XHJcblxyXG4kaW5wdXQtYnRuLXBhZGRpbmcteS1sZzogJGlucHV0LWJ0bi1wYWRkaW5nLXk7XHJcbiRpbnB1dC1idG4tcGFkZGluZy14LWxnOiAyLjVyZW07XHJcbiRpbnB1dC1idG4tZm9udC1zaXplLWxnOiAkZm9udC1zaXplLWJhc2U7XHJcbiRpbnB1dC1idG4tbGluZS1oZWlnaHQtbGc6ICRpbnB1dC1idG4tbGluZS1oZWlnaHQ7XHJcblxyXG4kaW5wdXQtYnRuLWJvcmRlci13aWR0aDogJGJvcmRlci13aWR0aDtcclxuXHJcbi8vIEJ1dHRvbnNcclxuLy9cclxuLy8gRm9yIGVhY2ggb2YgQm9vdHN0cmFwJ3MgYnV0dG9ucywgZGVmaW5lIHRleHQsIGJhY2tncm91bmQsIGFuZCBib3JkZXIgY29sb3IuXHJcblxyXG4kYnRuLXBhZGRpbmcteTogJGlucHV0LWJ0bi1wYWRkaW5nLXk7XHJcbiRidG4tcGFkZGluZy14OiAkaW5wdXQtYnRuLXBhZGRpbmcteDtcclxuJGJ0bi1mb250LWZhbWlseTogJGlucHV0LWJ0bi1mb250LWZhbWlseTtcclxuJGJ0bi1mb250LXNpemU6ICRpbnB1dC1idG4tZm9udC1zaXplO1xyXG4kYnRuLWxpbmUtaGVpZ2h0OiAkaW5wdXQtYnRuLWxpbmUtaGVpZ2h0O1xyXG4kYnRuLXdoaXRlLXNwYWNlOiBudWxsOyAvLyBTZXQgdG8gYG5vd3JhcGAgdG8gcHJldmVudCB0ZXh0IHdyYXBwaW5nXHJcblxyXG4kYnRuLXBhZGRpbmcteS1zbTogJGlucHV0LWJ0bi1wYWRkaW5nLXktc207XHJcbiRidG4tcGFkZGluZy14LXNtOiAkaW5wdXQtYnRuLXBhZGRpbmcteC1zbTtcclxuJGJ0bi1mb250LXNpemUtc206ICRpbnB1dC1idG4tZm9udC1zaXplLXNtO1xyXG4kYnRuLWxpbmUtaGVpZ2h0LXNtOiAkaW5wdXQtYnRuLWxpbmUtaGVpZ2h0LXNtO1xyXG5cclxuJGJ0bi1wYWRkaW5nLXktbGc6ICRpbnB1dC1idG4tcGFkZGluZy15LWxnO1xyXG4kYnRuLXBhZGRpbmcteC1sZzogJGlucHV0LWJ0bi1wYWRkaW5nLXgtbGc7XHJcbiRidG4tZm9udC1zaXplLWxnOiAkaW5wdXQtYnRuLWZvbnQtc2l6ZS1sZztcclxuJGJ0bi1saW5lLWhlaWdodC1sZzogJGlucHV0LWJ0bi1saW5lLWhlaWdodC1sZztcclxuXHJcbiRidG4tYm9yZGVyLXdpZHRoOiAkaW5wdXQtYnRuLWJvcmRlci13aWR0aDtcclxuXHJcbiRidG4tZm9udC13ZWlnaHQ6ICRmb250LXdlaWdodC1ub3JtYWw7XHJcbiRidG4tYm94LXNoYWRvdzogbm9uZTtcclxuJGJ0bi1mb2N1cy13aWR0aDogJGlucHV0LWJ0bi1mb2N1cy13aWR0aDtcclxuJGJ0bi1mb2N1cy1ib3gtc2hhZG93OiAkaW5wdXQtYnRuLWZvY3VzLWJveC1zaGFkb3c7XHJcbiRidG4tZGlzYWJsZWQtb3BhY2l0eTogMC41O1xyXG4kYnRuLWFjdGl2ZS1ib3gtc2hhZG93OiBub25lO1xyXG5cclxuLy8gJGJ0bi1saW5rLWRpc2FibGVkLWNvbG9yOiAgICAgJGdyYXktNjAwICFkZWZhdWx0O1xyXG5cclxuLy8gJGJ0bi1ibG9jay1zcGFjaW5nLXk6ICAgICAgICAgLjVyZW0gIWRlZmF1bHQ7XHJcblxyXG4vLyAvLyBBbGxvd3MgZm9yIGN1c3RvbWl6aW5nIGJ1dHRvbiByYWRpdXMgaW5kZXBlbmRlbnRseSBmcm9tIGdsb2JhbCBib3JkZXIgcmFkaXVzXHJcbiRidG4tYm9yZGVyLXJhZGl1czogMTJweDtcclxuJGJ0bi1ib3JkZXItcmFkaXVzLWxnOiAxMnB4O1xyXG4kYnRuLWJvcmRlci1yYWRpdXMtc206IDhweDtcclxuXHJcbiRidG4tdHJhbnNpdGlvbjogJHRyYW5zaXRpb24tYmFzZTtcclxuXHJcbi8vIC8vIEZvcm1zXHJcblxyXG4vLyAkbGFiZWwtbWFyZ2luLWJvdHRvbTogICAgICAgICAgICAgICAgICAgLjVyZW0gIWRlZmF1bHQ7XHJcblxyXG4kaW5wdXQtcGFkZGluZy15OiAkaW5wdXQtYnRuLXBhZGRpbmcteTtcclxuJGlucHV0LXBhZGRpbmcteDogcmVteSgyMCk7XHJcbiRpbnB1dC1mb250LWZhbWlseTogJGlucHV0LWJ0bi1mb250LWZhbWlseTtcclxuJGlucHV0LWZvbnQtc2l6ZTogJGlucHV0LWJ0bi1mb250LXNpemU7XHJcbiRpbnB1dC1mb250LXdlaWdodDogJGZvbnQtd2VpZ2h0LWJhc2U7XHJcbiRpbnB1dC1saW5lLWhlaWdodDogJGlucHV0LWJ0bi1saW5lLWhlaWdodDtcclxuXHJcbi8vICRpbnB1dC1wYWRkaW5nLXktc206ICAgICAgICAgICAgICAgICAgICAkaW5wdXQtYnRuLXBhZGRpbmcteS1zbSAhZGVmYXVsdDtcclxuLy8gJGlucHV0LXBhZGRpbmcteC1zbTogICAgICAgICAgICAgICAgICAgICRpbnB1dC1idG4tcGFkZGluZy14LXNtICFkZWZhdWx0O1xyXG4vLyAkaW5wdXQtZm9udC1zaXplLXNtOiAgICAgICAgICAgICAgICAgICAgJGlucHV0LWJ0bi1mb250LXNpemUtc20gIWRlZmF1bHQ7XHJcbi8vICRpbnB1dC1saW5lLWhlaWdodC1zbTogICAgICAgICAgICAgICAgICAkaW5wdXQtYnRuLWxpbmUtaGVpZ2h0LXNtICFkZWZhdWx0O1xyXG5cclxuLy8gJGlucHV0LXBhZGRpbmcteS1sZzogICAgICAgICAgICAgICAgICAgICRpbnB1dC1idG4tcGFkZGluZy15LWxnICFkZWZhdWx0O1xyXG4vLyAkaW5wdXQtcGFkZGluZy14LWxnOiAgICAgICAgICAgICAgICAgICAgJGlucHV0LWJ0bi1wYWRkaW5nLXgtbGcgIWRlZmF1bHQ7XHJcbiRpbnB1dC1mb250LXNpemUtbGc6ICRpbnB1dC1idG4tZm9udC1zaXplLWxnICFkZWZhdWx0O1xyXG4vLyAkaW5wdXQtbGluZS1oZWlnaHQtbGc6ICAgICAgICAgICAgICAgICAgJGlucHV0LWJ0bi1saW5lLWhlaWdodC1sZyAhZGVmYXVsdDtcclxuXHJcbiRpbnB1dC1iZzogJHdoaXRlO1xyXG4kaW5wdXQtZGlzYWJsZWQtYmc6ICRncmF5LTIwMDtcclxuXHJcbiRpbnB1dC1jb2xvcjogJGRhcms7XHJcbiRpbnB1dC1ib3JkZXItY29sb3I6ICRncmF5LTQwMDtcclxuJGlucHV0LWJvcmRlci13aWR0aDogJGlucHV0LWJ0bi1ib3JkZXItd2lkdGg7XHJcbiRpbnB1dC1ib3gtc2hhZG93OiBub25lO1xyXG5cclxuJGlucHV0LWJvcmRlci1yYWRpdXM6IDhweDtcclxuJGlucHV0LWJvcmRlci1yYWRpdXMtbGc6ICRpbnB1dC1ib3JkZXItcmFkaXVzO1xyXG4kaW5wdXQtYm9yZGVyLXJhZGl1cy1zbTogJGlucHV0LWJvcmRlci1yYWRpdXM7XHJcblxyXG4kaW5wdXQtZm9jdXMtYmc6ICR3aGl0ZTtcclxuJGlucHV0LWZvY3VzLWJvcmRlci1jb2xvcjogJHByaW1hcnk7XHJcbiRpbnB1dC1mb2N1cy1jb2xvcjogJGlucHV0LWNvbG9yO1xyXG4kaW5wdXQtZm9jdXMtd2lkdGg6ICRpbnB1dC1idG4tZm9jdXMtd2lkdGg7XHJcbiRpbnB1dC1mb2N1cy1ib3gtc2hhZG93OiAkaW5wdXQtYnRuLWZvY3VzLWJveC1zaGFkb3c7XHJcblxyXG4kaW5wdXQtcGxhY2Vob2xkZXItY29sb3I6ICRncmF5LTYwMDtcclxuJGlucHV0LXBsYWludGV4dC1jb2xvcjogJGJvZHktY29sb3I7XHJcblxyXG4vLyAkaW5wdXQtaGVpZ2h0LWJvcmRlcjogICAgICAgICAgICAgICAgICAgJGlucHV0LWJvcmRlci13aWR0aCAqIDIgIWRlZmF1bHQ7XHJcblxyXG4vLyAkaW5wdXQtaGVpZ2h0LWlubmVyOiAgICAgICAgICAgICAgICAgICAgYWRkKCRpbnB1dC1saW5lLWhlaWdodCAqIDFlbSwgJGlucHV0LXBhZGRpbmcteSAqIDIpICFkZWZhdWx0O1xyXG4vLyAkaW5wdXQtaGVpZ2h0LWlubmVyLWhhbGY6ICAgICAgICAgICAgICAgYWRkKCRpbnB1dC1saW5lLWhlaWdodCAqIC41ZW0sICRpbnB1dC1wYWRkaW5nLXkpICFkZWZhdWx0O1xyXG4vLyAkaW5wdXQtaGVpZ2h0LWlubmVyLXF1YXJ0ZXI6ICAgICAgICAgICAgYWRkKCRpbnB1dC1saW5lLWhlaWdodCAqIC4yNWVtLCAkaW5wdXQtcGFkZGluZy15IC8gMikgIWRlZmF1bHQ7XHJcblxyXG4kaW5wdXQtaGVpZ2h0OiA1NnB4O1xyXG4vLyAkaW5wdXQtaGVpZ2h0LXNtOiAgICAgICAgICAgICAgICAgICAgICAgYWRkKCRpbnB1dC1saW5lLWhlaWdodC1zbSAqIDFlbSwgYWRkKCRpbnB1dC1wYWRkaW5nLXktc20gKiAyLCAkaW5wdXQtaGVpZ2h0LWJvcmRlciwgZmFsc2UpKSAhZGVmYXVsdDtcclxuLy8gJGlucHV0LWhlaWdodC1sZzogICAgICAgICAgICAgICAgICAgICAgIGFkZCgkaW5wdXQtbGluZS1oZWlnaHQtbGcgKiAxZW0sIGFkZCgkaW5wdXQtcGFkZGluZy15LWxnICogMiwgJGlucHV0LWhlaWdodC1ib3JkZXIsIGZhbHNlKSkgIWRlZmF1bHQ7XHJcblxyXG4kaW5wdXQtdHJhbnNpdGlvbjogJHRyYW5zaXRpb24tYmFzZTtcclxuXHJcbi8vICRmb3JtLXRleHQtbWFyZ2luLXRvcDogICAgICAgICAgICAgICAgICAuMjVyZW0gIWRlZmF1bHQ7XHJcblxyXG4vLyAkZm9ybS1jaGVjay1pbnB1dC1ndXR0ZXI6ICAgICAgICAgICAgICAgMS4yNXJlbSAhZGVmYXVsdDtcclxuLy8gJGZvcm0tY2hlY2staW5wdXQtbWFyZ2luLXk6ICAgICAgICAgICAgIC4zcmVtICFkZWZhdWx0O1xyXG4vLyAkZm9ybS1jaGVjay1pbnB1dC1tYXJnaW4teDogICAgICAgICAgICAgLjI1cmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJGZvcm0tY2hlY2staW5saW5lLW1hcmdpbi14OiAgICAgICAgICAgIC43NXJlbSAhZGVmYXVsdDtcclxuLy8gJGZvcm0tY2hlY2staW5saW5lLWlucHV0LW1hcmdpbi14OiAgICAgIC4zMTI1cmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJGZvcm0tZ3JpZC1ndXR0ZXItd2lkdGg6ICAgICAgICAgICAgICAgIDEwcHggIWRlZmF1bHQ7XHJcbi8vICRmb3JtLWdyb3VwLW1hcmdpbi1ib3R0b206ICAgICAgICAgICAgICAxcmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJGlucHV0LWdyb3VwLWFkZG9uLWNvbG9yOiAgICAgICAgICAgICAgICRpbnB1dC1jb2xvciAhZGVmYXVsdDtcclxuLy8gJGlucHV0LWdyb3VwLWFkZG9uLWJnOiAgICAgICAgICAgICAgICAgICRncmF5LTIwMCAhZGVmYXVsdDtcclxuLy8gJGlucHV0LWdyb3VwLWFkZG9uLWJvcmRlci1jb2xvcjogICAgICAgICRpbnB1dC1ib3JkZXItY29sb3IgIWRlZmF1bHQ7XHJcblxyXG4vLyAkY3VzdG9tLWZvcm1zLXRyYW5zaXRpb246ICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvciAuMTVzIGVhc2UtaW4tb3V0LCBib3JkZXItY29sb3IgLjE1cyBlYXNlLWluLW91dCwgYm94LXNoYWRvdyAuMTVzIGVhc2UtaW4tb3V0ICFkZWZhdWx0O1xyXG5cclxuLy8gJGN1c3RvbS1jb250cm9sLWd1dHRlcjogICAgICAgICAgICAgICAgIC41cmVtICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWNvbnRyb2wtc3BhY2VyLXg6ICAgICAgICAgICAgICAgMXJlbSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWN1cnNvcjogICAgICAgICAgICAgICAgIG51bGwgIWRlZmF1bHQ7XHJcblxyXG4vLyAkY3VzdG9tLWNvbnRyb2wtaW5kaWNhdG9yLXNpemU6ICAgICAgICAgMXJlbSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1iZzogICAgICAgICAgICRpbnB1dC1iZyAhZGVmYXVsdDtcclxuXHJcbi8vICRjdXN0b20tY29udHJvbC1pbmRpY2F0b3ItYmctc2l6ZTogICAgICA1MCUgNTAlICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWNvbnRyb2wtaW5kaWNhdG9yLWJveC1zaGFkb3c6ICAgJGlucHV0LWJveC1zaGFkb3cgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tY29udHJvbC1pbmRpY2F0b3ItYm9yZGVyLWNvbG9yOiAkZ3JheS01MDAgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tY29udHJvbC1pbmRpY2F0b3ItYm9yZGVyLXdpZHRoOiAkaW5wdXQtYm9yZGVyLXdpZHRoICFkZWZhdWx0O1xyXG5cclxuLy8gJGN1c3RvbS1jb250cm9sLWxhYmVsLWNvbG9yOiAgICAgICAgICAgIG51bGwgIWRlZmF1bHQ7XHJcblxyXG4vLyAkY3VzdG9tLWNvbnRyb2wtaW5kaWNhdG9yLWRpc2FibGVkLWJnOiAgICAgICAgICAkaW5wdXQtZGlzYWJsZWQtYmcgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tY29udHJvbC1sYWJlbC1kaXNhYmxlZC1jb2xvcjogICAgICAgICAgICRncmF5LTYwMCAhZGVmYXVsdDtcclxuXHJcbi8vICRjdXN0b20tY29udHJvbC1pbmRpY2F0b3ItY2hlY2tlZC1jb2xvcjogICAgICAgICRjb21wb25lbnQtYWN0aXZlLWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWNvbnRyb2wtaW5kaWNhdG9yLWNoZWNrZWQtYmc6ICAgICAgICAgICAkY29tcG9uZW50LWFjdGl2ZS1iZyAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1jaGVja2VkLWRpc2FibGVkLWJnOiAgcmdiYSh0aGVtZS1jb2xvcihcInByaW1hcnlcIiksIC41KSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1jaGVja2VkLWJveC1zaGFkb3c6ICAgbm9uZSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1jaGVja2VkLWJvcmRlci1jb2xvcjogJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1jaGVja2VkLWJnICFkZWZhdWx0O1xyXG5cclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1mb2N1cy1ib3gtc2hhZG93OiAgICAgJGlucHV0LWZvY3VzLWJveC1zaGFkb3cgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tY29udHJvbC1pbmRpY2F0b3ItZm9jdXMtYm9yZGVyLWNvbG9yOiAgICRpbnB1dC1mb2N1cy1ib3JkZXItY29sb3IgIWRlZmF1bHQ7XHJcblxyXG4vLyAkY3VzdG9tLWNvbnRyb2wtaW5kaWNhdG9yLWFjdGl2ZS1jb2xvcjogICAgICAgICAkY29tcG9uZW50LWFjdGl2ZS1jb2xvciAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1hY3RpdmUtYmc6ICAgICAgICAgICAgbGlnaHRlbigkY29tcG9uZW50LWFjdGl2ZS1iZywgMzUlKSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1hY3RpdmUtYm94LXNoYWRvdzogICAgbm9uZSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1hY3RpdmUtYm9yZGVyLWNvbG9yOiAgJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1hY3RpdmUtYmcgIWRlZmF1bHQ7XHJcblxyXG4vLyAkY3VzdG9tLWNoZWNrYm94LWluZGljYXRvci1ib3JkZXItcmFkaXVzOiAgICAgICAkYm9yZGVyLXJhZGl1cyAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jaGVja2JveC1pbmRpY2F0b3ItaWNvbi1jaGVja2VkOiAgICAgICAgdXJsKFwiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nOCcgaGVpZ2h0PSc4JyB2aWV3Qm94PScwIDAgOCA4Jz48cGF0aCBmaWxsPScjeyRjdXN0b20tY29udHJvbC1pbmRpY2F0b3ItY2hlY2tlZC1jb2xvcn0nIGQ9J002LjU2NC43NWwtMy41OSAzLjYxMi0xLjUzOC0xLjU1TDAgNC4yNmwyLjk3NCAyLjk5TDggMi4xOTN6Jy8+PC9zdmc+XCIpICFkZWZhdWx0O1xyXG5cclxuLy8gJGN1c3RvbS1jaGVja2JveC1pbmRpY2F0b3ItaW5kZXRlcm1pbmF0ZS1iZzogICAgICAgICAgICRjb21wb25lbnQtYWN0aXZlLWJnICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWNoZWNrYm94LWluZGljYXRvci1pbmRldGVybWluYXRlLWNvbG9yOiAgICAgICAgJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1jaGVja2VkLWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWNoZWNrYm94LWluZGljYXRvci1pY29uLWluZGV0ZXJtaW5hdGU6ICAgICAgICAgdXJsKFwiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nNCcgaGVpZ2h0PSc0JyB2aWV3Qm94PScwIDAgNCA0Jz48cGF0aCBzdHJva2U9JyN7JGN1c3RvbS1jaGVja2JveC1pbmRpY2F0b3ItaW5kZXRlcm1pbmF0ZS1jb2xvcn0nIGQ9J00wIDJoNCcvPjwvc3ZnPlwiKSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1jaGVja2JveC1pbmRpY2F0b3ItaW5kZXRlcm1pbmF0ZS1ib3gtc2hhZG93OiAgIG5vbmUgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tY2hlY2tib3gtaW5kaWNhdG9yLWluZGV0ZXJtaW5hdGUtYm9yZGVyLWNvbG9yOiAkY3VzdG9tLWNoZWNrYm94LWluZGljYXRvci1pbmRldGVybWluYXRlLWJnICFkZWZhdWx0O1xyXG5cclxuLy8gJGN1c3RvbS1yYWRpby1pbmRpY2F0b3ItYm9yZGVyLXJhZGl1czogICAgICAgICAgNTAlICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLXJhZGlvLWluZGljYXRvci1pY29uLWNoZWNrZWQ6ICAgICAgICAgICB1cmwoXCJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMicgaGVpZ2h0PScxMicgdmlld0JveD0nLTQgLTQgOCA4Jz48Y2lyY2xlIHI9JzMnIGZpbGw9JyN7JGN1c3RvbS1jb250cm9sLWluZGljYXRvci1jaGVja2VkLWNvbG9yfScvPjwvc3ZnPlwiKSAhZGVmYXVsdDtcclxuXHJcbi8vICRjdXN0b20tc3dpdGNoLXdpZHRoOiAgICAgICAgICAgICAgICAgICAgICAgICAgICRjdXN0b20tY29udHJvbC1pbmRpY2F0b3Itc2l6ZSAqIDEuNzUgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tc3dpdGNoLWluZGljYXRvci1ib3JkZXItcmFkaXVzOiAgICAgICAgICRjdXN0b20tY29udHJvbC1pbmRpY2F0b3Itc2l6ZSAvIDIgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tc3dpdGNoLWluZGljYXRvci1zaXplOiAgICAgICAgICAgICAgICAgIHN1YnRyYWN0KCRjdXN0b20tY29udHJvbC1pbmRpY2F0b3Itc2l6ZSwgJGN1c3RvbS1jb250cm9sLWluZGljYXRvci1ib3JkZXItd2lkdGggKiA0KSAhZGVmYXVsdDtcclxuXHJcbiRjdXN0b20tc2VsZWN0LXBhZGRpbmcteTogJGlucHV0LXBhZGRpbmcteTtcclxuJGN1c3RvbS1zZWxlY3QtcGFkZGluZy14OiAxLjI1cmVtO1xyXG4kY3VzdG9tLXNlbGVjdC1mb250LWZhbWlseTogJGlucHV0LWZvbnQtZmFtaWx5ICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1mb250LXNpemU6ICRpbnB1dC1mb250LXNpemUgIWRlZmF1bHQ7XHJcbiRjdXN0b20tc2VsZWN0LWhlaWdodDogJGlucHV0LWhlaWdodDtcclxuJGN1c3RvbS1zZWxlY3QtaW5kaWNhdG9yLXBhZGRpbmc6IDEuMjVyZW07IC8vIEV4dHJhIHBhZGRpbmcgdG8gYWNjb3VudCBmb3IgdGhlIHByZXNlbmNlIG9mIHRoZSBiYWNrZ3JvdW5kLWltYWdlIGJhc2VkIGluZGljYXRvclxyXG4kY3VzdG9tLXNlbGVjdC1mb250LXdlaWdodDogJGlucHV0LWZvbnQtd2VpZ2h0ICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1saW5lLWhlaWdodDogJGlucHV0LWxpbmUtaGVpZ2h0ICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1jb2xvcjogJGlucHV0LWNvbG9yICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1kaXNhYmxlZC1jb2xvcjogJGdyYXktNjAwICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1iZzogJGlucHV0LWJnICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1kaXNhYmxlZC1iZzogJGdyYXktMjAwICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1iZy1zaXplOiA4cHggMTBweCAhZGVmYXVsdDsgLy8gSW4gcGl4ZWxzIGJlY2F1c2UgaW1hZ2UgZGltZW5zaW9uc1xyXG4kY3VzdG9tLXNlbGVjdC1pbmRpY2F0b3ItY29sb3I6ICRncmF5LTgwMCAhZGVmYXVsdDtcclxuJGN1c3RvbS1zZWxlY3QtaW5kaWNhdG9yOiB1cmwoXCJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0JyBoZWlnaHQ9JzUnIHZpZXdCb3g9JzAgMCA0IDUnPjxwYXRoIGZpbGw9JyN7JGN1c3RvbS1zZWxlY3QtaW5kaWNhdG9yLWNvbG9yfScgZD0nTTIgMEwwIDJoNHptMCA1TDAgM2g0eicvPjwvc3ZnPlwiKSAhZGVmYXVsdDtcclxuJGN1c3RvbS1zZWxlY3QtYmFja2dyb3VuZDogZXNjYXBlLXN2ZygkY3VzdG9tLXNlbGVjdC1pbmRpY2F0b3IpIG5vLXJlcGVhdCByaWdodFxyXG4gICRjdXN0b20tc2VsZWN0LXBhZGRpbmcteCBjZW50ZXIgLyAkY3VzdG9tLXNlbGVjdC1iZy1zaXplICFkZWZhdWx0OyAvLyBVc2VkIHNvIHdlIGNhbiBoYXZlIG11bHRpcGxlIGJhY2tncm91bmQgZWxlbWVudHMgKGUuZy4sIGFycm93IGFuZCBmZWVkYmFjayBpY29uKVxyXG5cclxuJGN1c3RvbS1zZWxlY3QtZmVlZGJhY2staWNvbi1wYWRkaW5nLXJpZ2h0OiBhZGQoXHJcbiAgMWVtICogMC43NSxcclxuICAoMiAqICRjdXN0b20tc2VsZWN0LXBhZGRpbmcteSAqIDAuNzUpICsgJGN1c3RvbS1zZWxlY3QtcGFkZGluZy14ICtcclxuICAgICRjdXN0b20tc2VsZWN0LWluZGljYXRvci1wYWRkaW5nXHJcbikgIWRlZmF1bHQ7XHJcbiRjdXN0b20tc2VsZWN0LWZlZWRiYWNrLWljb24tcG9zaXRpb246IGNlbnRlciByaWdodFxyXG4gICgkY3VzdG9tLXNlbGVjdC1wYWRkaW5nLXggKyAkY3VzdG9tLXNlbGVjdC1pbmRpY2F0b3ItcGFkZGluZykgIWRlZmF1bHQ7XHJcbiRjdXN0b20tc2VsZWN0LWZlZWRiYWNrLWljb24tc2l6ZTogJGlucHV0LWhlaWdodC1pbm5lci1oYWxmXHJcbiAgJGlucHV0LWhlaWdodC1pbm5lci1oYWxmICFkZWZhdWx0O1xyXG5cclxuJGN1c3RvbS1zZWxlY3QtYm9yZGVyLXdpZHRoOiAkaW5wdXQtYm9yZGVyLXdpZHRoICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1ib3JkZXItY29sb3I6ICRpbnB1dC1ib3JkZXItY29sb3IgIWRlZmF1bHQ7XHJcbiRjdXN0b20tc2VsZWN0LWJvcmRlci1yYWRpdXM6ICRib3JkZXItcmFkaXVzO1xyXG4kY3VzdG9tLXNlbGVjdC1ib3gtc2hhZG93OiBpbnNldCAwIDFweCAycHggcmdiYSgkYmxhY2ssIDAuMDc1KSAhZGVmYXVsdDtcclxuXHJcbiRjdXN0b20tc2VsZWN0LWZvY3VzLWJvcmRlci1jb2xvcjogJGlucHV0LWZvY3VzLWJvcmRlci1jb2xvcjtcclxuJGN1c3RvbS1zZWxlY3QtZm9jdXMtd2lkdGg6ICRpbnB1dC1mb2N1cy13aWR0aCAhZGVmYXVsdDtcclxuJGN1c3RvbS1zZWxlY3QtZm9jdXMtYm94LXNoYWRvdzogbm9uZTtcclxuXHJcbiRjdXN0b20tc2VsZWN0LXBhZGRpbmcteS1zbTogJGlucHV0LXBhZGRpbmcteS1zbSAhZGVmYXVsdDtcclxuJGN1c3RvbS1zZWxlY3QtcGFkZGluZy14LXNtOiAkaW5wdXQtcGFkZGluZy14LXNtICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1mb250LXNpemUtc206ICRpbnB1dC1mb250LXNpemUtc20gIWRlZmF1bHQ7XHJcbiRjdXN0b20tc2VsZWN0LWhlaWdodC1zbTogJGlucHV0LWhlaWdodC1zbSAhZGVmYXVsdDtcclxuXHJcbiRjdXN0b20tc2VsZWN0LXBhZGRpbmcteS1sZzogJGlucHV0LXBhZGRpbmcteS1sZyAhZGVmYXVsdDtcclxuJGN1c3RvbS1zZWxlY3QtcGFkZGluZy14LWxnOiAkaW5wdXQtcGFkZGluZy14LWxnICFkZWZhdWx0O1xyXG4kY3VzdG9tLXNlbGVjdC1mb250LXNpemUtbGc6ICRpbnB1dC1mb250LXNpemUtbGcgIWRlZmF1bHQ7XHJcbiRjdXN0b20tc2VsZWN0LWhlaWdodC1sZzogJGlucHV0LWhlaWdodC1sZyAhZGVmYXVsdDtcclxuXHJcbi8vICRjdXN0b20tcmFuZ2UtdHJhY2std2lkdGg6ICAgICAgICAgIDEwMCUgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdHJhY2staGVpZ2h0OiAgICAgICAgIC41cmVtICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLXJhbmdlLXRyYWNrLWN1cnNvcjogICAgICAgICBwb2ludGVyICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLXJhbmdlLXRyYWNrLWJnOiAgICAgICAgICAgICAkZ3JheS0zMDAgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdHJhY2stYm9yZGVyLXJhZGl1czogIDFyZW0gIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdHJhY2stYm94LXNoYWRvdzogICAgIGluc2V0IDAgLjI1cmVtIC4yNXJlbSByZ2JhKCRibGFjaywgLjEpICFkZWZhdWx0O1xyXG5cclxuLy8gJGN1c3RvbS1yYW5nZS10aHVtYi13aWR0aDogICAgICAgICAgICAgICAgICAgMXJlbSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1yYW5nZS10aHVtYi1oZWlnaHQ6ICAgICAgICAgICAgICAgICAgJGN1c3RvbS1yYW5nZS10aHVtYi13aWR0aCAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1yYW5nZS10aHVtYi1iZzogICAgICAgICAgICAgICAgICAgICAgJGNvbXBvbmVudC1hY3RpdmUtYmcgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdGh1bWItYm9yZGVyOiAgICAgICAgICAgICAgICAgIDAgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdGh1bWItYm9yZGVyLXJhZGl1czogICAgICAgICAgIDFyZW0gIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdGh1bWItYm94LXNoYWRvdzogICAgICAgICAgICAgIDAgLjFyZW0gLjI1cmVtIHJnYmEoJGJsYWNrLCAuMSkgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdGh1bWItZm9jdXMtYm94LXNoYWRvdzogICAgICAgIDAgMCAwIDFweCAkYm9keS1iZywgJGlucHV0LWZvY3VzLWJveC1zaGFkb3cgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tcmFuZ2UtdGh1bWItZm9jdXMtYm94LXNoYWRvdy13aWR0aDogICRpbnB1dC1mb2N1cy13aWR0aCAhZGVmYXVsdDsgLy8gRm9yIGZvY3VzIGJveCBzaGFkb3cgaXNzdWUgaW4gSUUvRWRnZVxyXG4vLyAkY3VzdG9tLXJhbmdlLXRodW1iLWFjdGl2ZS1iZzogICAgICAgICAgICAgICBsaWdodGVuKCRjb21wb25lbnQtYWN0aXZlLWJnLCAzNSUpICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLXJhbmdlLXRodW1iLWRpc2FibGVkLWJnOiAgICAgICAgICAgICAkZ3JheS01MDAgIWRlZmF1bHQ7XHJcblxyXG4vLyAkY3VzdG9tLWZpbGUtaGVpZ2h0OiAgICAgICAgICAgICAgICAkaW5wdXQtaGVpZ2h0ICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWZpbGUtaGVpZ2h0LWlubmVyOiAgICAgICAgICAkaW5wdXQtaGVpZ2h0LWlubmVyICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWZpbGUtZm9jdXMtYm9yZGVyLWNvbG9yOiAgICAkaW5wdXQtZm9jdXMtYm9yZGVyLWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWZpbGUtZm9jdXMtYm94LXNoYWRvdzogICAgICAkaW5wdXQtZm9jdXMtYm94LXNoYWRvdyAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1maWxlLWRpc2FibGVkLWJnOiAgICAgICAgICAgJGlucHV0LWRpc2FibGVkLWJnICFkZWZhdWx0O1xyXG5cclxuLy8gJGN1c3RvbS1maWxlLXBhZGRpbmcteTogICAgICAgICAgICAgJGlucHV0LXBhZGRpbmcteSAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1maWxlLXBhZGRpbmcteDogICAgICAgICAgICAgJGlucHV0LXBhZGRpbmcteCAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1maWxlLWxpbmUtaGVpZ2h0OiAgICAgICAgICAgJGlucHV0LWxpbmUtaGVpZ2h0ICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWZpbGUtZm9udC1mYW1pbHk6ICAgICAgICAgICAkaW5wdXQtZm9udC1mYW1pbHkgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tZmlsZS1mb250LXdlaWdodDogICAgICAgICAgICRpbnB1dC1mb250LXdlaWdodCAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1maWxlLWNvbG9yOiAgICAgICAgICAgICAgICAgJGlucHV0LWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWZpbGUtYmc6ICAgICAgICAgICAgICAgICAgICAkaW5wdXQtYmcgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tZmlsZS1ib3JkZXItd2lkdGg6ICAgICAgICAgICRpbnB1dC1ib3JkZXItd2lkdGggIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tZmlsZS1ib3JkZXItY29sb3I6ICAgICAgICAgICRpbnB1dC1ib3JkZXItY29sb3IgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tZmlsZS1ib3JkZXItcmFkaXVzOiAgICAgICAgICRpbnB1dC1ib3JkZXItcmFkaXVzICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWZpbGUtYm94LXNoYWRvdzogICAgICAgICAgICAkaW5wdXQtYm94LXNoYWRvdyAhZGVmYXVsdDtcclxuLy8gJGN1c3RvbS1maWxlLWJ1dHRvbi1jb2xvcjogICAgICAgICAgJGN1c3RvbS1maWxlLWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkY3VzdG9tLWZpbGUtYnV0dG9uLWJnOiAgICAgICAgICAgICAkaW5wdXQtZ3JvdXAtYWRkb24tYmcgIWRlZmF1bHQ7XHJcbi8vICRjdXN0b20tZmlsZS10ZXh0OiAoXHJcbi8vICAgZW46IFwiQnJvd3NlXCJcclxuLy8gKSAhZGVmYXVsdDtcclxuXHJcbi8vIC8vIEZvcm0gdmFsaWRhdGlvblxyXG5cclxuLy8gJGZvcm0tZmVlZGJhY2stbWFyZ2luLXRvcDogICAgICAgICAgJGZvcm0tdGV4dC1tYXJnaW4tdG9wICFkZWZhdWx0O1xyXG4vLyAkZm9ybS1mZWVkYmFjay1mb250LXNpemU6ICAgICAgICAgICAkc21hbGwtZm9udC1zaXplICFkZWZhdWx0O1xyXG4vLyAkZm9ybS1mZWVkYmFjay12YWxpZC1jb2xvcjogICAgICAgICB0aGVtZS1jb2xvcihcInN1Y2Nlc3NcIikgIWRlZmF1bHQ7XHJcbi8vICRmb3JtLWZlZWRiYWNrLWludmFsaWQtY29sb3I6ICAgICAgIHRoZW1lLWNvbG9yKFwiZGFuZ2VyXCIpICFkZWZhdWx0O1xyXG5cclxuLy8gJGZvcm0tZmVlZGJhY2staWNvbi12YWxpZC1jb2xvcjogICAgJGZvcm0tZmVlZGJhY2stdmFsaWQtY29sb3IgIWRlZmF1bHQ7XHJcbi8vICRmb3JtLWZlZWRiYWNrLWljb24tdmFsaWQ6ICAgICAgICAgIHVybChcImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgd2lkdGg9JzgnIGhlaWdodD0nOCcgdmlld0JveD0nMCAwIDggOCc+PHBhdGggZmlsbD0nI3skZm9ybS1mZWVkYmFjay1pY29uLXZhbGlkLWNvbG9yfScgZD0nTTIuMyA2LjczTC42IDQuNTNjLS40LTEuMDQuNDYtMS40IDEuMS0uOGwxLjEgMS40IDMuNC0zLjhjLjYtLjYzIDEuNi0uMjcgMS4yLjdsLTQgNC42Yy0uNDMuNS0uOC40LTEuMS4xeicvPjwvc3ZnPlwiKSAhZGVmYXVsdDtcclxuLy8gJGZvcm0tZmVlZGJhY2staWNvbi1pbnZhbGlkLWNvbG9yOiAgJGZvcm0tZmVlZGJhY2staW52YWxpZC1jb2xvciAhZGVmYXVsdDtcclxuLy8gJGZvcm0tZmVlZGJhY2staWNvbi1pbnZhbGlkOiAgICAgICAgdXJsKFwiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nMTInIGhlaWdodD0nMTInIGZpbGw9J25vbmUnIHN0cm9rZT0nI3skZm9ybS1mZWVkYmFjay1pY29uLWludmFsaWQtY29sb3J9JyB2aWV3Qm94PScwIDAgMTIgMTInPjxjaXJjbGUgY3g9JzYnIGN5PSc2JyByPSc0LjUnLz48cGF0aCBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBkPSdNNS44IDMuNmguNEw2IDYuNXonLz48Y2lyY2xlIGN4PSc2JyBjeT0nOC4yJyByPScuNicgZmlsbD0nI3skZm9ybS1mZWVkYmFjay1pY29uLWludmFsaWQtY29sb3J9JyBzdHJva2U9J25vbmUnLz48L3N2Zz5cIikgIWRlZmF1bHQ7XHJcblxyXG4vLyAkZm9ybS12YWxpZGF0aW9uLXN0YXRlczogKCkgIWRlZmF1bHQ7XHJcbi8vIC8vIHN0eWxlbGludC1kaXNhYmxlLW5leHQtbGluZSBzY3NzL2RvbGxhci12YXJpYWJsZS1kZWZhdWx0XHJcbi8vICRmb3JtLXZhbGlkYXRpb24tc3RhdGVzOiBtYXAtbWVyZ2UoXHJcbi8vICAgKFxyXG4vLyAgICAgXCJ2YWxpZFwiOiAoXHJcbi8vICAgICAgIFwiY29sb3JcIjogJGZvcm0tZmVlZGJhY2stdmFsaWQtY29sb3IsXHJcbi8vICAgICAgIFwiaWNvblwiOiAkZm9ybS1mZWVkYmFjay1pY29uLXZhbGlkXHJcbi8vICAgICApLFxyXG4vLyAgICAgXCJpbnZhbGlkXCI6IChcclxuLy8gICAgICAgXCJjb2xvclwiOiAkZm9ybS1mZWVkYmFjay1pbnZhbGlkLWNvbG9yLFxyXG4vLyAgICAgICBcImljb25cIjogJGZvcm0tZmVlZGJhY2staWNvbi1pbnZhbGlkXHJcbi8vICAgICApLFxyXG4vLyAgICksXHJcbi8vICAgJGZvcm0tdmFsaWRhdGlvbi1zdGF0ZXNcclxuLy8gKTtcclxuXHJcbi8vIC8vIFotaW5kZXggbWFzdGVyIGxpc3RcclxuLy8gLy9cclxuLy8gLy8gV2FybmluZzogQXZvaWQgY3VzdG9taXppbmcgdGhlc2UgdmFsdWVzLiBUaGV5J3JlIHVzZWQgZm9yIGEgYmlyZCdzIGV5ZSB2aWV3XHJcbi8vIC8vIG9mIGNvbXBvbmVudHMgZGVwZW5kZW50IG9uIHRoZSB6LWF4aXMgYW5kIGFyZSBkZXNpZ25lZCB0byBhbGwgd29yayB0b2dldGhlci5cclxuXHJcbi8vICR6aW5kZXgtZHJvcGRvd246ICAgICAgICAgICAgICAgICAgIDEwMDAgIWRlZmF1bHQ7XHJcbi8vICR6aW5kZXgtc3RpY2t5OiAgICAgICAgICAgICAgICAgICAgIDEwMjAgIWRlZmF1bHQ7XHJcbi8vICR6aW5kZXgtZml4ZWQ6ICAgICAgICAgICAgICAgICAgICAgIDEwMzAgIWRlZmF1bHQ7XHJcbi8vICR6aW5kZXgtbW9kYWwtYmFja2Ryb3A6ICAgICAgICAgICAgIDEwNDAgIWRlZmF1bHQ7XHJcbi8vICR6aW5kZXgtbW9kYWw6ICAgICAgICAgICAgICAgICAgICAgIDEwNTAgIWRlZmF1bHQ7XHJcbi8vICR6aW5kZXgtcG9wb3ZlcjogICAgICAgICAgICAgICAgICAgIDEwNjAgIWRlZmF1bHQ7XHJcbi8vICR6aW5kZXgtdG9vbHRpcDogICAgICAgICAgICAgICAgICAgIDEwNzAgIWRlZmF1bHQ7XHJcblxyXG4vLyAvLyBOYXZzXHJcblxyXG4vLyAkbmF2LWxpbmstcGFkZGluZy15OiAgICAgICAgICAgICAgICAuNXJlbSAhZGVmYXVsdDtcclxuLy8gJG5hdi1saW5rLXBhZGRpbmcteDogICAgICAgICAgICAgICAgMXJlbSAhZGVmYXVsdDtcclxuLy8gJG5hdi1saW5rLWRpc2FibGVkLWNvbG9yOiAgICAgICAgICAgJGdyYXktNjAwICFkZWZhdWx0O1xyXG5cclxuLy8gJG5hdi10YWJzLWJvcmRlci1jb2xvcjogICAgICAgICAgICAgJGdyYXktMzAwICFkZWZhdWx0O1xyXG4vLyAkbmF2LXRhYnMtYm9yZGVyLXdpZHRoOiAgICAgICAgICAgICAkYm9yZGVyLXdpZHRoICFkZWZhdWx0O1xyXG4vLyAkbmF2LXRhYnMtYm9yZGVyLXJhZGl1czogICAgICAgICAgICAkYm9yZGVyLXJhZGl1cyAhZGVmYXVsdDtcclxuLy8gJG5hdi10YWJzLWxpbmstaG92ZXItYm9yZGVyLWNvbG9yOiAgJGdyYXktMjAwICRncmF5LTIwMCAkbmF2LXRhYnMtYm9yZGVyLWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkbmF2LXRhYnMtbGluay1hY3RpdmUtY29sb3I6ICAgICAgICAkZ3JheS03MDAgIWRlZmF1bHQ7XHJcbi8vICRuYXYtdGFicy1saW5rLWFjdGl2ZS1iZzogICAgICAgICAgICRib2R5LWJnICFkZWZhdWx0O1xyXG4vLyAkbmF2LXRhYnMtbGluay1hY3RpdmUtYm9yZGVyLWNvbG9yOiAkZ3JheS0zMDAgJGdyYXktMzAwICRuYXYtdGFicy1saW5rLWFjdGl2ZS1iZyAhZGVmYXVsdDtcclxuXHJcbi8vICRuYXYtcGlsbHMtYm9yZGVyLXJhZGl1czogICAgICAgICAgICRib3JkZXItcmFkaXVzICFkZWZhdWx0O1xyXG4vLyAkbmF2LXBpbGxzLWxpbmstYWN0aXZlLWNvbG9yOiAgICAgICAkY29tcG9uZW50LWFjdGl2ZS1jb2xvciAhZGVmYXVsdDtcclxuLy8gJG5hdi1waWxscy1saW5rLWFjdGl2ZS1iZzogICAgICAgICAgJGNvbXBvbmVudC1hY3RpdmUtYmcgIWRlZmF1bHQ7XHJcblxyXG4vLyAkbmF2LWRpdmlkZXItY29sb3I6ICAgICAgICAgICAgICAgICAkZ3JheS0yMDAgIWRlZmF1bHQ7XHJcbi8vICRuYXYtZGl2aWRlci1tYXJnaW4teTogICAgICAgICAgICAgICRzcGFjZXIgLyAyICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gTmF2YmFyXHJcblxyXG4vLyAkbmF2YmFyLXBhZGRpbmcteTogICAgICAgICAgICAgICAgICAkc3BhY2VyIC8gMiAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1wYWRkaW5nLXg6ICAgICAgICAgICAgICAgICAgJHNwYWNlciAhZGVmYXVsdDtcclxuXHJcbi8vICRuYXZiYXItbmF2LWxpbmstcGFkZGluZy14OiAgICAgICAgIC41cmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJG5hdmJhci1icmFuZC1mb250LXNpemU6ICAgICAgICAgICAgJGZvbnQtc2l6ZS1sZyAhZGVmYXVsdDtcclxuLy8gLy8gQ29tcHV0ZSB0aGUgbmF2YmFyLWJyYW5kIHBhZGRpbmcteSBzbyB0aGUgbmF2YmFyLWJyYW5kIHdpbGwgaGF2ZSB0aGUgc2FtZSBoZWlnaHQgYXMgbmF2YmFyLXRleHQgYW5kIG5hdi1saW5rXHJcbi8vICRuYXYtbGluay1oZWlnaHQ6ICAgICAgICAgICAgICAgICAgICRmb250LXNpemUtYmFzZSAqICRsaW5lLWhlaWdodC1iYXNlICsgJG5hdi1saW5rLXBhZGRpbmcteSAqIDIgIWRlZmF1bHQ7XHJcbi8vICRuYXZiYXItYnJhbmQtaGVpZ2h0OiAgICAgICAgICAgICAgICRuYXZiYXItYnJhbmQtZm9udC1zaXplICogJGxpbmUtaGVpZ2h0LWJhc2UgIWRlZmF1bHQ7XHJcbi8vICRuYXZiYXItYnJhbmQtcGFkZGluZy15OiAgICAgICAgICAgICgkbmF2LWxpbmstaGVpZ2h0IC0gJG5hdmJhci1icmFuZC1oZWlnaHQpIC8gMiAhZGVmYXVsdDtcclxuXHJcbi8vICRuYXZiYXItdG9nZ2xlci1wYWRkaW5nLXk6ICAgICAgICAgIC4yNXJlbSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci10b2dnbGVyLXBhZGRpbmcteDogICAgICAgICAgLjc1cmVtICFkZWZhdWx0O1xyXG4vLyAkbmF2YmFyLXRvZ2dsZXItZm9udC1zaXplOiAgICAgICAgICAkZm9udC1zaXplLWxnICFkZWZhdWx0O1xyXG4vLyAkbmF2YmFyLXRvZ2dsZXItYm9yZGVyLXJhZGl1czogICAgICAkYnRuLWJvcmRlci1yYWRpdXMgIWRlZmF1bHQ7XHJcblxyXG4vLyAkbmF2YmFyLWRhcmstY29sb3I6ICAgICAgICAgICAgICAgICByZ2JhKCR3aGl0ZSwgLjUpICFkZWZhdWx0O1xyXG4vLyAkbmF2YmFyLWRhcmstaG92ZXItY29sb3I6ICAgICAgICAgICByZ2JhKCR3aGl0ZSwgLjc1KSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1kYXJrLWFjdGl2ZS1jb2xvcjogICAgICAgICAgJHdoaXRlICFkZWZhdWx0O1xyXG4vLyAkbmF2YmFyLWRhcmstZGlzYWJsZWQtY29sb3I6ICAgICAgICByZ2JhKCR3aGl0ZSwgLjI1KSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1kYXJrLXRvZ2dsZXItaWNvbi1iZzogICAgICAgdXJsKFwiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nMzAnIGhlaWdodD0nMzAnIHZpZXdCb3g9JzAgMCAzMCAzMCc+PHBhdGggc3Ryb2tlPScjeyRuYXZiYXItZGFyay1jb2xvcn0nIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLW1pdGVybGltaXQ9JzEwJyBzdHJva2Utd2lkdGg9JzInIGQ9J000IDdoMjJNNCAxNWgyMk00IDIzaDIyJy8+PC9zdmc+XCIpICFkZWZhdWx0O1xyXG4vLyAkbmF2YmFyLWRhcmstdG9nZ2xlci1ib3JkZXItY29sb3I6ICByZ2JhKCR3aGl0ZSwgLjEpICFkZWZhdWx0O1xyXG5cclxuLy8gJG5hdmJhci1saWdodC1jb2xvcjogICAgICAgICAgICAgICAgcmdiYSgkYmxhY2ssIC41KSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1saWdodC1ob3Zlci1jb2xvcjogICAgICAgICAgcmdiYSgkYmxhY2ssIC43KSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1saWdodC1hY3RpdmUtY29sb3I6ICAgICAgICAgcmdiYSgkYmxhY2ssIC45KSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1saWdodC1kaXNhYmxlZC1jb2xvcjogICAgICAgcmdiYSgkYmxhY2ssIC4zKSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1saWdodC10b2dnbGVyLWljb24tYmc6ICAgICAgdXJsKFwiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nMzAnIGhlaWdodD0nMzAnIHZpZXdCb3g9JzAgMCAzMCAzMCc+PHBhdGggc3Ryb2tlPScjeyRuYXZiYXItbGlnaHQtY29sb3J9JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1taXRlcmxpbWl0PScxMCcgc3Ryb2tlLXdpZHRoPScyJyBkPSdNNCA3aDIyTTQgMTVoMjJNNCAyM2gyMicvPjwvc3ZnPlwiKSAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1saWdodC10b2dnbGVyLWJvcmRlci1jb2xvcjogcmdiYSgkYmxhY2ssIC4xKSAhZGVmYXVsdDtcclxuXHJcbi8vICRuYXZiYXItbGlnaHQtdGhlbWUtY29sb3I6ICAgICAgICAgICAgICAgICRuYXZiYXItbGlnaHQtYWN0aXZlLWNvbG9yICFkZWZhdWx0O1xyXG4vLyAkbmF2YmFyLWxpZ2h0LWJyYW5kLWhvdmVyLWNvbG9yOiAgICAgICAgICAkbmF2YmFyLWxpZ2h0LWFjdGl2ZS1jb2xvciAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1kYXJrLXRoZW1lLWNvbG9yOiAgICAgICAgICAgICAgICAgJG5hdmJhci1kYXJrLWFjdGl2ZS1jb2xvciAhZGVmYXVsdDtcclxuLy8gJG5hdmJhci1kYXJrLWJyYW5kLWhvdmVyLWNvbG9yOiAgICAgICAgICAgJG5hdmJhci1kYXJrLWFjdGl2ZS1jb2xvciAhZGVmYXVsdDtcclxuXHJcbi8vIERyb3Bkb3duc1xyXG4vL1xyXG4vLyBEcm9wZG93biBtZW51IGNvbnRhaW5lciBhbmQgY29udGVudHMuXHJcblxyXG4kZHJvcGRvd24tbWluLXdpZHRoOiAxMHJlbTtcclxuJGRyb3Bkb3duLXBhZGRpbmcteTogMC41cmVtO1xyXG4kZHJvcGRvd24tc3BhY2VyOiAwLjEyNXJlbTtcclxuJGRyb3Bkb3duLWZvbnQtc2l6ZTogJGZvbnQtc2l6ZS1iYXNlO1xyXG4kZHJvcGRvd24tY29sb3I6ICRib2R5LWNvbG9yO1xyXG4kZHJvcGRvd24tYmc6ICR3aGl0ZTtcclxuJGRyb3Bkb3duLWJvcmRlci1jb2xvcjogcmdiYSgkYmxhY2ssIDAuMTUpO1xyXG4kZHJvcGRvd24tYm9yZGVyLXJhZGl1czogJGJvcmRlci1yYWRpdXM7XHJcbiRkcm9wZG93bi1ib3JkZXItd2lkdGg6ICRib3JkZXItd2lkdGg7XHJcbiRkcm9wZG93bi1pbm5lci1ib3JkZXItcmFkaXVzOiBzdWJ0cmFjdChcclxuICAkZHJvcGRvd24tYm9yZGVyLXJhZGl1cyxcclxuICAkZHJvcGRvd24tYm9yZGVyLXdpZHRoXHJcbik7XHJcbiRkcm9wZG93bi1kaXZpZGVyLWJnOiAkZ3JheS0yMDA7XHJcbiRkcm9wZG93bi1kaXZpZGVyLW1hcmdpbi15OiAkbmF2LWRpdmlkZXItbWFyZ2luLXk7XHJcbiRkcm9wZG93bi1ib3gtc2hhZG93OiAwIDAuNXJlbSAxcmVtIHJnYmEoJGJsYWNrLCAwLjE3NSk7XHJcblxyXG4kZHJvcGRvd24tbGluay1jb2xvcjogJGdyYXktMjAwO1xyXG4kZHJvcGRvd24tbGluay1ob3Zlci1jb2xvcjogZGFya2VuKCRncmF5LTIwMCwgNSUpO1xyXG4kZHJvcGRvd24tbGluay1ob3Zlci1iZzogJGdyYXktMTAwO1xyXG5cclxuJGRyb3Bkb3duLWxpbmstYWN0aXZlLWNvbG9yOiAkY29tcG9uZW50LWFjdGl2ZS1jb2xvcjtcclxuJGRyb3Bkb3duLWxpbmstYWN0aXZlLWJnOiAkY29tcG9uZW50LWFjdGl2ZS1iZztcclxuXHJcbiRkcm9wZG93bi1saW5rLWRpc2FibGVkLWNvbG9yOiAkZ3JheS02MDA7XHJcblxyXG4kZHJvcGRvd24taXRlbS1wYWRkaW5nLXk6IDAuMjVyZW07XHJcbiRkcm9wZG93bi1pdGVtLXBhZGRpbmcteDogMS41cmVtO1xyXG5cclxuJGRyb3Bkb3duLWhlYWRlci1jb2xvcjogJGdyYXktNjAwO1xyXG5cclxuLy8gLy8gUGFnaW5hdGlvblxyXG5cclxuJHBhZ2luYXRpb24tcGFkZGluZy15OiAwLjZyZW07XHJcbiRwYWdpbmF0aW9uLXBhZGRpbmcteDogMC43NXJlbTtcclxuJHBhZ2luYXRpb24tcGFkZGluZy15LXNtOiAwLjI1cmVtO1xyXG4kcGFnaW5hdGlvbi1wYWRkaW5nLXgtc206IDAuNXJlbTtcclxuJHBhZ2luYXRpb24tcGFkZGluZy15LWxnOiAwLjc1cmVtO1xyXG4kcGFnaW5hdGlvbi1wYWRkaW5nLXgtbGc6IDEuNXJlbTtcclxuJHBhZ2luYXRpb24tbGluZS1oZWlnaHQ6IDEuMjU7XHJcblxyXG4kcGFnaW5hdGlvbi1jb2xvcjogJGdyYXktNjAwO1xyXG4kcGFnaW5hdGlvbi1iZzogJHdoaXRlO1xyXG4kcGFnaW5hdGlvbi1ib3JkZXItd2lkdGg6ICRib3JkZXItd2lkdGg7XHJcbiRwYWdpbmF0aW9uLWJvcmRlci1jb2xvcjogJGdyYXktODAwO1xyXG5cclxuJHBhZ2luYXRpb24tZm9jdXMtYm94LXNoYWRvdzogbm9uZTtcclxuJHBhZ2luYXRpb24tZm9jdXMtb3V0bGluZTogMDtcclxuXHJcbiRwYWdpbmF0aW9uLWhvdmVyLWNvbG9yOiAkbGluay1ob3Zlci1jb2xvcjtcclxuJHBhZ2luYXRpb24taG92ZXItYmc6ICRncmF5LTIwMDtcclxuJHBhZ2luYXRpb24taG92ZXItYm9yZGVyLWNvbG9yOiAkZ3JheS04MDA7XHJcblxyXG4kcGFnaW5hdGlvbi1hY3RpdmUtY29sb3I6ICRncmF5LTYwMDtcclxuJHBhZ2luYXRpb24tYWN0aXZlLWJnOiAkZ3JheS04MDA7XHJcbiRwYWdpbmF0aW9uLWFjdGl2ZS1ib3JkZXItY29sb3I6ICRncmF5LTgwMDtcclxuXHJcbiRwYWdpbmF0aW9uLWRpc2FibGVkLWNvbG9yOiAkZ3JheS02MDA7XHJcbiRwYWdpbmF0aW9uLWRpc2FibGVkLWJnOiAkd2hpdGU7XHJcbiRwYWdpbmF0aW9uLWRpc2FibGVkLWJvcmRlci1jb2xvcjogJGdyYXktMzAwO1xyXG5cclxuLy8gLy8gSnVtYm90cm9uXHJcblxyXG4vLyAkanVtYm90cm9uLXBhZGRpbmc6ICAgICAgICAgICAgICAgICAycmVtICFkZWZhdWx0O1xyXG4vLyAkanVtYm90cm9uLWNvbG9yOiAgICAgICAgICAgICAgICAgICBudWxsICFkZWZhdWx0O1xyXG4vLyAkanVtYm90cm9uLWJnOiAgICAgICAgICAgICAgICAgICAgICAkZ3JheS0yMDAgIWRlZmF1bHQ7XHJcblxyXG4vLyAvLyBDYXJkc1xyXG5cclxuLy8gJGNhcmQtc3BhY2VyLXk6ICAgICAgICAgICAgICAgICAgICAgLjc1cmVtICFkZWZhdWx0O1xyXG4vLyAkY2FyZC1zcGFjZXIteDogICAgICAgICAgICAgICAgICAgICAxLjI1cmVtICFkZWZhdWx0O1xyXG4vLyAkY2FyZC1ib3JkZXItd2lkdGg6ICAgICAgICAgICAgICAgICAkYm9yZGVyLXdpZHRoICFkZWZhdWx0O1xyXG4vLyAkY2FyZC1ib3JkZXItcmFkaXVzOiAgICAgICAgICAgICAgICAkYm9yZGVyLXJhZGl1cyAhZGVmYXVsdDtcclxuLy8gJGNhcmQtYm9yZGVyLWNvbG9yOiAgICAgICAgICAgICAgICAgcmdiYSgkYmxhY2ssIC4xMjUpICFkZWZhdWx0O1xyXG4vLyAkY2FyZC1pbm5lci1ib3JkZXItcmFkaXVzOiAgICAgICAgICBzdWJ0cmFjdCgkY2FyZC1ib3JkZXItcmFkaXVzLCAkY2FyZC1ib3JkZXItd2lkdGgpICFkZWZhdWx0O1xyXG4vLyAkY2FyZC1jYXAtYmc6ICAgICAgICAgICAgICAgICAgICAgICByZ2JhKCRibGFjaywgLjAzKSAhZGVmYXVsdDtcclxuLy8gJGNhcmQtY2FwLWNvbG9yOiAgICAgICAgICAgICAgICAgICAgbnVsbCAhZGVmYXVsdDtcclxuLy8gJGNhcmQtaGVpZ2h0OiAgICAgICAgICAgICAgICAgICAgICAgbnVsbCAhZGVmYXVsdDtcclxuLy8gJGNhcmQtY29sb3I6ICAgICAgICAgICAgICAgICAgICAgICAgbnVsbCAhZGVmYXVsdDtcclxuLy8gJGNhcmQtYmc6ICAgICAgICAgICAgICAgICAgICAgICAgICAgJHdoaXRlICFkZWZhdWx0O1xyXG5cclxuLy8gJGNhcmQtaW1nLW92ZXJsYXktcGFkZGluZzogICAgICAgICAgMS4yNXJlbSAhZGVmYXVsdDtcclxuXHJcbi8vICRjYXJkLWdyb3VwLW1hcmdpbjogICAgICAgICAgICAgICAgICRncmlkLWd1dHRlci13aWR0aCAvIDIgIWRlZmF1bHQ7XHJcbi8vICRjYXJkLWRlY2stbWFyZ2luOiAgICAgICAgICAgICAgICAgICRjYXJkLWdyb3VwLW1hcmdpbiAhZGVmYXVsdDtcclxuXHJcbi8vICRjYXJkLWNvbHVtbnMtY291bnQ6ICAgICAgICAgICAgICAgIDMgIWRlZmF1bHQ7XHJcbi8vICRjYXJkLWNvbHVtbnMtZ2FwOiAgICAgICAgICAgICAgICAgIDEuMjVyZW0gIWRlZmF1bHQ7XHJcbi8vICRjYXJkLWNvbHVtbnMtbWFyZ2luOiAgICAgICAgICAgICAgICRjYXJkLXNwYWNlci15ICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gVG9vbHRpcHNcclxuXHJcbi8vICR0b29sdGlwLWZvbnQtc2l6ZTogICAgICAgICAgICAgICAgICRmb250LXNpemUtc20gIWRlZmF1bHQ7XHJcbi8vICR0b29sdGlwLW1heC13aWR0aDogICAgICAgICAgICAgICAgIDIwMHB4ICFkZWZhdWx0O1xyXG4vLyAkdG9vbHRpcC1jb2xvcjogICAgICAgICAgICAgICAgICAgICAkd2hpdGUgIWRlZmF1bHQ7XHJcbi8vICR0b29sdGlwLWJnOiAgICAgICAgICAgICAgICAgICAgICAgICRibGFjayAhZGVmYXVsdDtcclxuLy8gJHRvb2x0aXAtYm9yZGVyLXJhZGl1czogICAgICAgICAgICAgJGJvcmRlci1yYWRpdXMgIWRlZmF1bHQ7XHJcbi8vICR0b29sdGlwLW9wYWNpdHk6ICAgICAgICAgICAgICAgICAgIC45ICFkZWZhdWx0O1xyXG4vLyAkdG9vbHRpcC1wYWRkaW5nLXk6ICAgICAgICAgICAgICAgICAuMjVyZW0gIWRlZmF1bHQ7XHJcbi8vICR0b29sdGlwLXBhZGRpbmcteDogICAgICAgICAgICAgICAgIC41cmVtICFkZWZhdWx0O1xyXG4vLyAkdG9vbHRpcC1tYXJnaW46ICAgICAgICAgICAgICAgICAgICAwICFkZWZhdWx0O1xyXG5cclxuLy8gJHRvb2x0aXAtYXJyb3ctd2lkdGg6ICAgICAgICAgICAgICAgLjhyZW0gIWRlZmF1bHQ7XHJcbi8vICR0b29sdGlwLWFycm93LWhlaWdodDogICAgICAgICAgICAgIC40cmVtICFkZWZhdWx0O1xyXG4vLyAkdG9vbHRpcC1hcnJvdy1jb2xvcjogICAgICAgICAgICAgICAkdG9vbHRpcC1iZyAhZGVmYXVsdDtcclxuXHJcbi8vIC8vIEZvcm0gdG9vbHRpcHMgbXVzdCBjb21lIGFmdGVyIHJlZ3VsYXIgdG9vbHRpcHNcclxuLy8gJGZvcm0tZmVlZGJhY2stdG9vbHRpcC1wYWRkaW5nLXk6ICAgICAkdG9vbHRpcC1wYWRkaW5nLXkgIWRlZmF1bHQ7XHJcbi8vICRmb3JtLWZlZWRiYWNrLXRvb2x0aXAtcGFkZGluZy14OiAgICAgJHRvb2x0aXAtcGFkZGluZy14ICFkZWZhdWx0O1xyXG4vLyAkZm9ybS1mZWVkYmFjay10b29sdGlwLWZvbnQtc2l6ZTogICAgICR0b29sdGlwLWZvbnQtc2l6ZSAhZGVmYXVsdDtcclxuLy8gJGZvcm0tZmVlZGJhY2stdG9vbHRpcC1saW5lLWhlaWdodDogICAkbGluZS1oZWlnaHQtYmFzZSAhZGVmYXVsdDtcclxuLy8gJGZvcm0tZmVlZGJhY2stdG9vbHRpcC1vcGFjaXR5OiAgICAgICAkdG9vbHRpcC1vcGFjaXR5ICFkZWZhdWx0O1xyXG4vLyAkZm9ybS1mZWVkYmFjay10b29sdGlwLWJvcmRlci1yYWRpdXM6ICR0b29sdGlwLWJvcmRlci1yYWRpdXMgIWRlZmF1bHQ7XHJcblxyXG4vLyAvLyBQb3BvdmVyc1xyXG5cclxuJHBvcG92ZXItZm9udC1zaXplOiAkZm9udC1zaXplLXNtICFkZWZhdWx0O1xyXG4kcG9wb3Zlci1iZzogJHdoaXRlICFkZWZhdWx0O1xyXG4kcG9wb3Zlci1tYXgtd2lkdGg6IDI0NnB4ICFkZWZhdWx0O1xyXG4kcG9wb3Zlci1ib3JkZXItd2lkdGg6IDA7XHJcbiRwb3BvdmVyLWJvcmRlci1jb2xvcjogcmdiYSgkYmxhY2ssIDAuMikgIWRlZmF1bHQ7XHJcbiRwb3BvdmVyLWJvcmRlci1yYWRpdXM6ICRib3JkZXItcmFkaXVzLWxnICFkZWZhdWx0O1xyXG4kcG9wb3Zlci1pbm5lci1ib3JkZXItcmFkaXVzOiBzdWJ0cmFjdChcclxuICAkcG9wb3Zlci1ib3JkZXItcmFkaXVzLFxyXG4gICRwb3BvdmVyLWJvcmRlci13aWR0aFxyXG4pICFkZWZhdWx0O1xyXG4kcG9wb3Zlci1ib3gtc2hhZG93OiAkYm94LXNoYWRvdy14bCAhZGVmYXVsdDtcclxuXHJcbi8vICRwb3BvdmVyLWhlYWRlci1iZzogICAgICAgICAgICAgICAgIGRhcmtlbigkcG9wb3Zlci1iZywgMyUpICFkZWZhdWx0O1xyXG4vLyAkcG9wb3Zlci1oZWFkZXItY29sb3I6ICAgICAgICAgICAgICAkaGVhZGluZ3MtY29sb3IgIWRlZmF1bHQ7XHJcbiRwb3BvdmVyLWhlYWRlci1wYWRkaW5nLXk6IDAuNzVyZW07XHJcbiRwb3BvdmVyLWhlYWRlci1wYWRkaW5nLXg6IDFyZW07XHJcblxyXG4vLyAkcG9wb3Zlci1ib2R5LWNvbG9yOiAgICAgICAgICAgICAgICAkYm9keS1jb2xvciAhZGVmYXVsdDtcclxuJHBvcG92ZXItYm9keS1wYWRkaW5nLXk6ICRwb3BvdmVyLWhlYWRlci1wYWRkaW5nLXk7XHJcbiRwb3BvdmVyLWJvZHktcGFkZGluZy14OiAkcG9wb3Zlci1oZWFkZXItcGFkZGluZy14O1xyXG5cclxuLy8gJHBvcG92ZXItYXJyb3ctd2lkdGg6ICAgICAgICAgICAgICAgMXJlbSAhZGVmYXVsdDtcclxuLy8gJHBvcG92ZXItYXJyb3ctaGVpZ2h0OiAgICAgICAgICAgICAgLjVyZW0gIWRlZmF1bHQ7XHJcbi8vICRwb3BvdmVyLWFycm93LWNvbG9yOiAgICAgICAgICAgICAgICRwb3BvdmVyLWJnICFkZWZhdWx0O1xyXG5cclxuLy8gJHBvcG92ZXItYXJyb3ctb3V0ZXItY29sb3I6ICAgICAgICAgZmFkZS1pbigkcG9wb3Zlci1ib3JkZXItY29sb3IsIC4wNSkgIWRlZmF1bHQ7XHJcblxyXG4vLyAvLyBUb2FzdHNcclxuXHJcbi8vICR0b2FzdC1tYXgtd2lkdGg6ICAgICAgICAgICAgICAgICAgIDM1MHB4ICFkZWZhdWx0O1xyXG4vLyAkdG9hc3QtcGFkZGluZy14OiAgICAgICAgICAgICAgICAgICAuNzVyZW0gIWRlZmF1bHQ7XHJcbi8vICR0b2FzdC1wYWRkaW5nLXk6ICAgICAgICAgICAgICAgICAgIC4yNXJlbSAhZGVmYXVsdDtcclxuLy8gJHRvYXN0LWZvbnQtc2l6ZTogICAgICAgICAgICAgICAgICAgLjg3NXJlbSAhZGVmYXVsdDtcclxuLy8gJHRvYXN0LWNvbG9yOiAgICAgICAgICAgICAgICAgICAgICAgbnVsbCAhZGVmYXVsdDtcclxuLy8gJHRvYXN0LWJhY2tncm91bmQtY29sb3I6ICAgICAgICAgICAgcmdiYSgkd2hpdGUsIC44NSkgIWRlZmF1bHQ7XHJcbi8vICR0b2FzdC1ib3JkZXItd2lkdGg6ICAgICAgICAgICAgICAgIDFweCAhZGVmYXVsdDtcclxuLy8gJHRvYXN0LWJvcmRlci1jb2xvcjogICAgICAgICAgICAgICAgcmdiYSgwLCAwLCAwLCAuMSkgIWRlZmF1bHQ7XHJcbi8vICR0b2FzdC1ib3JkZXItcmFkaXVzOiAgICAgICAgICAgICAgIC4yNXJlbSAhZGVmYXVsdDtcclxuLy8gJHRvYXN0LWJveC1zaGFkb3c6ICAgICAgICAgICAgICAgICAgMCAuMjVyZW0gLjc1cmVtIHJnYmEoJGJsYWNrLCAuMSkgIWRlZmF1bHQ7XHJcblxyXG4vLyAkdG9hc3QtaGVhZGVyLWNvbG9yOiAgICAgICAgICAgICAgICAkZ3JheS02MDAgIWRlZmF1bHQ7XHJcbi8vICR0b2FzdC1oZWFkZXItYmFja2dyb3VuZC1jb2xvcjogICAgIHJnYmEoJHdoaXRlLCAuODUpICFkZWZhdWx0O1xyXG4vLyAkdG9hc3QtaGVhZGVyLWJvcmRlci1jb2xvcjogICAgICAgICByZ2JhKDAsIDAsIDAsIC4wNSkgIWRlZmF1bHQ7XHJcblxyXG4vLyAvLyBCYWRnZXNcclxuXHJcbiRiYWRnZS1mb250LXNpemU6IHJlbXkoMTIpO1xyXG4kYmFkZ2UtZm9udC13ZWlnaHQ6IDUwMDtcclxuLy8gJGJhZGdlLXBhZGRpbmcteTogICAgICAgICAgICAgICAgICAgMC4yNWVtICFkZWZhdWx0O1xyXG4kYmFkZ2UtcGFkZGluZy14OiAwLjVyZW07XHJcbiRiYWRnZS1ib3JkZXItcmFkaXVzOiAkYm9yZGVyLXJhZGl1cy1tZDtcclxuXHJcbi8vICRiYWRnZS10cmFuc2l0aW9uOiAgICAgICAgICAgICAgICAgICRidG4tdHJhbnNpdGlvbiAhZGVmYXVsdDtcclxuLy8gJGJhZGdlLWZvY3VzLXdpZHRoOiAgICAgICAgICAgICAgICAgJGlucHV0LWJ0bi1mb2N1cy13aWR0aCAhZGVmYXVsdDtcclxuXHJcbi8vICRiYWRnZS1waWxsLXBhZGRpbmcteDogICAgICAgICAgICAgIC42ZW0gIWRlZmF1bHQ7XHJcbi8vIC8vIFVzZSBhIGhpZ2hlciB0aGFuIG5vcm1hbCB2YWx1ZSB0byBlbnN1cmUgY29tcGxldGVseSByb3VuZGVkIGVkZ2VzIHdoZW5cclxuLy8gLy8gY3VzdG9taXppbmcgcGFkZGluZyBvciBmb250LXNpemUgb24gbGFiZWxzLlxyXG4vLyAkYmFkZ2UtcGlsbC1ib3JkZXItcmFkaXVzOiAgICAgICAgICAxMHJlbSAhZGVmYXVsdDtcclxuXHJcbi8vIE1vZGFsc1xyXG5cclxuLy8gUGFkZGluZyBhcHBsaWVkIHRvIHRoZSBtb2RhbCBib2R5XHJcbiRtb2RhbC1pbm5lci1wYWRkaW5nOiAwLjc1cmVtO1xyXG5cclxuLy8gTWFyZ2luIGJldHdlZW4gZWxlbWVudHMgaW4gZm9vdGVyLCBtdXN0IGJlIGxvd2VyIHRoYW4gb3IgZXF1YWwgdG8gMiAqICRtb2RhbC1pbm5lci1wYWRkaW5nXHJcbi8vICRtb2RhbC1mb290ZXItbWFyZ2luLWJldHdlZW46ICAgICAgIC41cmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJG1vZGFsLWRpYWxvZy1tYXJnaW46ICAgICAgICAgICAgICAgLjVyZW0gIWRlZmF1bHQ7XHJcbi8vICRtb2RhbC1kaWFsb2ctbWFyZ2luLXktc20tdXA6ICAgICAgIDEuNzVyZW0gIWRlZmF1bHQ7XHJcblxyXG4kbW9kYWwtdGl0bGUtbGluZS1oZWlnaHQ6ICRsaW5lLWhlaWdodC1iYXNlO1xyXG5cclxuJG1vZGFsLWNvbnRlbnQtY29sb3I6IG51bGw7XHJcbiRtb2RhbC1jb250ZW50LWJnOiAkd2hpdGU7XHJcbiRtb2RhbC1jb250ZW50LWJvcmRlci1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiRtb2RhbC1jb250ZW50LWJvcmRlci13aWR0aDogMDtcclxuJG1vZGFsLWNvbnRlbnQtYm9yZGVyLXJhZGl1czogJGJvcmRlci1yYWRpdXM7XHJcbiRtb2RhbC1jb250ZW50LWlubmVyLWJvcmRlci1yYWRpdXM6ICRib3JkZXItcmFkaXVzO1xyXG4kbW9kYWwtY29udGVudC1ib3gtc2hhZG93LXhzOiBub25lO1xyXG4kbW9kYWwtY29udGVudC1ib3gtc2hhZG93LXNtLXVwOiAkYm9yZGVyLXJhZGl1cztcclxuXHJcbiRtb2RhbC1iYWNrZHJvcC1iZzogJGJsYWNrO1xyXG4kbW9kYWwtYmFja2Ryb3Atb3BhY2l0eTogMC43O1xyXG4kbW9kYWwtaGVhZGVyLWJvcmRlci1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiRtb2RhbC1mb290ZXItYm9yZGVyLWNvbG9yOiB0cmFuc3BhcmVudDtcclxuJG1vZGFsLWhlYWRlci1ib3JkZXItd2lkdGg6IDA7XHJcbiRtb2RhbC1mb290ZXItYm9yZGVyLXdpZHRoOiAwO1xyXG4kbW9kYWwtaGVhZGVyLXBhZGRpbmcteTogMC43NXJlbTtcclxuJG1vZGFsLWhlYWRlci1wYWRkaW5nLXg6IDEuNXJlbTtcclxuJG1vZGFsLWhlYWRlci1wYWRkaW5nOiAkbW9kYWwtaGVhZGVyLXBhZGRpbmcteSAkbW9kYWwtaGVhZGVyLXBhZGRpbmcteDtcclxuXHJcbi8vICRtb2RhbC14bDogICAgICAgICAgICAgICAgICAgICAgICAgIDExNDBweCAhZGVmYXVsdDtcclxuJG1vZGFsLWxnOiAxMDQ0cHg7XHJcbi8vICRtb2RhbC1tZDogICAgICAgICAgICAgICAgICAgICAgICAgIDUwMHB4ICFkZWZhdWx0O1xyXG4vLyAkbW9kYWwtc206ICAgICAgICAgICAgICAgICAgICAgICAgICAzMDBweCAhZGVmYXVsdDtcclxuXHJcbi8vICRtb2RhbC1mYWRlLXRyYW5zZm9ybTogICAgICAgICAgICAgIHRyYW5zbGF0ZSgwLCAtNTBweCkgIWRlZmF1bHQ7XHJcbi8vICRtb2RhbC1zaG93LXRyYW5zZm9ybTogICAgICAgICAgICAgIG5vbmUgIWRlZmF1bHQ7XHJcbi8vICRtb2RhbC10cmFuc2l0aW9uOiAgICAgICAgICAgICAgICAgIHRyYW5zZm9ybSAuM3MgZWFzZS1vdXQgIWRlZmF1bHQ7XHJcbi8vICRtb2RhbC1zY2FsZS10cmFuc2Zvcm06ICAgICAgICAgICAgIHNjYWxlKDEuMDIpICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gQWxlcnRzXHJcbi8vIC8vXHJcbi8vIC8vIERlZmluZSBhbGVydCBjb2xvcnMsIGJvcmRlciByYWRpdXMsIGFuZCBwYWRkaW5nLlxyXG5cclxuLy8gJGFsZXJ0LXBhZGRpbmcteTogICAgICAgICAgICAgICAgICAgLjc1cmVtICFkZWZhdWx0O1xyXG4vLyAkYWxlcnQtcGFkZGluZy14OiAgICAgICAgICAgICAgICAgICAxLjI1cmVtICFkZWZhdWx0O1xyXG4vLyAkYWxlcnQtbWFyZ2luLWJvdHRvbTogICAgICAgICAgICAgICAxcmVtICFkZWZhdWx0O1xyXG4vLyAkYWxlcnQtYm9yZGVyLXJhZGl1czogICAgICAgICAgICAgICAkYm9yZGVyLXJhZGl1cyAhZGVmYXVsdDtcclxuLy8gJGFsZXJ0LWxpbmstZm9udC13ZWlnaHQ6ICAgICAgICAgICAgJGZvbnQtd2VpZ2h0LWJvbGQgIWRlZmF1bHQ7XHJcbi8vICRhbGVydC1ib3JkZXItd2lkdGg6ICAgICAgICAgICAgICAgICRib3JkZXItd2lkdGggIWRlZmF1bHQ7XHJcblxyXG4vLyAkYWxlcnQtYmctbGV2ZWw6ICAgICAgICAgICAgICAgICAgICAtMTAgIWRlZmF1bHQ7XHJcbi8vICRhbGVydC1ib3JkZXItbGV2ZWw6ICAgICAgICAgICAgICAgIC05ICFkZWZhdWx0O1xyXG4vLyAkYWxlcnQtY29sb3ItbGV2ZWw6ICAgICAgICAgICAgICAgICA2ICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gUHJvZ3Jlc3MgYmFyc1xyXG5cclxuLy8gJHByb2dyZXNzLWhlaWdodDogICAgICAgICAgICAgICAgICAgMXJlbSAhZGVmYXVsdDtcclxuLy8gJHByb2dyZXNzLWZvbnQtc2l6ZTogICAgICAgICAgICAgICAgJGZvbnQtc2l6ZS1iYXNlICogLjc1ICFkZWZhdWx0O1xyXG4vLyAkcHJvZ3Jlc3MtYmc6ICAgICAgICAgICAgICAgICAgICAgICAkZ3JheS0yMDAgIWRlZmF1bHQ7XHJcbi8vICRwcm9ncmVzcy1ib3JkZXItcmFkaXVzOiAgICAgICAgICAgICRib3JkZXItcmFkaXVzICFkZWZhdWx0O1xyXG4vLyAkcHJvZ3Jlc3MtYm94LXNoYWRvdzogICAgICAgICAgICAgICBpbnNldCAwIC4xcmVtIC4xcmVtIHJnYmEoJGJsYWNrLCAuMSkgIWRlZmF1bHQ7XHJcbi8vICRwcm9ncmVzcy1iYXItY29sb3I6ICAgICAgICAgICAgICAgICR3aGl0ZSAhZGVmYXVsdDtcclxuLy8gJHByb2dyZXNzLWJhci1iZzogICAgICAgICAgICAgICAgICAgdGhlbWUtY29sb3IoXCJwcmltYXJ5XCIpICFkZWZhdWx0O1xyXG4vLyAkcHJvZ3Jlc3MtYmFyLWFuaW1hdGlvbi10aW1pbmc6ICAgICAxcyBsaW5lYXIgaW5maW5pdGUgIWRlZmF1bHQ7XHJcbi8vICRwcm9ncmVzcy1iYXItdHJhbnNpdGlvbjogICAgICAgICAgIHdpZHRoIC42cyBlYXNlICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gTGlzdCBncm91cFxyXG5cclxuLy8gJGxpc3QtZ3JvdXAtY29sb3I6ICAgICAgICAgICAgICAgICAgbnVsbCAhZGVmYXVsdDtcclxuLy8gJGxpc3QtZ3JvdXAtYmc6ICAgICAgICAgICAgICAgICAgICAgJHdoaXRlICFkZWZhdWx0O1xyXG4vLyAkbGlzdC1ncm91cC1ib3JkZXItY29sb3I6ICAgICAgICAgICByZ2JhKCRibGFjaywgLjEyNSkgIWRlZmF1bHQ7XHJcbiRsaXN0LWdyb3VwLWJvcmRlci13aWR0aDogMHB4O1xyXG4kbGlzdC1ncm91cC1ib3JkZXItcmFkaXVzOiAkYm9yZGVyLXJhZGl1cztcclxuXHJcbi8vICRsaXN0LWdyb3VwLWl0ZW0tcGFkZGluZy15OiAgICAgICAgIC43NXJlbSAhZGVmYXVsdDtcclxuLy8gJGxpc3QtZ3JvdXAtaXRlbS1wYWRkaW5nLXg6ICAgICAgICAgMS4yNXJlbSAhZGVmYXVsdDtcclxuXHJcbi8vICRsaXN0LWdyb3VwLWhvdmVyLWJnOiAgICAgICAgICAgICAgICRncmF5LTEwMCAhZGVmYXVsdDtcclxuLy8gJGxpc3QtZ3JvdXAtYWN0aXZlLWNvbG9yOiAgICAgICAgICAgJGNvbXBvbmVudC1hY3RpdmUtY29sb3IgIWRlZmF1bHQ7XHJcbi8vICRsaXN0LWdyb3VwLWFjdGl2ZS1iZzogICAgICAgICAgICAgICRjb21wb25lbnQtYWN0aXZlLWJnICFkZWZhdWx0O1xyXG4vLyAkbGlzdC1ncm91cC1hY3RpdmUtYm9yZGVyLWNvbG9yOiAgICAkbGlzdC1ncm91cC1hY3RpdmUtYmcgIWRlZmF1bHQ7XHJcblxyXG4vLyAkbGlzdC1ncm91cC1kaXNhYmxlZC1jb2xvcjogICAgICAgICAkZ3JheS02MDAgIWRlZmF1bHQ7XHJcbi8vICRsaXN0LWdyb3VwLWRpc2FibGVkLWJnOiAgICAgICAgICAgICRsaXN0LWdyb3VwLWJnICFkZWZhdWx0O1xyXG5cclxuLy8gJGxpc3QtZ3JvdXAtYWN0aW9uLWNvbG9yOiAgICAgICAgICAgJGdyYXktNzAwICFkZWZhdWx0O1xyXG4vLyAkbGlzdC1ncm91cC1hY3Rpb24taG92ZXItY29sb3I6ICAgICAkbGlzdC1ncm91cC1hY3Rpb24tY29sb3IgIWRlZmF1bHQ7XHJcblxyXG4vLyAkbGlzdC1ncm91cC1hY3Rpb24tYWN0aXZlLWNvbG9yOiAgICAkYm9keS1jb2xvciAhZGVmYXVsdDtcclxuLy8gJGxpc3QtZ3JvdXAtYWN0aW9uLWFjdGl2ZS1iZzogICAgICAgJGdyYXktMjAwICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gSW1hZ2UgdGh1bWJuYWlsc1xyXG5cclxuLy8gJHRodW1ibmFpbC1wYWRkaW5nOiAgICAgICAgICAgICAgICAgLjI1cmVtICFkZWZhdWx0O1xyXG4vLyAkdGh1bWJuYWlsLWJnOiAgICAgICAgICAgICAgICAgICAgICAkYm9keS1iZyAhZGVmYXVsdDtcclxuLy8gJHRodW1ibmFpbC1ib3JkZXItd2lkdGg6ICAgICAgICAgICAgJGJvcmRlci13aWR0aCAhZGVmYXVsdDtcclxuLy8gJHRodW1ibmFpbC1ib3JkZXItY29sb3I6ICAgICAgICAgICAgJGdyYXktMzAwICFkZWZhdWx0O1xyXG4vLyAkdGh1bWJuYWlsLWJvcmRlci1yYWRpdXM6ICAgICAgICAgICAkYm9yZGVyLXJhZGl1cyAhZGVmYXVsdDtcclxuLy8gJHRodW1ibmFpbC1ib3gtc2hhZG93OiAgICAgICAgICAgICAgMCAxcHggMnB4IHJnYmEoJGJsYWNrLCAuMDc1KSAhZGVmYXVsdDtcclxuXHJcbi8vIC8vIEZpZ3VyZXNcclxuXHJcbi8vICRmaWd1cmUtY2FwdGlvbi1mb250LXNpemU6ICAgICAgICAgIDkwJSAhZGVmYXVsdDtcclxuLy8gJGZpZ3VyZS1jYXB0aW9uLWNvbG9yOiAgICAgICAgICAgICAgJGdyYXktNjAwICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gQnJlYWRjcnVtYnNcclxuXHJcbi8vICRicmVhZGNydW1iLWZvbnQtc2l6ZTogICAgICAgICAgICAgIG51bGwgIWRlZmF1bHQ7XHJcblxyXG4vLyAkYnJlYWRjcnVtYi1wYWRkaW5nLXk6ICAgICAgICAgICAgICAuNzVyZW0gIWRlZmF1bHQ7XHJcbi8vICRicmVhZGNydW1iLXBhZGRpbmcteDogICAgICAgICAgICAgIDFyZW0gIWRlZmF1bHQ7XHJcbi8vICRicmVhZGNydW1iLWl0ZW0tcGFkZGluZzogICAgICAgICAgIC41cmVtICFkZWZhdWx0O1xyXG5cclxuLy8gJGJyZWFkY3J1bWItbWFyZ2luLWJvdHRvbTogICAgICAgICAgMXJlbSAhZGVmYXVsdDtcclxuXHJcbi8vICRicmVhZGNydW1iLWJnOiAgICAgICAgICAgICAgICAgICAgICRncmF5LTIwMCAhZGVmYXVsdDtcclxuLy8gJGJyZWFkY3J1bWItZGl2aWRlci1jb2xvcjogICAgICAgICAgJGdyYXktNjAwICFkZWZhdWx0O1xyXG4vLyAkYnJlYWRjcnVtYi1hY3RpdmUtY29sb3I6ICAgICAgICAgICAkZ3JheS02MDAgIWRlZmF1bHQ7XHJcbi8vICRicmVhZGNydW1iLWRpdmlkZXI6ICAgICAgICAgICAgICAgIHF1b3RlKFwiL1wiKSAhZGVmYXVsdDtcclxuXHJcbi8vICRicmVhZGNydW1iLWJvcmRlci1yYWRpdXM6ICAgICAgICAgICRib3JkZXItcmFkaXVzICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gQ2Fyb3VzZWxcclxuXHJcbi8vICRjYXJvdXNlbC1jb250cm9sLWNvbG9yOiAgICAgICAgICAgICAkd2hpdGUgIWRlZmF1bHQ7XHJcbi8vICRjYXJvdXNlbC1jb250cm9sLXdpZHRoOiAgICAgICAgICAgICAxNSUgIWRlZmF1bHQ7XHJcbi8vICRjYXJvdXNlbC1jb250cm9sLW9wYWNpdHk6ICAgICAgICAgICAuNSAhZGVmYXVsdDtcclxuLy8gJGNhcm91c2VsLWNvbnRyb2wtaG92ZXItb3BhY2l0eTogICAgIC45ICFkZWZhdWx0O1xyXG4vLyAkY2Fyb3VzZWwtY29udHJvbC10cmFuc2l0aW9uOiAgICAgICAgb3BhY2l0eSAuMTVzIGVhc2UgIWRlZmF1bHQ7XHJcblxyXG4vLyAkY2Fyb3VzZWwtaW5kaWNhdG9yLXdpZHRoOiAgICAgICAgICAgMzBweCAhZGVmYXVsdDtcclxuLy8gJGNhcm91c2VsLWluZGljYXRvci1oZWlnaHQ6ICAgICAgICAgIDNweCAhZGVmYXVsdDtcclxuLy8gJGNhcm91c2VsLWluZGljYXRvci1oaXQtYXJlYS1oZWlnaHQ6IDEwcHggIWRlZmF1bHQ7XHJcbi8vICRjYXJvdXNlbC1pbmRpY2F0b3Itc3BhY2VyOiAgICAgICAgICAzcHggIWRlZmF1bHQ7XHJcbi8vICRjYXJvdXNlbC1pbmRpY2F0b3ItYWN0aXZlLWJnOiAgICAgICAkd2hpdGUgIWRlZmF1bHQ7XHJcbi8vICRjYXJvdXNlbC1pbmRpY2F0b3ItdHJhbnNpdGlvbjogICAgICBvcGFjaXR5IC42cyBlYXNlICFkZWZhdWx0O1xyXG5cclxuLy8gJGNhcm91c2VsLWNhcHRpb24td2lkdGg6ICAgICAgICAgICAgIDcwJSAhZGVmYXVsdDtcclxuLy8gJGNhcm91c2VsLWNhcHRpb24tY29sb3I6ICAgICAgICAgICAgICR3aGl0ZSAhZGVmYXVsdDtcclxuXHJcbi8vICRjYXJvdXNlbC1jb250cm9sLWljb24td2lkdGg6ICAgICAgICAyMHB4ICFkZWZhdWx0O1xyXG5cclxuLy8gJGNhcm91c2VsLWNvbnRyb2wtcHJldi1pY29uLWJnOiAgICAgIHVybChcImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZycgZmlsbD0nI3skY2Fyb3VzZWwtY29udHJvbC1jb2xvcn0nIHdpZHRoPSc4JyBoZWlnaHQ9JzgnIHZpZXdCb3g9JzAgMCA4IDgnPjxwYXRoIGQ9J001LjI1IDBsLTQgNCA0IDQgMS41LTEuNUw0LjI1IDRsMi41LTIuNUw1LjI1IDB6Jy8+PC9zdmc+XCIpICFkZWZhdWx0O1xyXG4vLyAkY2Fyb3VzZWwtY29udHJvbC1uZXh0LWljb24tYmc6ICAgICAgdXJsKFwiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyBmaWxsPScjeyRjYXJvdXNlbC1jb250cm9sLWNvbG9yfScgd2lkdGg9JzgnIGhlaWdodD0nOCcgdmlld0JveD0nMCAwIDggOCc+PHBhdGggZD0nTTIuNzUgMGwtMS41IDEuNUwzLjc1IDRsLTIuNSAyLjVMMi43NSA4bDQtNC00LTR6Jy8+PC9zdmc+XCIpICFkZWZhdWx0O1xyXG5cclxuLy8gJGNhcm91c2VsLXRyYW5zaXRpb24tZHVyYXRpb246ICAgICAgIC42cyAhZGVmYXVsdDtcclxuLy8gJGNhcm91c2VsLXRyYW5zaXRpb246ICAgICAgICAgICAgICAgIHRyYW5zZm9ybSAkY2Fyb3VzZWwtdHJhbnNpdGlvbi1kdXJhdGlvbiBlYXNlLWluLW91dCAhZGVmYXVsdDsgLy8gRGVmaW5lIHRyYW5zZm9ybSB0cmFuc2l0aW9uIGZpcnN0IGlmIHVzaW5nIG11bHRpcGxlIHRyYW5zaXRpb25zIChlLmcuLCBgdHJhbnNmb3JtIDJzIGVhc2UsIG9wYWNpdHkgLjVzIGVhc2Utb3V0YClcclxuXHJcbi8vIC8vIFNwaW5uZXJzXHJcblxyXG4vLyAkc3Bpbm5lci13aWR0aDogICAgICAgICAycmVtICFkZWZhdWx0O1xyXG4vLyAkc3Bpbm5lci1oZWlnaHQ6ICAgICAgICAkc3Bpbm5lci13aWR0aCAhZGVmYXVsdDtcclxuLy8gJHNwaW5uZXItYm9yZGVyLXdpZHRoOiAgLjI1ZW0gIWRlZmF1bHQ7XHJcblxyXG4vLyAkc3Bpbm5lci13aWR0aC1zbTogICAgICAgIDFyZW0gIWRlZmF1bHQ7XHJcbi8vICRzcGlubmVyLWhlaWdodC1zbTogICAgICAgJHNwaW5uZXItd2lkdGgtc20gIWRlZmF1bHQ7XHJcbi8vICRzcGlubmVyLWJvcmRlci13aWR0aC1zbTogLjJlbSAhZGVmYXVsdDtcclxuXHJcbi8vIC8vIENsb3NlXHJcblxyXG4vLyAkY2xvc2UtZm9udC1zaXplOiAgICAgICAgICAgICAgICAgICAkZm9udC1zaXplLWJhc2UgKiAxLjUgIWRlZmF1bHQ7XHJcbi8vICRjbG9zZS1mb250LXdlaWdodDogICAgICAgICAgICAgICAgICRmb250LXdlaWdodC1ib2xkICFkZWZhdWx0O1xyXG4vLyAkY2xvc2UtY29sb3I6ICAgICAgICAgICAgICAgICAgICAgICAkYmxhY2sgIWRlZmF1bHQ7XHJcbi8vICRjbG9zZS10ZXh0LXNoYWRvdzogICAgICAgICAgICAgICAgIDAgMXB4IDAgJHdoaXRlICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gQ29kZVxyXG5cclxuLy8gJGNvZGUtZm9udC1zaXplOiAgICAgICAgICAgICAgICAgICAgODcuNSUgIWRlZmF1bHQ7XHJcbi8vICRjb2RlLWNvbG9yOiAgICAgICAgICAgICAgICAgICAgICAgICRwaW5rICFkZWZhdWx0O1xyXG5cclxuLy8gJGtiZC1wYWRkaW5nLXk6ICAgICAgICAgICAgICAgICAgICAgLjJyZW0gIWRlZmF1bHQ7XHJcbi8vICRrYmQtcGFkZGluZy14OiAgICAgICAgICAgICAgICAgICAgIC40cmVtICFkZWZhdWx0O1xyXG4vLyAka2JkLWZvbnQtc2l6ZTogICAgICAgICAgICAgICAgICAgICAkY29kZS1mb250LXNpemUgIWRlZmF1bHQ7XHJcbi8vICRrYmQtY29sb3I6ICAgICAgICAgICAgICAgICAgICAgICAgICR3aGl0ZSAhZGVmYXVsdDtcclxuLy8gJGtiZC1iZzogICAgICAgICAgICAgICAgICAgICAgICAgICAgJGdyYXktMjAwICFkZWZhdWx0O1xyXG5cclxuLy8gJHByZS1jb2xvcjogICAgICAgICAgICAgICAgICAgICAgICAgJGdyYXktMjAwICFkZWZhdWx0O1xyXG4vLyAkcHJlLXNjcm9sbGFibGUtbWF4LWhlaWdodDogICAgICAgICAzNDBweCAhZGVmYXVsdDtcclxuXHJcbi8vIC8vIFV0aWxpdGllc1xyXG5cclxuLy8gJGRpc3BsYXlzOiBub25lLCBpbmxpbmUsIGlubGluZS1ibG9jaywgYmxvY2ssIHRhYmxlLCB0YWJsZS1yb3csIHRhYmxlLWNlbGwsIGZsZXgsIGlubGluZS1mbGV4ICFkZWZhdWx0O1xyXG4vLyAkb3ZlcmZsb3dzOiBhdXRvLCBoaWRkZW4gIWRlZmF1bHQ7XHJcbi8vICRwb3NpdGlvbnM6IHN0YXRpYywgcmVsYXRpdmUsIGFic29sdXRlLCBmaXhlZCwgc3RpY2t5ICFkZWZhdWx0O1xyXG5cclxuLy8gLy8gUHJpbnRpbmdcclxuXHJcbi8vICRwcmludC1wYWdlLXNpemU6ICAgICAgICAgICAgICAgICAgIGEzICFkZWZhdWx0O1xyXG4vLyAkcHJpbnQtYm9keS1taW4td2lkdGg6ICAgICAgICAgICAgICBtYXAtZ2V0KCRncmlkLWJyZWFrcG9pbnRzLCBcImxnXCIpICFkZWZhdWx0O1xyXG5cclxuLy8gSnlzYW4gVmFyaWFibGVzXHJcblxyXG5AZnVuY3Rpb24gc3BhY2UoJHNpemUpIHtcclxuICBAcmV0dXJuIG1hcC1nZXQoJG1hcDogJHNwYWNlcnMsICRrZXk6ICRzaXplKTtcclxufVxyXG5cclxuJGhlYWRlci1oZWlnaHQ6IDYycHg7XHJcbiRoZWFkZXItaGVpZ2h0LW1kOiAxMDBweDtcclxuJGhlYWRlci13aWR0aDogMjgwcHg7XHJcblxyXG4kYnRuLW1pbi13aWR0aDogMTY0cHg7XHJcblxyXG4vLyBKLWlucHV0XHJcbiRqLWlucHV0LWZvbnQtc2l6ZTogMXJlbTtcclxuJGotaW5wdXQtZm9udC1mYW1pbHk6ICRmb250LWZhbWlseS1iYXNlO1xyXG4kai1pbnB1dC1mb250LXN0eWxlOiBub3JtYWw7XHJcbiRqLWlucHV0LWZvbnQtd2VpZ2h0OiAkZm9udC13ZWlnaHQtYmFzZTtcclxuXHJcbiRqLWlucHV0LWxpbmUtaGVpZ2h0OiAyMHB4O1xyXG4kai1pbnB1dC1wYWRkaW5nLXk6IDE3LjVweDtcclxuJGotaW5wdXQtcGFkZGluZy14OiAyMHB4O1xyXG5cclxuJGotaW5wdXQtYm9yZGVyLXdpZHRoOiAxcHg7XHJcbiRqLWlucHV0LWJvcmRlci1yYWRpdXM6IDhweDtcclxuJGotaW5wdXQtYm9yZGVyLXN0eWxlOiBzb2xpZDtcclxuXHJcbiRqLWlucHV0LWJhY2tncm91bmQtY29sb3I6ICR3aGl0ZTtcclxuJGotaW5wdXQtbGFiZWwtY29sb3I6ICRncmF5LWRhcms7XHJcbiRqLWlucHV0LWJvcmRlci1jb2xvcjogJGdyYXktbGlnaHQ7XHJcbiRqLWlucHV0LXRleHQtY29sb3I6ICRibGFjaztcclxuJGotaW5wdXQtbWFzay1jb2xvcjogJGdyYXk7XHJcbiRqLWlucHV0LWljb24tY29sb3I6ICRvcmFuZ2U7XHJcbiRqLWlucHV0LWhlbHBlci1jb2xvcjogJGdyYXktZGFyaztcclxuXHJcbiRqLWlucHV0LWJvcmRlci1jb2xvci0tYWN0aXZlOiAkcHJpbWFyeTtcclxuJGotaW5wdXQtbGFiZWwtY29sb3ItLWFjdGl2ZTogJHByaW1hcnk7XHJcbiRqLWlucHV0LXRleHQtY29sb3ItLWFjdGl2ZTogJHByaW1hcnk7XHJcblxyXG4kai1pbnB1dC1iYWNrZ3JvdW5kLWNvbG9yLS1lcnJvcjogJHJlZC1saWdodDtcclxuJGotaW5wdXQtaGVscGVyLWNvbG9yLS1lcnJvcjogJHJlZDtcclxuJGotaW5wdXQtYm9yZGVyLWNvbG9yLS1lcnJvcjogJHJlZDtcclxuXHJcbiRqLWlucHV0LWJhY2tncm91bmQtY29sb3ItLWRpc2FibGVkOiAkaW5wdXQtZGlzYWJsZWQtYmc7IC8vIGZyb20gZmlnbWEgcHJpbWl0aXZlcyBzaG91bGQgYmUgZ3JheS0yMDBcclxuXHJcbiRqLWlucHV0LWxhYmVsLXBvc2l0aW9uLXRvcDogJGotaW5wdXQtcGFkZGluZy15ICsgJGotaW5wdXQtYm9yZGVyLXdpZHRoO1xyXG4kai1pbnB1dC1sYWJlbC1wb3NpdGlvbi10b3AtYWN0aXZlOiAxMHB4O1xyXG4kai1pbnB1dC1saW5rLXBvc2l0aW9uLXRvcDogMTZweDtcclxuJGotaW5wdXQtbGFiZWwtcG9zaXRpb24tbGVmdDogJGotaW5wdXQtcGFkZGluZy14ICsgJGotaW5wdXQtYm9yZGVyLXdpZHRoO1xyXG4kai1pbnB1dC1sYWJlbC1saW5lLWhlaWdodDogJGotaW5wdXQtbGluZS1oZWlnaHQ7XHJcbiRqLWlucHV0LWxhYmVsLWNvbG9yOiAkZ3JheS1kYXJrO1xyXG5cclxuJGotaW5wdXQtcGFkZGluZy10b3A6IDI3cHg7XHJcbiRqLWlucHV0LXBhZGRpbmctYm90dG9tOiAxMHB4O1xyXG4kai1pbnB1dC1tYXJnaW4tYm90dG9tOiAxNnB4O1xyXG4kai1pbnB1dC1wbGFjZWhvbGRlci1jb2xvcjogJGdyYXk7XHJcbiRqLWlucHV0LXBsYWNlaG9sZGVyLXBvc2l0aW9uOiAkai1pbnB1dC1wYWRkaW5nLXRvcCArICRqLWlucHV0LWJvcmRlci13aWR0aDtcclxuJGotaW5wdXQtY2hhci1sZW5ndGg6IDguOTlweDtcclxuXHJcbiRqLWlucHV0LWJ1dHRvbi1wb3NpdGlvbjogMjBweDtcclxuJGotaW5wdXQtc2hhZG93LXBvc2l0aW9uOiAkai1pbnB1dC1sYWJlbC1wb3NpdGlvbi1sZWZ0O1xyXG5cclxuJGotaW5wdXQtbGFiZWwtei1pbmRleDogMDtcclxuJGotaW5wdXQtc2hhZG93LXotaW5kZXg6IDE7XHJcbiRqLWlucHV0LXotaW5kZXg6IDI7XHJcbiRqLWlucHV0LWxpbmstei1pbmRleDogMztcclxuJGotaW5wdXQtYnV0dG9uLXotaW5kZXg6IDQ7XHJcblxyXG4kYm94LXNoYWRvdy10by10b3AtbGc6IDAgLTFyZW0gM3JlbSByZ2JhKCRibGFjaywgMC4xNzUpO1xyXG5cclxuJGVuYWJsZS1wb2ludGVyLWN1cnNvci1mb3ItYnV0dG9uczogdHJ1ZTtcclxuIl19 */";
-
-/***/ }),
-
-/***/ 33193:
-/*!*************************************************************************************************************************!*\
-  !*** ./src/app/jmart-cabinet/modules/settings/components/pickup-points-map/pickup-points-map.component.scss?ngResource ***!
-  \*************************************************************************************************************************/
-/***/ ((module) => {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJwaWNrdXAtcG9pbnRzLW1hcC5jb21wb25lbnQuc2NzcyJ9 */";
 
 /***/ }),
 
@@ -5354,7 +5019,7 @@ module.exports = ".settings {\n  padding-top: 40px;\n}\n.settings__title {\n  fo
   \**********************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div \n  class=\"j-input input-autocomplete\"\n  [class.disabled]=\"formControl.disabled\"\n  [class]=\"class\"\n>\n  <input \n    #input\n    class=\"form-control\"\n    [value]=\"inputValue\"\n    (keyup)=\"onChange($event.target.value)\"\n    [id]=\"id\"\n    [class.is-filled]=\"isFilled\"\n    [name]=\"name\"\n    [autofocus]=\"autofocus\"\n    (focus)=\"onFocus()\"\n    (blur)=\"onBlur()\"\n    autocomplete=\"off\"\n    autocomplete=\"false\"\n  >\n  <label \n    class=\"j-input--float-label\"\n    [for]=\"id\"\n    translate\n  >\n    {{label}}\n  </label>\n  <ul \n    class=\"list-group input-autocomplete__options\"\n    [hidden]=\"!isFocused\"\n  >\n    <li \n      class=\"list-group-item\"\n      *ngFor=\"let option of options\"\n      (mousedown)=\"onOptionSelect(option)\"\n    >\n        {{ option.title }}\n    </li>\n  </ul>\n</div>";
+module.exports = "<div class=\"j-input input-autocomplete\">\n  <input \n    #input\n    class=\"form-control\"\n    [value]=\"inputValue\"\n    (keyup)=\"onChange($event.target.value)\"\n    [id]=\"id\"\n    [class.is-filled]=\"isFilled\"\n    [name]=\"name\"\n    [autofocus]=\"autofocus\"\n    (focus)=\"onFocus()\"\n    (blur)=\"onBlur()\"\n    autocomplete=\"off\"\n    autocomplete=\"false\"\n  >\n  <label \n    class=\"j-input--float-label\"\n    [for]=\"id\"\n    translate\n  >\n    {{label}}\n  </label>\n  <ul \n    class=\"list-group input-autocomplete__options\"\n    [hidden]=\"!isFocused\"\n  >\n    <li \n      class=\"list-group-item\"\n      *ngFor=\"let option of options\"\n      (mousedown)=\"onOptionSelect(option)\"\n    >\n        {{ option.title }}\n    </li>\n  </ul>\n</div>";
 
 /***/ }),
 
@@ -5384,7 +5049,7 @@ module.exports = "<div class=\"delivery-list\">\n  <!--  SEARCH-->\n  <!-- <div 
   \*******************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"delivery-price d-flex align-items-center\" [class]=\"class\">\n    <j-amount-input\n        class=\"delivery-price__amount-input\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.HOURS.FROM'\"\n        currency=\"KZT_RU\"\n        [formControl]=\"controls.from\"\n        [isDisabled]=\"true\"\n    ></j-amount-input>\n    <j-amount-input\n        *ngIf=\"!isLast\"\n        class=\"delivery-price__amount-input mx-2\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.HOURS.TO'\"\n        currency=\"KZT_RU\"\n        [formControl]=\"controls.to\"\n    ></j-amount-input>\n    <j-amount-input\n        class=\"delivery-price__amount-input\"\n        [class.mx-2]=\"isLast\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.PRICE.TITLE'\"\n        currency=\"KZT_RU\"\n        [formControl]=\"controls.deliveryPrice\"\n        [isDisabled]=\"checkbox?.value\"\n    ></j-amount-input>\n    <j-checkbox\n        *ngIf=\"isLast\"\n        class=\"delivery-price__amount-input text-center mb-2\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.IS_FREE'\"\n        [control]=\"checkbox\"\n    ></j-checkbox>\n    <button\n     *ngIf='canBeRemoved'\n     (click)='onRemove()'\n     class='btn pl-3 pr-1 align-self-baseline'\n     inlineSVG='./assets/icons/delete.svg'\n    ></button>\n</div>\n";
+module.exports = "<div class=\"delivery-price d-flex align-items-center\" [class]=\"class\">\n    <j-amount-input\n        class=\"delivery-price__amount-input\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.HOURS.FROM'\"\n        currency=\"KZT_RU\"\n        [formControl]=\"controls.from\"\n        [isDisabled]=\"true\"\n    ></j-amount-input>\n    <j-amount-input\n        *ngIf=\"!isLast\"\n        class=\"delivery-price__amount-input mx-2\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.HOURS.TO'\"\n        currency=\"KZT_RU\"\n        [formControl]=\"controls.to\"\n    ></j-amount-input>\n    <j-amount-input\n        class=\"delivery-price__amount-input\"\n        [class.mx-2]=\"isLast\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.PRICE.TITLE'\"\n        currency=\"KZT_RU\"\n        [formControl]=\"controls.deliveryPrice\"\n        [isDisabled]=\"checkbox?.value\"\n    ></j-amount-input>\n    <j-checkbox\n        *ngIf=\"isLast\"\n        class=\"delivery-price__amount-input text-center mb-2\"\n        [label]=\"'JMART.SETTINGS.DELIVERY.FORM.IS_FREE'\"\n        [control]=\"checkbox\"\n    ></j-checkbox>\n    <button\n     *ngIf='canBeRemoved'\n     (click)='onRemove()'\n     class='btn pl-3 pr-1 align-self-baseline'\n     inlineSVG='/assets/icons/delete.svg'\n    ></button>\n</div>\n";
 
 /***/ }),
 
@@ -5394,7 +5059,7 @@ module.exports = "<div class=\"delivery-price d-flex align-items-center\" [class
   \*******************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "\n<j-table\n  [data]=\"deliveryTableData\"\n  [class]=\"deliveryTableClasses\"\n>\n  <ng-template getTemplate name=\"columns\" let-column>\n    <span class=\"delivery-table__column-header border-0 font-weight-light\">\n      {{ column }}\n    </span>\n  </ng-template>\n  <ng-template getTemplate name=\"column-1\" let-city>\n    <span class=\"delivery-table--label\">{{ city.from }}</span>\n    <span\n      *ngIf=\"city.to\"\n      class=\"d-block delivery-table--label delivery-table__city-to\"\n    >\n      <span\n        inlineSVG='./assets/jmart/delivery/from-city.svg'\n      >\n      </span>\n      {{ city.to }}\n    </span>\n  </ng-template>\n  <ng-template getTemplate name=\"column-2\" let-prices>\n    <ng-container *ngIf=\"prices\">\n      <div class=\"prices delivery-table--label\" *ngFor=\"let price of prices\">\n        <span class=\"price\">{{price.price}}</span>\n        <span class=\"range\">{{price.range}}</span>\n      </div>\n    </ng-container>\n    <div class=\"delivery-table__empty-cell\" *ngIf=\"!prices\">-</div>\n  </ng-template>\n  <ng-template getTemplate name=\"column-3\" let-wokringHours>\n    <ng-container *ngIf=\"wokringHours\">\n      <div class=\"working-time delivery-table--label\" *ngFor=\"let time of wokringHours\">\n        <span class=\"working-days\">{{time.days}}</span>\n        <span class=\"working-hours\">{{time.hour}}</span>\n      </div>\n    </ng-container>\n    <div class=\"delivery-table__empty-cell\" *ngIf=\"!wokringHours\">-</div>\n  </ng-template>\n  <ng-template getTemplate name=\"column-4\" let-time>\n    <ng-container *ngIf=\"time; else emptyTime\">\n      <div *ngIf=\"time?.isCity\">\n        <span class=\"estimated estimated-type delivery-table--label\">{{ time.estimatedType }}</span>\n        <span class=\"estimated estimated-time delivery-table--label\">{{ time.estimatedTime }}</span>\n      </div>\n      <span *ngIf=\"!time.isCity\" class=\"estimated estimated-type delivery-table--label\">{{time.deliveryEstimatedDay}}</span>\n    </ng-container>\n    <ng-template #emptyTime>\n      <div class=\"delivery-table__empty-cell\" *ngIf=\"!time\">-</div>\n    </ng-template>\n  </ng-template>\n  <ng-template getTemplate name=\"column-5\" let-deliveryMode>\n    <div class=\"table__body-item col delivery-table--label p-0\">{{ deliveryMode }}</div>\n  </ng-template>\n  <ng-template getTemplate name=\"column-6\" let-delivery>\n      <span\n        tooltipClass=\"tooltip-light\"\n        [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.EDIT' | translate\"\n        class=\"edit-btn mr-2\"\n        (click)=\"edit(delivery)\"\n      >\n        <svg width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" xmlns=\"http://www.w3.org/2000/svg\">\n          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M18.8253 6.19123L18.8257 6.19084C19.1038 5.92538 19.3236 5.61097 19.4733 5.26596C19.6231 4.92081 19.7 4.55139 19.7 4.17867C19.7 3.80594 19.6231 3.43652 19.4733 3.09137C19.3235 2.74619 19.1035 2.43165 18.8253 2.1661L18.8252 2.16604L17.7516 1.14094L17.7516 1.14088C17.4735 0.875148 17.1425 0.663657 16.7772 0.519131C16.4119 0.374598 16.02 0.300049 15.6238 0.300049C15.2277 0.300049 14.8357 0.374598 14.4704 0.519131C14.1052 0.663635 13.7743 0.875084 13.4962 1.14076L13.4961 1.14088L3.11129 11.1081C2.69024 11.5236 2.36743 12.0189 2.16343 12.5608L2.16299 12.562L0.353379 17.5025L0.352851 17.504C0.301557 17.6498 0.287395 17.8047 0.311223 17.9562C0.335139 18.1083 0.396834 18.2538 0.492315 18.3805C0.587855 18.5072 0.714657 18.6117 0.863065 18.684C1.01118 18.7563 1.17593 18.7941 1.34354 18.7939C1.45952 18.7925 1.57457 18.7755 1.68525 18.7435L6.85976 17.0154L6.86196 17.0147C7.43659 16.8277 7.9574 16.5176 8.3847 16.1092L8.38535 16.1086L18.8253 6.19123ZM15.6267 2.26407L15.6267 2.26414C15.8675 2.26644 16.1003 2.35929 16.2738 2.52654L16.2754 2.52802L17.346 3.53754L17.3513 3.54247L17.3563 3.54765C17.5182 3.71572 17.6103 3.93847 17.6103 4.17226C17.6103 4.40605 17.5182 4.6288 17.3563 4.79687L17.3476 4.80587L17.3474 4.80568L15.7889 6.29384L13.3594 4.07892L14.9848 2.52887C15.0678 2.44622 15.1664 2.38076 15.2745 2.3356C15.3839 2.2899 15.5013 2.26572 15.6199 2.26416L15.6267 2.26407ZM11.91 5.46108L4.5872 12.4443L4.58616 12.4453C4.36971 12.6537 4.20587 12.9083 4.1087 13.1896L3.22369 15.6479L3.01549 16.2262L3.59952 16.0345L6.17233 15.19L6.17427 15.1894C6.46368 15.0983 6.72815 14.9438 6.94636 14.7372L6.94725 14.7364L14.3405 7.67687L11.91 5.46108Z\" />\n        </svg>\n      </span>\n      <span [inlineSVG]=\"'./assets/jmart/delete-orange.svg'\" (click)=\"remove(delivery)\"\n      tooltipClass=\"tooltip-light\" [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.REMOVE' | translate\"></span>\n  </ng-template>\n</j-table>\n";
+module.exports = "\n<j-table\n  [data]=\"deliveryTableData\"\n  [class]=\"deliveryTableClasses\"\n>\n  <ng-template getTemplate name=\"columns\" let-column>\n    <span class=\"delivery-table__column-header border-0 font-weight-light\">\n      {{ column }}\n    </span>\n  </ng-template>\n  <ng-template getTemplate name=\"column-1\" let-city>\n    <span class=\"delivery-table--label\">{{ city.from }}</span>\n    <span\n      *ngIf=\"city.to\"\n      class=\"d-block delivery-table--label delivery-table__city-to\"\n    >\n      <span \n        inlineSVG='assets/jmart/delivery/from-city.svg'\n      >\n      </span>\n      {{ city.to }}\n    </span>\n  </ng-template>\n  <ng-template getTemplate name=\"column-2\" let-prices>\n    <ng-container *ngIf=\"prices\">\n      <div class=\"prices delivery-table--label\" *ngFor=\"let price of prices\">\n        <span class=\"price\">{{price.price}}</span>\n        <span class=\"range\">{{price.range}}</span>\n      </div>\n    </ng-container>\n    <div class=\"delivery-table__empty-cell\" *ngIf=\"!prices\">-</div>\n  </ng-template>\n  <ng-template getTemplate name=\"column-3\" let-wokringHours>\n    <ng-container *ngIf=\"wokringHours\">\n      <div class=\"working-time delivery-table--label\" *ngFor=\"let time of wokringHours\">\n        <span class=\"working-days\">{{time.days}}</span>\n        <span class=\"working-hours\">{{time.hour}}</span>\n      </div>\n    </ng-container>\n    <div class=\"delivery-table__empty-cell\" *ngIf=\"!wokringHours\">-</div>\n  </ng-template>\n  <ng-template getTemplate name=\"column-4\" let-time>\n    <ng-container *ngIf=\"time; else emptyTime\">\n      <div *ngIf=\"time?.isCity\">\n        <span class=\"estimated estimated-type delivery-table--label\">{{ time.estimatedType }}</span>\n        <span class=\"estimated estimated-time delivery-table--label\">{{ time.estimatedTime }}</span>\n      </div>\n      <span *ngIf=\"!time.isCity\" class=\"estimated estimated-type delivery-table--label\">{{time.deliveryEstimatedDay}}</span>\n    </ng-container>\n    <ng-template #emptyTime>\n      <div class=\"delivery-table__empty-cell\" *ngIf=\"!time\">-</div>\n    </ng-template>\n  </ng-template>\n  <ng-template getTemplate name=\"column-5\" let-deliveryMode>\n    <div class=\"table__body-item col delivery-table--label p-0\">{{ deliveryMode }}</div>\n  </ng-template>\n  <ng-template getTemplate name=\"column-6\" let-delivery>\n      <span \n        tooltipClass=\"tooltip-light\"\n        [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.EDIT' | translate\"\n        class=\"edit-btn mr-2\"\n        (click)=\"edit(delivery)\"\n      >\n        <svg width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" xmlns=\"http://www.w3.org/2000/svg\">\n          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M18.8253 6.19123L18.8257 6.19084C19.1038 5.92538 19.3236 5.61097 19.4733 5.26596C19.6231 4.92081 19.7 4.55139 19.7 4.17867C19.7 3.80594 19.6231 3.43652 19.4733 3.09137C19.3235 2.74619 19.1035 2.43165 18.8253 2.1661L18.8252 2.16604L17.7516 1.14094L17.7516 1.14088C17.4735 0.875148 17.1425 0.663657 16.7772 0.519131C16.4119 0.374598 16.02 0.300049 15.6238 0.300049C15.2277 0.300049 14.8357 0.374598 14.4704 0.519131C14.1052 0.663635 13.7743 0.875084 13.4962 1.14076L13.4961 1.14088L3.11129 11.1081C2.69024 11.5236 2.36743 12.0189 2.16343 12.5608L2.16299 12.562L0.353379 17.5025L0.352851 17.504C0.301557 17.6498 0.287395 17.8047 0.311223 17.9562C0.335139 18.1083 0.396834 18.2538 0.492315 18.3805C0.587855 18.5072 0.714657 18.6117 0.863065 18.684C1.01118 18.7563 1.17593 18.7941 1.34354 18.7939C1.45952 18.7925 1.57457 18.7755 1.68525 18.7435L6.85976 17.0154L6.86196 17.0147C7.43659 16.8277 7.9574 16.5176 8.3847 16.1092L8.38535 16.1086L18.8253 6.19123ZM15.6267 2.26407L15.6267 2.26414C15.8675 2.26644 16.1003 2.35929 16.2738 2.52654L16.2754 2.52802L17.346 3.53754L17.3513 3.54247L17.3563 3.54765C17.5182 3.71572 17.6103 3.93847 17.6103 4.17226C17.6103 4.40605 17.5182 4.6288 17.3563 4.79687L17.3476 4.80587L17.3474 4.80568L15.7889 6.29384L13.3594 4.07892L14.9848 2.52887C15.0678 2.44622 15.1664 2.38076 15.2745 2.3356C15.3839 2.2899 15.5013 2.26572 15.6199 2.26416L15.6267 2.26407ZM11.91 5.46108L4.5872 12.4443L4.58616 12.4453C4.36971 12.6537 4.20587 12.9083 4.1087 13.1896L3.22369 15.6479L3.01549 16.2262L3.59952 16.0345L6.17233 15.19L6.17427 15.1894C6.46368 15.0983 6.72815 14.9438 6.94636 14.7372L6.94725 14.7364L14.3405 7.67687L11.91 5.46108Z\" />\n        </svg>\n      </span>\n      <span [inlineSVG]=\"'./assets/jmart/delete-orange.svg'\" (click)=\"remove(delivery)\"\n      tooltipClass=\"tooltip-light\" [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.REMOVE' | translate\"></span>\n  </ng-template>\n</j-table>";
 
 /***/ }),
 
@@ -5464,7 +5129,7 @@ module.exports = "<ng-content></ng-content>\n<table class=\"table table-borderle
   \*****************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div>\n  <div class='col-12 pr-2 pl-2 d-flex justify-content-between align-items-center'>\n    <p class='form-field-title'>Режим работы</p>\n    <button [disabled]='pickedDaysCount === 7' (click)='addWorkRegimesHandler()' class='btn add-workRegimes__button' type='button'>\n      {{\"JMART.SETTINGS.DELIVERY.FORM.PRICE.BTN\" | translate}}\n    </button>\n  </div>\n\n  <ng-container>\n    <ul>\n      <li *ngFor='let workRegime of workRegimes; index as i' class=\"my-3\">\n        <ng-container *ngTemplateOutlet='addWorkRegimeForm; context: {workRegime: workRegime, i : i}'></ng-container>\n      </li>\n    </ul>\n  </ng-container>\n</div>\n\n<ng-template #deleteWorkRegime let-index='index'>\n  <button *ngIf='index !== 0' (click)='deleteWorkRegimeHandler(index)' class='btn delete-workRegimes__button' inlineSVG='./assets/icons/delete.svg'></button>\n</ng-template>\n\n<ng-template #addWorkRegimeForm\n             let-workRegime='workRegime'\n             let-index='i'\n>\n  <div class='col-12 pr-2 pl-2'>\n    <div class='d-flex'>\n      <j-dropdown-input [nonClosingAfterSelection]='true' [selectedItem]=\"'test'\" [options]='workRegime.days' label='Дни недели' class='work-day__item'>\n        <ng-template #selectedTemplate>\n          <!-- <ul class='d-flex align-items-center selected-days'>\n            <li\n              *ngFor='let selected of getWorkRegimeSelectedDays(workRegime.form, index)'\n            >\n              {{ selected | shortDayName }},\n            </li>\n          </ul> -->\n          <span>{{ getWorkRegimeSelectedDays(workRegime.form, index) }}</span>\n        </ng-template>\n        <ng-template #optionTemplate let-workDay>\n          <div class=\"custom-control custom-checkbox work-day__checkbox\">\n            <input [formControl]='workRegime.form.controls[workDay]'\n                   type=\"checkbox\"\n                   class=\"custom-control-input\"\n                   id=\"{{index + workDay}}\">\n            <label class=\"custom-control-label\" for=\"{{index + workDay}}\">{{ getDayTranslateKey(workDay) | translate }}</label>\n          </div>\n        </ng-template>\n      </j-dropdown-input>\n      <ng-container *ngTemplateOutlet='deleteWorkRegime; context: {index: index}'></ng-container>\n    </div>\n    <div>\n      <div class='d-flex justify-content-start align-items-center'>\n        <div class=\"custom-control custom-checkbox\">\n          <input [formControl]='workRegime.workRegimeOptions.controls.workRegimeTime'\n                 type=\"checkbox\"\n                 class=\"custom-control-input\"\n                 id=\"{{index}}allDayCheckbox\">\n          <label class=\"custom-control-label\" for=\"{{index}}allDayCheckbox\">Круглосуточно</label>\n        </div>\n       <div class='d-flex mb-2'>\n         <ng-container\n           *ngTemplateOutlet='workTimeForm;\n          context: { label: \"От\", control: workRegime.workRegimeTime.controls.open, type: TIME_INPUT_TYPE.FROM }'></ng-container>\n         <ng-container\n           *ngTemplateOutlet='workTimeForm;\n          context: { label: \"До\", control: workRegime.workRegimeTime.controls.close, type: TIME_INPUT_TYPE.TO }'></ng-container>\n       </div>\n      </div>\n      <div class='d-flex justify-content-start align-items-center' *ngIf=\"showWorkRegimeBreakTime\">\n        <div class=\"custom-control custom-checkbox without-break-checkbox\">\n          <input\n            [formControl]='workRegime.workRegimeOptions.controls.workRegimeBreakTime'\n            type=\"checkbox\"\n            class=\"custom-control-input\"\n            id=\"{{index}}withoutBreakCheckbox\">\n          <label class=\"custom-control-label\" for=\"{{index}}withoutBreakCheckbox\">Без перерыва</label>\n        </div>\n        <div class='d-flex mb-2'>\n          <ng-container\n            *ngTemplateOutlet='workTimeForm;\n          context: { label: \"Перерыв от\", control: workRegime.workRegimeBreakTime.controls.from, type: TIME_INPUT_TYPE.FROM }'></ng-container>\n          <ng-container\n            *ngTemplateOutlet='workTimeForm;\n          context: { label: \"Перерыв до\", control: workRegime.workRegimeBreakTime.controls.to, type: TIME_INPUT_TYPE.TO }'></ng-container>\n        </div>\n      </div>\n    </div>\n  </div>\n</ng-template>\n\n<ng-template #workTimeForm\n             let-type='type'\n             let-label='label'\n             let-control='control'\n>\n  <div class='d-flex'>\n    <j-form-field>\n      <j-label>{{label}}</j-label>\n      <input type=\"text\"\n             jFormInput\n             [formControl]='control'\n             mask=\"00:00\"\n             class=\"form-control mb-2\"\n      >\n    </j-form-field>\n    <div *ngIf='type === TIME_INPUT_TYPE.FROM' class='divider'></div>\n  </div>\n</ng-template>\n";
+module.exports = "<div>\n  <div class='col-12 pr-2 pl-2 d-flex justify-content-between align-items-center'>\n    <p class='form-field-title'>Режим работы</p>\n    <button [disabled]='pickedDaysCount === 7' (click)='addWorkRegimesHandler()' class='btn add-workRegimes__button' type='button'>\n      {{\"JMART.SETTINGS.DELIVERY.FORM.PRICE.BTN\" | translate}}\n    </button>\n  </div>\n\n  <ng-container>\n    <ul>\n      <li *ngFor='let workRegime of workRegimes; index as i' class=\"my-3\">\n        <ng-container *ngTemplateOutlet='addWorkRegimeForm; context: {workRegime: workRegime, i : i}'></ng-container>\n      </li>\n    </ul>\n  </ng-container>\n</div>\n\n<ng-template #deleteWorkRegime let-index='index'>\n  <button *ngIf='index !== 0' (click)='deleteWorkRegimeHandler(index)' class='btn delete-workRegimes__button' inlineSVG='/assets/icons/delete.svg'></button>\n</ng-template>\n\n<ng-template #addWorkRegimeForm\n             let-workRegime='workRegime'\n             let-index='i'\n>\n  <div class='col-12 pr-2 pl-2'>\n    <div class='d-flex'>\n      <j-dropdown-input [nonClosingAfterSelection]='true' [selectedItem]=\"'test'\" [options]='workRegime.days' label='Дни недели' class='work-day__item'>\n        <ng-template #selectedTemplate>\n          <!-- <ul class='d-flex align-items-center selected-days'>\n            <li\n              *ngFor='let selected of getWorkRegimeSelectedDays(workRegime.form, index)'\n            >\n              {{ selected | shortDayName }},\n            </li>\n          </ul> -->\n          <span>{{ getWorkRegimeSelectedDays(workRegime.form, index) }}</span>\n        </ng-template>\n        <ng-template #optionTemplate let-workDay>\n          <div class=\"custom-control custom-checkbox work-day__checkbox\">\n            <input [formControl]='workRegime.form.controls[workDay]'\n                   type=\"checkbox\"\n                   class=\"custom-control-input\"\n                   id=\"{{index + workDay}}\">\n            <label class=\"custom-control-label\" for=\"{{index + workDay}}\">{{ getDayTranslateKey(workDay) | translate }}</label>\n          </div>\n        </ng-template>\n      </j-dropdown-input>\n      <ng-container *ngTemplateOutlet='deleteWorkRegime; context: {index: index}'></ng-container>\n    </div>\n    <div>\n      <div class='d-flex justify-content-start align-items-center'>\n        <div class=\"custom-control custom-checkbox\">\n          <input [formControl]='workRegime.workRegimeOptions.controls.workRegimeTime'\n                 type=\"checkbox\"\n                 class=\"custom-control-input\"\n                 id=\"{{index}}allDayCheckbox\">\n          <label class=\"custom-control-label\" for=\"{{index}}allDayCheckbox\">Круглосуточно</label>\n        </div>\n       <div class='d-flex mb-2'>\n         <ng-container\n           *ngTemplateOutlet='workTimeForm;\n          context: { label: \"От\", control: workRegime.workRegimeTime.controls.open, type: TIME_INPUT_TYPE.FROM }'></ng-container>\n         <ng-container\n           *ngTemplateOutlet='workTimeForm;\n          context: { label: \"До\", control: workRegime.workRegimeTime.controls.close, type: TIME_INPUT_TYPE.TO }'></ng-container>\n       </div>\n      </div>\n      <div class='d-flex justify-content-start align-items-center' *ngIf=\"showWorkRegimeBreakTime\">\n        <div class=\"custom-control custom-checkbox without-break-checkbox\">\n          <input\n            [formControl]='workRegime.workRegimeOptions.controls.workRegimeBreakTime'\n            type=\"checkbox\"\n            class=\"custom-control-input\"\n            id=\"{{index}}withoutBreakCheckbox\">\n          <label class=\"custom-control-label\" for=\"{{index}}withoutBreakCheckbox\">Без перерыва</label>\n        </div>\n        <div class='d-flex mb-2'>\n          <ng-container\n            *ngTemplateOutlet='workTimeForm;\n          context: { label: \"Перерыв от\", control: workRegime.workRegimeBreakTime.controls.from, type: TIME_INPUT_TYPE.FROM }'></ng-container>\n          <ng-container\n            *ngTemplateOutlet='workTimeForm;\n          context: { label: \"Перерыв до\", control: workRegime.workRegimeBreakTime.controls.to, type: TIME_INPUT_TYPE.TO }'></ng-container>\n        </div>\n      </div>\n    </div>\n  </div>\n</ng-template>\n\n<ng-template #workTimeForm\n             let-type='type'\n             let-label='label'\n             let-control='control'\n>\n  <div class='d-flex'>\n    <j-form-field>\n      <j-label>{{label}}</j-label>\n      <input type=\"text\"\n             jFormInput\n             [formControl]='control'\n             mask=\"00:00\"\n             class=\"form-control mb-2\"\n      >\n    </j-form-field>\n    <div *ngIf='type === TIME_INPUT_TYPE.FROM' class='divider'></div>\n  </div>\n</ng-template>\n";
 
 /***/ }),
 
@@ -5475,16 +5140,6 @@ module.exports = "<div>\n  <div class='col-12 pr-2 pl-2 d-flex justify-content-b
 /***/ ((module) => {
 
 module.exports = "<section class=\"points-empty container-fluid\">\n  <span class=\"points-empty__img mb-3\" inlineSVG=\"./assets/jmart/no-data.svg\"></span>\n<!--  <span class=\"points-empty__text\">{{'JMART.SETTINGS.PICKUPPOINTS.NO_DATA' | translate}}</span>-->\n  <span class=\"points-empty__text\">{{text | translate}}</span>\n</section>\n";
-
-/***/ }),
-
-/***/ 77682:
-/*!*************************************************************************************************************************!*\
-  !*** ./src/app/jmart-cabinet/modules/settings/components/pickup-points-map/pickup-points-map.component.html?ngResource ***!
-  \*************************************************************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<j-yandex-maps\n    [addressFromPosAction]=\"addressFromPosAction\"\n    (applyClickFn)=\"applyClickFn($event)\"\n    (backClickFn)=\"navigateToPickupPoints()\"\n></j-yandex-maps>";
 
 /***/ }),
 
@@ -5514,7 +5169,7 @@ module.exports = "<div id=\"ck-button\" class=\"statuses\" *ngFor=\"let status o
   \***************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<section class=\"table container-fluid\">\n  <div class=\"table__header row\">\n    <p class=\"table__header-item col-1\">ID</p>\n    <p class=\"table__header-item col-4\">{{mapTranslate('ADDRESS') | translate}}</p>\n    <p class=\"table__header-item col-3\">{{mapTranslate('SCHEDULE') | translate}}</p>\n    <p class=\"table__header-item col-1\">{{mapTranslate('TYPE') | translate}}</p>\n    <p class=\"table__header-item col\">{{mapTranslate('TYPE_WAREHOUSE') | translate}}</p>\n    <p class=\"table__header-item col-auto\"></p>\n  </div>\n\n  <div class=\"table__body row\" *ngFor=\"let point of viewPoints;let pointIndex=index; trackBy: identify\" >\n    <div class=\"table__body-item col-1\">\n      <span *ngIf=\"point.status === 'A'\" class=\"mr-1\">\n        <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"#74BA72\"/>\n        </svg>\n      </span>\n      <span *ngIf=\"point.status === 'D'\" class=\"mr-1\">\n        <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"#FF0000\"/>\n        </svg>\n      </span>\n      <span class=\"store-id\">{{point.companyStoreId}}</span>\n    </div>\n    <p class=\"table__body-item col-4\">​​{{point.city?.name ? point.city?.name : point.city?.title}}, {{point.pickupAddress}}</p>\n    <div class=\"table__body-item col-3\">\n      <div class=\"working-time\" *ngFor=\"let time of point.workingTime\">\n        <span class=\"working-days\">{{time.days}}</span>\n        <span class=\"working-hours\">{{time.hour}}, {{time.break}}</span>\n      </div>\n    </div>\n    <p *ngIf=\"point.type\" class=\"table__body-item col-1\">{{point.type.label}}</p>\n    <div class=\"table__body-item col\">\n      <p>{{point.isMain}}</p>\n      <p>{{point.isMainInCity}}</p>\n    </div>\n    <div class=\"table__body-item col-auto\">\n      <span (click)=\"edit(points[pointIndex])\"\n            tooltipClass=\"tooltip-light\"\n            [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.EDIT' | translate\"\n            class=\"edit-btn\"\n      >\n      <svg width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" xmlns=\"http://www.w3.org/2000/svg\">\n        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M18.8253 6.19123L18.8257 6.19084C19.1038 5.92538 19.3236 5.61097 19.4733 5.26596C19.6231 4.92081 19.7 4.55139 19.7 4.17867C19.7 3.80594 19.6231 3.43652 19.4733 3.09137C19.3235 2.74619 19.1035 2.43165 18.8253 2.1661L18.8252 2.16604L17.7516 1.14094L17.7516 1.14088C17.4735 0.875148 17.1425 0.663657 16.7772 0.519131C16.4119 0.374598 16.02 0.300049 15.6238 0.300049C15.2277 0.300049 14.8357 0.374598 14.4704 0.519131C14.1052 0.663635 13.7743 0.875084 13.4962 1.14076L13.4961 1.14088L3.11129 11.1081C2.69024 11.5236 2.36743 12.0189 2.16343 12.5608L2.16299 12.562L0.353379 17.5025L0.352851 17.504C0.301557 17.6498 0.287395 17.8047 0.311223 17.9562C0.335139 18.1083 0.396834 18.2538 0.492315 18.3805C0.587855 18.5072 0.714657 18.6117 0.863065 18.684C1.01118 18.7563 1.17593 18.7941 1.34354 18.7939C1.45952 18.7925 1.57457 18.7755 1.68525 18.7435L6.85976 17.0154L6.86196 17.0147C7.43659 16.8277 7.9574 16.5176 8.3847 16.1092L8.38535 16.1086L18.8253 6.19123ZM15.6267 2.26407L15.6267 2.26414C15.8675 2.26644 16.1003 2.35929 16.2738 2.52654L16.2754 2.52802L17.346 3.53754L17.3513 3.54247L17.3563 3.54765C17.5182 3.71572 17.6103 3.93847 17.6103 4.17226C17.6103 4.40605 17.5182 4.6288 17.3563 4.79687L17.3476 4.80587L17.3474 4.80568L15.7889 6.29384L13.3594 4.07892L14.9848 2.52887C15.0678 2.44622 15.1664 2.38076 15.2745 2.3356C15.3839 2.2899 15.5013 2.26572 15.6199 2.26416L15.6267 2.26407ZM11.91 5.46108L4.5872 12.4443L4.58616 12.4453C4.36971 12.6537 4.20587 12.9083 4.1087 13.1896L3.22369 15.6479L3.01549 16.2262L3.59952 16.0345L6.17233 15.19L6.17427 15.1894C6.46368 15.0983 6.72815 14.9438 6.94636 14.7372L6.94725 14.7364L14.3405 7.67687L11.91 5.46108Z\" />\n      </svg>\n    </span>\n    </div>\n  </div>\n</section>\n";
+module.exports = "<section class=\"table container-fluid\">\n  <div class=\"table__header row\">\n    <p class=\"table__header-item col-1\">ID</p>\n    <p class=\"table__header-item col-4\">{{mapTranslate('ADDRESS') | translate}}</p>\n    <p class=\"table__header-item col-3\">{{mapTranslate('SCHEDULE') | translate}}</p>\n    <p class=\"table__header-item col-1\">{{mapTranslate('TYPE') | translate}}</p>\n    <p class=\"table__header-item col\">{{mapTranslate('TYPE_WAREHOUSE') | translate}}</p>\n    <p class=\"table__header-item col-auto\"></p>\n  </div>\n\n  <div class=\"table__body row\" *ngFor=\"let point of points; trackBy: identify\" >\n    <div class=\"table__body-item col-1\">\n      <span *ngIf=\"point.status === 'A'\" class=\"mr-1\">\n        <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"#74BA72\"/>\n        </svg>\n      </span>\n      <span *ngIf=\"point.status === 'D'\" class=\"mr-1\">\n        <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <circle cx=\"6\" cy=\"6\" r=\"6\" fill=\"#FF0000\"/>\n        </svg>\n      </span>\n      <span class=\"store-id\">{{point.companyStoreId}}</span>\n    </div>\n    <p class=\"table__body-item col-4\">​​{{point.city?.name ? point.city?.name : point.city?.title}}, {{point.pickupAddress}}</p>\n    <div class=\"table__body-item col-3\">\n      <div class=\"working-time\" *ngFor=\"let time of point.workingTime\">\n        <span class=\"working-days\">{{time.days}}</span>\n        <span class=\"working-hours\">{{time.hour}}, {{time.break}}</span>\n      </div>\n    </div>\n    <p *ngIf=\"point.type\" class=\"table__body-item col-1\">{{point.type.label}}</p>\n    <div class=\"table__body-item col\">\n      <p>{{point.isMain}}</p>\n      <p>{{point.isMainInCity}}</p>\n    </div>\n    <div class=\"table__body-item col-auto\">\n      <span (click)=\"edit(point)\"\n            tooltipClass=\"tooltip-light\"\n            [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.EDIT' | translate\"\n            class=\"edit-btn\"\n      >\n      <svg width=\"20\" height=\"19\" viewBox=\"0 0 20 19\" xmlns=\"http://www.w3.org/2000/svg\">\n        <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M18.8253 6.19123L18.8257 6.19084C19.1038 5.92538 19.3236 5.61097 19.4733 5.26596C19.6231 4.92081 19.7 4.55139 19.7 4.17867C19.7 3.80594 19.6231 3.43652 19.4733 3.09137C19.3235 2.74619 19.1035 2.43165 18.8253 2.1661L18.8252 2.16604L17.7516 1.14094L17.7516 1.14088C17.4735 0.875148 17.1425 0.663657 16.7772 0.519131C16.4119 0.374598 16.02 0.300049 15.6238 0.300049C15.2277 0.300049 14.8357 0.374598 14.4704 0.519131C14.1052 0.663635 13.7743 0.875084 13.4962 1.14076L13.4961 1.14088L3.11129 11.1081C2.69024 11.5236 2.36743 12.0189 2.16343 12.5608L2.16299 12.562L0.353379 17.5025L0.352851 17.504C0.301557 17.6498 0.287395 17.8047 0.311223 17.9562C0.335139 18.1083 0.396834 18.2538 0.492315 18.3805C0.587855 18.5072 0.714657 18.6117 0.863065 18.684C1.01118 18.7563 1.17593 18.7941 1.34354 18.7939C1.45952 18.7925 1.57457 18.7755 1.68525 18.7435L6.85976 17.0154L6.86196 17.0147C7.43659 16.8277 7.9574 16.5176 8.3847 16.1092L8.38535 16.1086L18.8253 6.19123ZM15.6267 2.26407L15.6267 2.26414C15.8675 2.26644 16.1003 2.35929 16.2738 2.52654L16.2754 2.52802L17.346 3.53754L17.3513 3.54247L17.3563 3.54765C17.5182 3.71572 17.6103 3.93847 17.6103 4.17226C17.6103 4.40605 17.5182 4.6288 17.3563 4.79687L17.3476 4.80587L17.3474 4.80568L15.7889 6.29384L13.3594 4.07892L14.9848 2.52887C15.0678 2.44622 15.1664 2.38076 15.2745 2.3356C15.3839 2.2899 15.5013 2.26572 15.6199 2.26416L15.6267 2.26407ZM11.91 5.46108L4.5872 12.4443L4.58616 12.4453C4.36971 12.6537 4.20587 12.9083 4.1087 13.1896L3.22369 15.6479L3.01549 16.2262L3.59952 16.0345L6.17233 15.19L6.17427 15.1894C6.46368 15.0983 6.72815 14.9438 6.94636 14.7372L6.94725 14.7364L14.3405 7.67687L11.91 5.46108Z\" />\n      </svg>\n    </span>\n    </div>\n  </div>\n</section>\n";
 
 /***/ }),
 
@@ -5544,7 +5199,7 @@ module.exports = "<j-dropdown-input \n  [label]=\"label\"\n  [options]=\"citiesN
   \***********************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"tabs\">\n   <!-- <a class=\"p1 tabs__link\"\n      [routerLink]=\"['information']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.INFORMATION.TITLE</a> -->\n   <a class=\"p1 tabs__link\"\n      [routerLink]=\"['pickup-points']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.PICKUPPOINTS.TITLE</a>\n\n    <a class=\"p1 tabs__link\"\n       [routerLink]=\"['delivery']\"\n       routerLinkActive=\"tabs__link_active\"\n       translate>JMART.SETTINGS.DELIVERY.TITLE</a>\n\n   <!-- <a class=\"p1 tabs__link\"\n      [routerLink]=\"['schedule']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.SCHEDULE.TITLE</a>\n\n   <a class=\"p1 tabs__link\"\n      [routerLink]=\"['users']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.USERS.TITLE</a> -->\n</div>\n";
+module.exports = "<div class=\"tabs\">\n   <!-- <a class=\"p1 tabs__link\"\n      [routerLink]=\"['information']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.INFORMATION.TITLE</a> -->\n   <!-- <a class=\"p1 tabs__link\"\n      [routerLink]=\"['pickup-points']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.PICKUPPOINTS.TITLE</a> -->\n\n    <a class=\"p1 tabs__link\"\n       [routerLink]=\"['delivery']\"\n       routerLinkActive=\"tabs__link_active\"\n       translate>JMART.SETTINGS.DELIVERY.TITLE</a>\n\n   <!-- <a class=\"p1 tabs__link\"\n      [routerLink]=\"['schedule']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.SCHEDULE.TITLE</a>\n\n   <a class=\"p1 tabs__link\"\n      [routerLink]=\"['users']\"\n      routerLinkActive=\"tabs__link_active\"\n      translate>JMART.SETTINGS.USERS.TITLE</a> -->\n</div>\n";
 
 /***/ }),
 
@@ -5704,7 +5359,7 @@ module.exports = "<div class=\"point-remove p-3\">\n  <div class=\"point-remove_
   \*******************************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<section class=\"pickup-points-modal p-4\">\n  <button type=\"button\"\n          class=\"close\"\n          (click)=\"cancel()\">\n    <img src=\"./assets/icons/close.svg\"\n         alt=\"{{'SHARED.CLOSE' | translate}}\">\n  </button>\n  <div class=\"row justify-content-between align-items-center pt-3 pickup-points-modal__header\">\n    <h5 class=\"col-auto m-0 pickup-points-modal__header-title\" translate>{{ formTitle }}</h5>\n    <div class=\"col-auto delete-btn pt-0 pb-0\" *ngIf=\"editedIndex === 1\">\n      <span [inlineSVG]=\"'./assets/jmart/delete-orange.svg'\" (click)=\"remove()\"\n            tooltipClass=\"tooltip-light\" [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.REMOVE' | translate\"></span>\n    </div>\n  </div>\n\n  <form class=\"pickup-points-modal__form\" [formGroup]=\"form\" (ngSubmit)=\"save()\">\n    <div class=\"switch\" *ngIf=\"editedIndex === 1\">\n      <j-switch (change)=\"changeStatus($event)\" [value]=\"status\"></j-switch>\n      <div class=\"switch__status ml-2\">\n        <span class=\"switch__status-text\">{{mapTranslate('STATUS') | translate}}</span>\n        <span class=\"switch__status-state\" *ngIf=\"form.get('status').value\">{{mapTranslate('STATUS_ENABLED') | translate}}</span>\n        <span class=\"switch__status-state\" *ngIf=\"!form.get('status').value\">{{mapTranslate('STATUS_DISABLED') | translate}}</span>\n      </div>\n      <a href=\"javascript:void(0)\"\n         jSuffix\n         tooltipClass=\"tooltip-light tooltip-large\"\n         [ngbTooltip]=\"kbeInfo\"\n         [inlineSVG]=\"'./assets/icons/payments/question.svg'\"\n         triggers=\"mouseenter:mouseleave\"\n         class=\"mr-1 link-gray\">\n      </a>\n    </div>\n\n    <j-input label=\"{{mapTranslate('ID_POINT') | translate}}\"\n             type=\"text\"\n             [formControl]=\"form.get('companyStoreId')\"\n             [hasError]=\"idPointError && isSubmitted\"\n             [isClearable]=\"false\"\n             translate\n             ngbAutofocus=\"false\"\n    ></j-input>\n\n    <span class=\"prompt\">\n      <span class=\"prompt__important\">{{mapTranslate('IMPORTANT') | translate}}</span> {{mapTranslate('IMPORTANT_TEXT') | translate}}\n    </span>\n\n    <j-input label=\"{{mapTranslate('POINT_NAME') | translate}}\"\n             type=\"text\"\n             [formControl]=\"form.get('name')\"\n             [hasError]=\"titleError && isSubmitted\"\n             [isClearable]=\"false\"\n             translate\n    ></j-input>\n\n    <span class=\"prompt\">{{mapTranslate('PROMT') | translate}}</span>\n\n    <!-- <j-dropdown-input label=\"{{mapTranslate('CITY') | translate}}\"\n                      [options]=\"cityNames\"\n                      (selected)=\"selectedCity($event)\"\n                      [hasError]=\"cityError && isSubmitted\"\n                      [selectedItem]=\"form.get('city').value\"\n    ></j-dropdown-input> -->\n    <j-select-city\n      class=\"select-city\"\n      [control]=\"form.get('city')\"\n      [label]=\"'JMART.SETTINGS.DELIVERY.CITY'\"\n    ></j-select-city>\n    <!-- <button type=\"button\" (click)=\"test()\">test</button> -->\n<!-- \n    <j-input label=\"{{mapTranslate('ADDRESS') | translate}}\"\n             type=\"text\"\n             [formControl]=\"form.get('pickupAddress')\"\n             [hasError]=\"addressError && isSubmitted\"\n             [isClearable]=\"false\"\n    ></j-input> -->\n\n    <j-input-autocomplete\n      label=\"{{mapTranslate('ADDRESS') | translate}}\"\n      [options]=\"addressOptions\"\n      class=\"mb-0\"\n      [formControl]=\"form.get('pickupAddress')\"\n      ngDefaultControl\n    ></j-input-autocomplete>\n    <button\n      class=\"btn btn-link pl-0 pt-1\"\n      [disabled]=\"form.get('pickupAddress').disabled\"\n      (click)=\"chooseOnMap()\"\n      translate\n    > JMART.SETTINGS.PICKUPPOINTS.CHOOSE_ON_MAP </button>\n\n    <j-iban-input label=\"{{mapTranslate('IBAN' | translate)}}\"\n                  [formControl]=\"form.get('iban')\"\n                  [hasError]=\"ibanError && isSubmitted\"\n                  [isClearable]=\"false\"\n    ></j-iban-input>\n\n    <h6 class=\"pickup-points-type mt-4\">{{mapTranslate('POINT_TYPE') | translate}}</h6>\n    <j-radio-button [options]=\"typePointList\"\n                    [formControl]=\"form.get('type')\"\n                    ngDefaultControl\n    ></j-radio-button>\n\n    <div class=\"mb-4\">\n      <h6 class=\"pickup-points-type mt-4\">{{mapTranslate('TYPE_WAREHOUSE') | translate}}</h6>\n      <div class=\"custom-control custom-checkbox select-all main-checkbox\">\n        <input type=\"checkbox\"\n               class=\"custom-control-input\"\n               id=\"main\"\n               [formControl]=\"form.get('isMain')\"\n        >\n        <label class=\"custom-control-label\"\n               for=\"main\">\n          <span class=\"saved-name\">{{mapTranslate('MAIN') | translate}}</span>\n        </label>\n      </div>\n      <div class=\"custom-control custom-checkbox select-all\">\n        <input type=\"checkbox\"\n               class=\"custom-control-input\"\n               id=\"mainCity\"\n               [formControl]=\"form.get('isMainInCity')\"\n        >\n        <label class=\"custom-control-label\"\n               for=\"mainCity\">\n          <span class=\"saved-name\">{{mapTranslate('MAIN_CITY') | translate}}</span>\n        </label>\n      </div>\n      <j-tole-work-regime\n        [showWorkRegimeBreakTime]=\"false\"\n        [workRegimes]=\"workingTime.workignTimeFormGroup\"\n      ></j-tole-work-regime>\n    </div>\n    <div class=\"row justify-content-end p-0 m-0\">\n      <button class=\"btn btn-outline-primary mr-3\" type=\"button\" (click)=\"cancel()\" translate>JMART.SETTINGS.INFORMATION.CANCEL</button>\n      <button class=\"btn btn-primary\" type=\"submit\" translate>JMART.SETTINGS.INFORMATION.SAVE</button>\n    </div>\n  </form>\n</section>\n<ng-template #kbeInfo>\n  <j-points-info [text]=\"'Тут будет текст:)'\"></j-points-info>\n</ng-template>\n";
+module.exports = "<section class=\"pickup-points-modal p-4\">\n  <button type=\"button\"\n          class=\"close\"\n          (click)=\"cancel()\">\n    <img src=\"./assets/icons/close.svg\"\n         alt=\"{{'SHARED.CLOSE' | translate}}\">\n  </button>\n  <div class=\"row justify-content-between align-items-center pt-3 pickup-points-modal__header\">\n    <h5 class=\"col-auto m-0 pickup-points-modal__header-title\" translate>{{ formTitle }}</h5>\n    <div class=\"col-auto delete-btn pt-0 pb-0\" *ngIf=\"editedIndex === 1\">\n      <span [inlineSVG]=\"'./assets/jmart/delete-orange.svg'\" (click)=\"remove()\"\n            tooltipClass=\"tooltip-light\" [ngbTooltip]=\"'JMART.SETTINGS.INFORMATION.REMOVE' | translate\"></span>\n    </div>\n  </div>\n\n  <form class=\"pickup-points-modal__form\" [formGroup]=\"form\" (ngSubmit)=\"save()\">\n    <div class=\"switch\" *ngIf=\"editedIndex === 1\">\n      <j-switch (change)=\"changeStatus($event)\" [value]=\"status\"></j-switch>\n      <div class=\"switch__status ml-2\">\n        <span class=\"switch__status-text\">{{mapTranslate('STATUS') | translate}}</span>\n        <span class=\"switch__status-state\" *ngIf=\"form.get('status').value\">{{mapTranslate('STATUS_ENABLED') | translate}}</span>\n        <span class=\"switch__status-state\" *ngIf=\"!form.get('status').value\">{{mapTranslate('STATUS_DISABLED') | translate}}</span>\n      </div>\n      <a href=\"javascript:void(0)\"\n         jSuffix\n         tooltipClass=\"tooltip-light tooltip-large\"\n         [ngbTooltip]=\"kbeInfo\"\n         [inlineSVG]=\"'/assets/icons/payments/question.svg'\"\n         triggers=\"mouseenter:mouseleave\"\n         class=\"mr-1 link-gray\">\n      </a>\n    </div>\n\n    <j-input label=\"{{mapTranslate('ID_POINT') | translate}}\"\n             type=\"text\"\n             [formControl]=\"form.get('companyStoreId')\"\n             [hasError]=\"idPointError && isSubmitted\"\n             [isClearable]=\"false\"\n             translate\n             ngbAutofocus=\"false\"\n    ></j-input>\n\n    <span class=\"prompt\">\n      <span class=\"prompt__important\">{{mapTranslate('IMPORTANT') | translate}}</span> {{mapTranslate('IMPORTANT_TEXT') | translate}}\n    </span>\n\n    <j-input label=\"{{mapTranslate('POINT_NAME') | translate}}\"\n             type=\"text\"\n             [formControl]=\"form.get('name')\"\n             [hasError]=\"titleError && isSubmitted\"\n             [isClearable]=\"false\"\n             translate\n    ></j-input>\n\n    <span class=\"prompt\">{{mapTranslate('PROMT') | translate}}</span>\n\n    <!-- <j-dropdown-input label=\"{{mapTranslate('CITY') | translate}}\"\n                      [options]=\"cityNames\"\n                      (selected)=\"selectedCity($event)\"\n                      [hasError]=\"cityError && isSubmitted\"\n                      [selectedItem]=\"form.get('city').value\"\n    ></j-dropdown-input> -->\n    <j-select-city\n      class=\"select-city\"\n      [control]=\"form.get('city')\"\n      [label]=\"'JMART.SETTINGS.DELIVERY.CITY'\"\n    ></j-select-city>\n    <button type=\"button\" (click)=\"test()\">test</button>\n\n    <j-input label=\"{{mapTranslate('ADDRESS') | translate}}\"\n             type=\"text\"\n             [formControl]=\"form.get('pickupAddress')\"\n             [hasError]=\"addressError && isSubmitted\"\n             [isClearable]=\"false\"\n    ></j-input>\n\n    <j-iban-input label=\"{{mapTranslate('IBAN' | translate)}}\"\n                  [formControl]=\"form.get('iban')\"\n                  [hasError]=\"ibanError && isSubmitted\"\n                  [isClearable]=\"false\"\n    ></j-iban-input>\n\n    <h6 class=\"pickup-points-type mt-4\">{{mapTranslate('POINT_TYPE') | translate}}</h6>\n    <j-radio-button [options]=\"typePointList\"\n                    [formControl]=\"form.get('type')\"\n                    ngDefaultControl\n    ></j-radio-button>\n\n    <div class=\"mb-4\">\n      <h6 class=\"pickup-points-type mt-4\">{{mapTranslate('TYPE_WAREHOUSE') | translate}}</h6>\n      <div class=\"custom-control custom-checkbox select-all main-checkbox\">\n        <input type=\"checkbox\"\n               class=\"custom-control-input\"\n               id=\"main\"\n               [formControl]=\"form.get('isMain')\"\n        >\n        <label class=\"custom-control-label\"\n               for=\"main\">\n          <span class=\"saved-name\">{{mapTranslate('MAIN') | translate}}</span>\n        </label>\n      </div>\n      <div class=\"custom-control custom-checkbox select-all\">\n        <input type=\"checkbox\"\n               class=\"custom-control-input\"\n               id=\"mainCity\"\n               [formControl]=\"form.get('isMainInCity')\"\n        >\n        <label class=\"custom-control-label\"\n               for=\"mainCity\">\n          <span class=\"saved-name\">{{mapTranslate('MAIN_CITY') | translate}}</span>\n        </label>\n      </div>\n      <j-tole-work-regime\n        [showWorkRegimeBreakTime]=\"false\"\n        [workRegimes]=\"workingTime.workignTimeFormGroup\"\n      ></j-tole-work-regime>\n    </div>\n    <div class=\"row justify-content-end p-0 m-0\">\n      <button class=\"btn btn-outline-primary mr-3\" type=\"button\" (click)=\"cancel()\" translate>JMART.SETTINGS.INFORMATION.CANCEL</button>\n      <button class=\"btn btn-primary\" type=\"submit\" translate>JMART.SETTINGS.INFORMATION.SAVE</button>\n    </div>\n  </form>\n</section>\n<ng-template #kbeInfo>\n  <j-points-info [text]=\"'Тут будет текст:)'\"></j-points-info>\n</ng-template>\n";
 
 /***/ }),
 

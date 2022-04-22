@@ -281,9 +281,9 @@ let CardProductPageComponent = class CardProductPageComponent {
             { link: 'availability',
                 title: 'Наличие'
             },
-            { link: 'price',
-                title: 'Стоимость по городам'
-            },
+            // { link: 'price',
+            //   title: 'Стоимость по городам'
+            // },
             { link: 'info',
                 title: 'Информация о товаре'
             }
@@ -339,11 +339,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DeliveryService": () => (/* binding */ DeliveryService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 34929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 34929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ 84505);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ 28784);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ 28784);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 86942);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ 79128);
 
 
 
@@ -354,6 +355,8 @@ let DeliveryService = class DeliveryService {
         this.baseUrl = baseUrl;
         this.http = http;
         this.deliveryCity$ = new rxjs__WEBPACK_IMPORTED_MODULE_0__.BehaviorSubject([]);
+        this.cities$ = null;
+        this.citiesAndRegions$ = null;
     }
     getDeliveries() {
         this.http.get(`${this.baseUrl}/gw/shipping/v1/merchant/shipping-rates`).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)((res) => {
@@ -364,6 +367,55 @@ let DeliveryService = class DeliveryService {
             this.deliveryCity$.next(deliveries);
         });
         return this.deliveryCity$;
+    }
+    mapCity({ cityId, title }) {
+        return {
+            cityId,
+            title,
+            type: 3,
+            id: cityId,
+        };
+    }
+    getCities() {
+        if (!this.cities$) {
+            const cities$ = this.http.get(`${this.baseUrl}/gw/dictionary/v1/cities`, {
+                params: {
+                    status: 'A'
+                },
+            }).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)((data) => Object.values(data.data).map(this.mapCity)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.shareReplay)(1));
+            this.cities$ = cities$;
+        }
+        return this.cities$;
+    }
+    getCitiesAndRegion() {
+        if (!this.citiesAndRegions$) {
+            const cities$ = this.http.get(`${this.baseUrl}/gw/dictionary/v1/entities/city,region`, {
+                params: { is_city: 0 },
+            }).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)((data) => {
+                const { city, region } = data.data;
+                return [
+                    { title: 'Вся страна', value: { title: 'Вся страна', cityId: 0, type: 1, id: 0 } },
+                    ...region.map(({ title, id }) => ({
+                        title,
+                        value: {
+                            title,
+                            cityId: id,
+                            type: 2,
+                            id,
+                        }
+                    })),
+                    ...city.map(city => {
+                        const mappedCity = this.mapCity(city);
+                        return {
+                            title: mappedCity.title,
+                            value: mappedCity,
+                        };
+                    }),
+                ];
+            }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.shareReplay)(1));
+            this.citiesAndRegions$ = cities$;
+        }
+        return this.citiesAndRegions$;
     }
     addDelivery(delivery) {
         const url = `${this.baseUrl}/gw/shipping/v1/merchant/shipping-rates`;
@@ -401,11 +453,11 @@ let DeliveryService = class DeliveryService {
     }
 };
 DeliveryService.ctorParameters = () => [
-    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Inject, args: ['JMART_CABINET_BASE_URL',] }] },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpClient }
+    { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Inject, args: ['JMART_CABINET_BASE_URL',] }] },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__.HttpClient }
 ];
-DeliveryService = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+DeliveryService = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
         providedIn: 'root'
     })
 ], DeliveryService);
@@ -440,7 +492,7 @@ module.exports = ".product-title {\n  font-style: normal;\n  font-weight: 500;\n
   \*******************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ng-container>\n  <div class='modal-header j-modal-header'>\n    <button type='button'\n            class='close'\n            *ngIf='isReady'\n            (click)=\"close()\">\n      <img src='./assets/icons/close.svg'\n           alt=\"{{'SHARED.CLOSE' | translate}}\">\n    </button>\n\n  </div>\n  <div class='modal-body j-modal-body text-center pb-4' *ngIf='isReady'>\n    <h3 translate class='light mb-3 mt-0 text-left '>\n      SMS подтверждение <br>\n      для выдачи заказа\n    </h3>\n    <div class='text-left'>\n      <p translate>\n        Введите код из SMS отправленный <br>\n        на номер покупателя {{phone}}\n        <strong class='text-nowrap'></strong>\n      </p>\n      <p *ngIf='isTimerRunning' [innerHTML]=\"'SHARED.SMS.NEW_CODE' | translate:translateParam\"\n         class='mt-2 text-muted'>\n      </p>\n      <p *ngIf='!isTimerRunning' class='text-primary' style='cursor: pointer' (click)='requestSms()'>\n        Отправить код повторно\n      </p>\n      <p class='text-danger'>\n        {{errorText}}\n      </p>\n\n      <form class='mt-4'\n            (ngSubmit)='onSubmit()'\n            [formGroup]='authSmsForm'>\n        <j-sms-input #smsInput\n                     [autofocus]='true'\n                     [formControl]='f.smsCode'\n                     maskType='jmartSms'\n                     class='my-4'\n        ></j-sms-input>\n        <div class='auth-submit'>\n          <button translate\n                  type='submit'\n                  [disabled]='loading'\n                  class='btn btn-static btn-primary btn-lg w-50'>\n            SHARED.CONTINUE\n          </button>\n        </div>\n      </form>\n    </div>\n\n  </div>\n  <div class='spinner-wrap' *ngIf='!isReady'>\n    <j-animated-loading></j-animated-loading>\n  </div>\n\n\n</ng-container>\n";
+module.exports = "<ng-container>\n  <div class='modal-header j-modal-header'>\n    <button type='button'\n            class='close'\n            *ngIf='isReady'\n            (click)=\"close()\">\n      <img src='/assets/icons/close.svg'\n           alt=\"{{'SHARED.CLOSE' | translate}}\">\n    </button>\n\n  </div>\n  <div class='modal-body j-modal-body text-center pb-4' *ngIf='isReady'>\n    <h3 translate class='light mb-3 mt-0 text-left '>\n      SMS подтверждение <br>\n      для выдачи заказа\n    </h3>\n    <div class='text-left'>\n      <p translate>\n        Введите код из SMS отправленный <br>\n        на номер покупателя {{phone}}\n        <strong class='text-nowrap'></strong>\n      </p>\n      <p *ngIf='isTimerRunning' [innerHTML]=\"'SHARED.SMS.NEW_CODE' | translate:translateParam\"\n         class='mt-2 text-muted'>\n      </p>\n      <p *ngIf='!isTimerRunning' class='text-primary' style='cursor: pointer' (click)='requestSms()'>\n        Отправить код повторно\n      </p>\n      <p class='text-danger'>\n        {{errorText}}\n      </p>\n\n      <form class='mt-4'\n            (ngSubmit)='onSubmit()'\n            [formGroup]='authSmsForm'>\n        <j-sms-input #smsInput\n                     [autofocus]='true'\n                     [formControl]='f.smsCode'\n                     maskType='jmartSms'\n                     class='my-4'\n        ></j-sms-input>\n        <div class='auth-submit'>\n          <button translate\n                  type='submit'\n                  [disabled]='loading'\n                  class='btn btn-static btn-primary btn-lg w-50'>\n            SHARED.CONTINUE\n          </button>\n        </div>\n      </form>\n    </div>\n\n  </div>\n  <div class='spinner-wrap' *ngIf='!isReady'>\n    <j-animated-loading></j-animated-loading>\n  </div>\n\n\n</ng-container>\n";
 
 /***/ }),
 
@@ -450,7 +502,7 @@ module.exports = "<ng-container>\n  <div class='modal-header j-modal-header'>\n 
   \********************************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<f-page (closed)=\"onClose()\" closePosition=\"outside\" colsClassList=\"offset-lg-1 col-lg-10 offset-xl-2 col-xl-8\"\n        *ngIf=\"(product$ | async) as product; else loading\">\n    <f-page-header>\n      <ng-container  >\n        <span class='product-small'>{{product?.category}}</span>\n        <h1 class=\"product-title\">{{product?.product}}</h1>\n        <div class='row my-5'>\n          <div class='col-7'>\n            <j-carousel-products [links]='product?.imageUrls'></j-carousel-products>\n          </div>\n          <div class='col-5'>\n            <j-card-product-main-info [product]='product'></j-card-product-main-info>\n          </div>\n        </div>\n      </ng-container>\n      <div class=\"f-page-tabs-wrap\">\n        <nav class=\"f-page-tabs\">\n          <a *ngFor='let tab of tabs;'\n             [class.tab_active]='tab.link === currentTab'\n             (click)='currentTab = tab.link'>\n            {{tab.title | translate}}\n          </a>\n        </nav>\n      </div>\n    </f-page-header>\n    <f-page-body>\n      <div class=\"outlet-animation-wrapper\">\n        <j-card-product-additionally-info [productFeatures]='product?.productFeatures'  *ngIf='currentTab === \"info\"' ></j-card-product-additionally-info>\n        <j-card-product-availability [availability]='product?.availability' [productId]=\"product.productId\"  *ngIf='currentTab === \"availability\"'></j-card-product-availability>\n        <j-card-product-price [basePrice]='product?.price' [productId]=\"product.productId\"  [cityPrices]='product?.cityPrices' *ngIf='currentTab === \"price\"'></j-card-product-price>\n      </div>\n    </f-page-body>\n</f-page>\n<ng-template #loading>\n  <f-page (closed)=\"onClose()\" closePosition=\"outside\" colsClassList=\"offset-lg-1 col-lg-10 offset-xl-2 col-xl-8\">\n    <f-page-header>\n      <ngx-skeleton-loader *ngFor='let theme of themesMain;' [theme]='theme'>\n      </ngx-skeleton-loader>\n      <div class=\"f-page-tabs-wrap\">\n        <nav class=\"f-page-tabs\">\n          <a *ngFor='let tab of tabs;'\n             [class.tab_active]='tab.link === currentTab'\n             (click)='currentTab = tab.link'>\n            {{tab.title | translate}}\n          </a>\n        </nav>\n      </div>\n    </f-page-header>\n    <f-page-body>\n      <ngx-skeleton-loader *ngFor='let theme of themesTab;' [theme]='theme'>\n      </ngx-skeleton-loader>\n    </f-page-body>\n  </f-page>\n</ng-template>\n";
+module.exports = "<f-page (closed)=\"onClose()\" closePosition=\"outside\" colsClassList=\"offset-lg-1 col-lg-10 offset-xl-2 col-xl-8\"\n        *ngIf=\"(product$ | async) as product; else loading\">\n    <f-page-header>\n      <ng-container  >\n        <span class='product-small'>{{product?.category}}</span>\n        <h1 class=\"product-title\">{{product?.product}}</h1>\n        <div class='row my-5'>\n          <div class='col-7'>\n            <j-carousel-products [links]='product?.imageUrls'></j-carousel-products>\n          </div>\n          <div class='col-5'>\n            <j-card-product-main-info [product]='product'></j-card-product-main-info>\n          </div>\n        </div>\n      </ng-container>\n      <div class=\"f-page-tabs-wrap\">\n        <nav class=\"f-page-tabs\">\n          <a *ngFor='let tab of tabs;'\n             [class.tab_active]='tab.link === currentTab'\n             (click)='currentTab = tab.link'>\n            {{tab.title | translate}}\n          </a>\n        </nav>\n      </div>\n    </f-page-header>\n    <f-page-body>\n      <div class=\"outlet-animation-wrapper\">\n        <j-card-product-additionally-info [productFeatures]='product?.productFeatures'  *ngIf='currentTab === \"info\"' ></j-card-product-additionally-info>\n        <j-card-product-availability [availability]='product?.availability'  *ngIf='currentTab === \"availability\"'></j-card-product-availability>\n        <j-card-product-price [basePrice]='product?.price'  [cityPrices]='product?.cityPrices' *ngIf='currentTab === \"price\"'></j-card-product-price>\n      </div>\n    </f-page-body>\n</f-page>\n<ng-template #loading>\n  <f-page (closed)=\"onClose()\" closePosition=\"outside\" colsClassList=\"offset-lg-1 col-lg-10 offset-xl-2 col-xl-8\">\n    <f-page-header>\n      <ngx-skeleton-loader *ngFor='let theme of themesMain;' [theme]='theme'>\n      </ngx-skeleton-loader>\n      <div class=\"f-page-tabs-wrap\">\n        <nav class=\"f-page-tabs\">\n          <a *ngFor='let tab of tabs;'\n             [class.tab_active]='tab.link === currentTab'\n             (click)='currentTab = tab.link'>\n            {{tab.title | translate}}\n          </a>\n        </nav>\n      </div>\n    </f-page-header>\n    <f-page-body>\n      <ngx-skeleton-loader *ngFor='let theme of themesTab;' [theme]='theme'>\n      </ngx-skeleton-loader>\n    </f-page-body>\n  </f-page>\n</ng-template>\n";
 
 /***/ })
 
